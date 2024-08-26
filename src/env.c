@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 11:00:59 by aditer            #+#    #+#             */
-/*   Updated: 2024/08/23 13:32:03 by aditer           ###   ########.fr       */
+/*   Updated: 2024/08/26 07:37:40 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_list	*init_env(char **envp)
 		if (!node_env->name)
 			return (NULL);
 		ft_strlcpy(node_env->name, envp[i], limit);
-		node_env->content = limit + envp[i] + 1;
+		node_env->content = limit + envp[i];
 		tmp = ft_lstnew(node_env);
 		if (!tmp)
 			return (NULL);

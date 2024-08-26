@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:40:02 by aditer            #+#    #+#             */
-/*   Updated: 2024/08/23 12:32:02 by aditer           ###   ########.fr       */
+/*   Updated: 2024/08/26 13:51:25 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,18 @@ void		print_env(t_list *env);
 void		free_env(t_list *env);
 char		**get_env_tab(t_list *env);
 void		add_env(t_list **env, char *name, char *content);
+void		remove_env(t_list **env, char *name);
 
 typedef struct s_env
 {
 	char	*name;
 	char	*content;
 }			t_env;
+
+typedef	struct s_token
+{
+	char	*value;
+	int		type;
+}			t_token;
 
 #endif
