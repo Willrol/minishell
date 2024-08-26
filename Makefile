@@ -12,7 +12,8 @@ SRC_DIR = src
 
 SRC = 	main.c		\
 		env.c		\
-		env2.c
+		env2.c		\
+		lexer.c
 
 OBJ_DIR = obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
