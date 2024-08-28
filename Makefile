@@ -6,7 +6,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 CC = cc
 RM = rm -f
-CFLAGS = -Wall -Werror -Wextra -g3
+CFLAGS = -Wall -Werror -Wextra -Wunused -g3
 
 SRC_DIR = src
 

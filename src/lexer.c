@@ -6,60 +6,104 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:06:36 by aditer            #+#    #+#             */
-/*   Updated: 2024/08/26 16:46:24 by aditer           ###   ########.fr       */
+/*   Updated: 2024/08/28 14:02:25 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	isnotsp(char *line, int i)
+int	wordintake(char *line, t_list **token, int *flag)
 {
-	if (line[i] == '\'' || line[i] == '"' || line[i] == '$' || line[i] == '>'
-		|| line[i] == '<' || line[i] == ' ' || line[i] == '|')
-		return (1);
-	return (0);
+	int		j;
+	t_token	*node_token;
+
+	j = ft_mot(line);
+	node_token = calloc(1, sizeof(t_token));
+	if (!node_token)
+		return (FAILURE);
+	node_token->value = ft_substr(line, 0, j);
+	node_token->type = 0;
+	ft_lstadd_back(token, ft_lstnew(node_token));
+	*flag = 0;
+	return (j);
 }
 
-int	ft_mot(char *line, int i)
+int	process_double_quote(const char *line, t_list **token)
 {
-	int	j;
+	int		j;
+	t_token	*node_token;
 
-	j = 0;
-	while (line[i] && isnotsp(line, i) == 0)
-	{
-		i++;
+	j = 1;
+	while (line[j] && line[j] != line[0])
 		j++;
+	if (!line[j])
+	{
+		ft_putstr_fd("Error: Unclosed double quote.\n", 2);
+		free_token_list(*token);
+		return (FAILURE);
 	}
-	return (j);
+	node_token = calloc(1, sizeof(t_token));
+	if (!node_token)
+		return (FAILURE);
+	node_token->value = ft_substr(line, 0, j + 1);
+	node_token->type = typval(node_token->value);
+	ft_lstadd_back(token, ft_lstnew(node_token));
+	return (j + 1);
+}
+
+int	process_token(char *line, t_list **token, int *flag)
+{
+	t_token	*node_token;
+	int		tmptype;
+
+	tmptype = 0;
+	node_token = calloc(1, sizeof(t_token));
+	if (!node_token)
+	{
+		free_token_list(*token);
+		return (FAILURE);
+	}
+	node_token->value = ft_substr(line, 0, isnotsp(line));
+	if (*flag == 1 && (tmptype == typval(node_token->value) || tmptype > 3))
+	{
+		printf("error\n");
+		free(node_token->value);
+		free(node_token);
+		free_token_list(*token);
+		return (FAILURE);
+	}
+	node_token->type = typval(node_token->value);
+	tmptype = node_token->type;
+	ft_lstadd_back(token, ft_lstnew(node_token));
+	*flag = 1;
+	return (isnotsp(line));
 }
 
 void	lexer(char *line)
 {
-	int		i;
-	int		j;
-	char	*truc;
+	int		err;
+	int		flag;
+	t_list	*token;
 
-	// t_list	*token;
-	// t_token	*node_token;
-	i = 0;
-	while (line[i])
+	flag = 0;
+	token = NULL;
+	while (line[0])
 	{
-		if (line[i] == ' ')
+		if (line[0] == ' ')
 		{
-			i++;
+			line++;
 			continue ;
 		}
-		if (isnotsp(line, i) == 0)
-		{
-			j = ft_mot(line, i);
-			truc = ft_strtrim(ft_substr(line, i, j), " ");
-			i += j;
-			printf("%s\ni = %d\n", truc, i);
-			free(truc);
-		}
+		if (isnotsp(line) == 0)
+			err = E(line, &token, &flag);
+		else if (isnotsp(line) == 3)
+			err = process_double_quote(line, &token);
 		else
-			i++;
+			err = process_token(line, &token, &flag);
+		line += err;
+		if (err == FAILURE)
+			return ;
 	}
+	print_token(token);
+	free_token_list(token);
 }
-
-//> >> < << $ | " " ' '

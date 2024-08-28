@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:39:34 by aditer            #+#    #+#             */
-/*   Updated: 2024/08/26 16:42:05 by aditer           ###   ########.fr       */
+/*   Updated: 2024/08/28 14:04:28 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ char	*read_input(void)
 		printf("exit\n");
 		exit(EXIT_SUCCESS);
 	}
-	// add_history(line);
 	printf("%s\n", line);
 	free(line);
 	return (line);
@@ -34,19 +33,10 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	lexer("               qskjhdjqsd  | jqlsdjjlqjd | dsqjdk jqk||       qksdqkslkd              ");
-	 env = init_env(envp);
-	 if (!env)
-	 	return (EXIT_FAILURE);
-	// print_env(env);
-	// add_env(&env, "TEST=", "SALOPETTE");
-	// printf("//////////////////////////////////////////////////:\n");
-	// add_env(&env, "TEST=", "super SALOPETTE");
-	// add_env(&env, "TEST2=", "super PATATE");
-	// print_env(env);
-	// printf("//////////////////////////////////////////////////:\n");
-	// remove_env(&env, "TEST=eaza");
-	// print_env(env);
-	 free_env(env);
+	lexer("alpha <dqsdq <fd <<  fds| edzq |da\'z<<dsq  > prou\'tdfsdfsd");
+	env = init_env(envp);
+	if (!env)
+		return (EXIT_FAILURE);
+	free_env(env);
 	return (0);
 }

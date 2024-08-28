@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 11:00:59 by aditer            #+#    #+#             */
-/*   Updated: 2024/08/26 07:37:40 by aditer           ###   ########.fr       */
+/*   Updated: 2024/08/28 13:45:19 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,3 @@ char	**get_env_tab(t_list *env)
 	tab_env[i] = NULL;
 	return (tab_env);
 }
-
