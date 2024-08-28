@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:40:02 by aditer            #+#    #+#             */
-/*   Updated: 2024/08/28 14:03:48 by aditer           ###   ########.fr       */
+/*   Updated: 2024/08/28 14:11:30 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MINISHELL_H
 
 # include "../lib/libft/include/libft.h"
-# include "minishell_struct.h"
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdbool.h>

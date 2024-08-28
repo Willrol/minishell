@@ -6,11 +6,11 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:06:36 by aditer            #+#    #+#             */
-/*   Updated: 2024/08/28 14:02:25 by aditer           ###   ########.fr       */
+/*   Updated: 2024/08/28 14:11:54 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 int	wordintake(char *line, t_list **token, int *flag)
 {
@@ -95,7 +95,7 @@ void	lexer(char *line)
 			continue ;
 		}
 		if (isnotsp(line) == 0)
-			err = E(line, &token, &flag);
+			err = wordintake(line, &token, &flag);
 		else if (isnotsp(line) == 3)
 			err = process_double_quote(line, &token);
 		else

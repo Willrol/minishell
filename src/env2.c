@@ -6,11 +6,11 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 08:11:12 by aditer            #+#    #+#             */
-/*   Updated: 2024/08/28 13:45:24 by aditer           ###   ########.fr       */
+/*   Updated: 2024/08/28 14:11:12 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 t_list	*search_env(t_list *env, char *name)
 {

@@ -6,11 +6,11 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 11:00:59 by aditer            #+#    #+#             */
-/*   Updated: 2024/08/28 13:45:19 by aditer           ###   ########.fr       */
+/*   Updated: 2024/08/28 14:11:18 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 t_list	*init_env(char **envp)
 {

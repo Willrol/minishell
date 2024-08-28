@@ -6,14 +6,15 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 CC = cc
 RM = rm -f
-CFLAGS = -Wall -Werror -Wextra -Wunused -g3
+CFLAGS = -Wall -Werror -Wextra -Wunused -g3 -I./include
 
 SRC_DIR = src
 
-SRC = 	main.c		\
-		env.c		\
-		env2.c		\
-		lexer.c
+SRC = 	main.c			\
+		env.c			\
+		env2.c			\
+		lexer.c			\
+		lexer_utils.c
 
 OBJ_DIR = obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))

@@ -6,11 +6,11 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:39:34 by aditer            #+#    #+#             */
-/*   Updated: 2024/08/28 14:04:28 by aditer           ###   ########.fr       */
+/*   Updated: 2024/08/28 14:13:37 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 char	*read_input(void)
 {
@@ -33,7 +33,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	lexer("alpha <dqsdq <fd <<  fds| edzq |da\'z<<dsq  > prou\'tdfsdfsd");
+	lexer("alpha <dqsdq <fd <<  fds| edzq |da\"z<<dsq  > prou\"tdfsdfsd");
 	env = init_env(envp);
 	if (!env)
 		return (EXIT_FAILURE);
