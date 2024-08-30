@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:39:34 by aditer            #+#    #+#             */
-/*   Updated: 2024/08/28 14:13:37 by aditer           ###   ########.fr       */
+/*   Updated: 2024/08/30 08:35:13 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,6 @@ char	*read_input(void)
 	char	*line;
 
 	line = readline("minishell$ ");
-	if (!line)
-	{
-		printf("exit\n");
-		exit(EXIT_SUCCESS);
-	}
-	printf("%s\n", line);
-	free(line);
 	return (line);
 }
 
@@ -33,10 +26,23 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	lexer("alpha <dqsdq <fd <<  fds| edzq |da\"z<<dsq  > prou\"tdfsdfsd");
+	char *input;
+
 	env = init_env(envp);
 	if (!env)
 		return (EXIT_FAILURE);
+	while (1)
+	{
+		input = ft_strtrim(read_input(), " ");
+		if (strncmp(input, "exit", 4) == 0)
+		{
+			free(input);
+			break ;
+		}
+		lexer(input);
+		free(input);
+
+	}
 	free_env(env);
 	return (0);
 }

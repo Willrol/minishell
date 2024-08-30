@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:06:36 by aditer            #+#    #+#             */
-/*   Updated: 2024/08/28 14:11:54 by aditer           ###   ########.fr       */
+/*   Updated: 2024/08/30 07:36:01 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,11 @@ int	process_double_quote(const char *line, t_list **token)
 	return (j + 1);
 }
 
-int	process_token(char *line, t_list **token, int *flag)
+t_valuetype	process_token(char *line, t_list **token, int *flag,
+		t_valuetype *tmptype)
 {
 	t_token	*node_token;
-	int		tmptype;
 
-	tmptype = 0;
 	node_token = calloc(1, sizeof(t_token));
 	if (!node_token)
 	{
@@ -64,7 +63,7 @@ int	process_token(char *line, t_list **token, int *flag)
 		return (FAILURE);
 	}
 	node_token->value = ft_substr(line, 0, isnotsp(line));
-	if (*flag == 1 && (tmptype == typval(node_token->value) || tmptype > 3))
+	if (*flag == 1 && (*tmptype == typval(node_token->value) || *tmptype > 3))
 	{
 		printf("error\n");
 		free(node_token->value);
@@ -73,33 +72,36 @@ int	process_token(char *line, t_list **token, int *flag)
 		return (FAILURE);
 	}
 	node_token->type = typval(node_token->value);
-	tmptype = node_token->type;
+	*tmptype = node_token->type;
 	ft_lstadd_back(token, ft_lstnew(node_token));
 	*flag = 1;
 	return (isnotsp(line));
 }
 
+void	skip_spaces(char **line)
+{
+	while (**line == ' ')
+		(*line)++;
+}
+
 void	lexer(char *line)
 {
-	int		err;
-	int		flag;
-	t_list	*token;
+	int			err;
+	int			flag;
+	t_list		*token;
+	t_valuetype	tmptype;
 
 	flag = 0;
 	token = NULL;
 	while (line[0])
 	{
-		if (line[0] == ' ')
-		{
-			line++;
-			continue ;
-		}
+		skip_spaces(&line);
 		if (isnotsp(line) == 0)
 			err = wordintake(line, &token, &flag);
 		else if (isnotsp(line) == 3)
 			err = process_double_quote(line, &token);
 		else
-			err = process_token(line, &token, &flag);
+			err = process_token(line, &token, &flag, &tmptype);
 		line += err;
 		if (err == FAILURE)
 			return ;

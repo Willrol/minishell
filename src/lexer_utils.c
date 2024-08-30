@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:02:32 by aditer            #+#    #+#             */
-/*   Updated: 2024/08/28 14:10:21 by aditer           ###   ########.fr       */
+/*   Updated: 2024/08/30 07:47:42 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,27 +69,28 @@ int	ft_mot(char *line)
 	return (j);
 }
 
-int	typval(char *value)
+t_valuetype	typval(char *value)
 {
 	if (value[0] == '\'')
-		return (1);
-	if (value[0] == '"')
-		return (2);
-	if (value[0] == '$')
-		return (3);
-	if (value[0] == '>')
+		return (SINGLE_QUOTE);
+	else if (value[0] == '"')
+		return (DOUBLE_QUOTE);
+	else if (value[0] == '$')
+		return (DOLLAR_SIGN);
+	else if (value[0] == '>')
 	{
 		if (value[1] == '>')
-			return (4);
-		return (5);
+			return (DOUBLE_GREATER_THAN);
+		return (GREATER_THAN);
 	}
-	if (value[0] == '<')
+	else if (value[0] == '<')
 	{
 		if (value[1] == '<')
-			return (6);
-		return (7);
+			return (DOUBLE_LESS_THAN);
+		return (LESS_THAN);
 	}
-	if (value[0] == '|')
+	else if (value[0] == '|')
+		return (PIPE);
+	else
 		return (0);
-	return (0);
 }

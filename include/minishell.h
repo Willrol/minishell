@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:40:02 by aditer            #+#    #+#             */
-/*   Updated: 2024/08/28 14:11:30 by aditer           ###   ########.fr       */
+/*   Updated: 2024/08/30 08:17:41 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,19 @@
 # define FAILURE -1
 # define SUCCESS 0
 
+typedef enum e_valuetype
+{
+	SINGLE_QUOTE = 1,
+	DOUBLE_QUOTE = 2,
+	DOLLAR_SIGN = 3,
+	PIPE = 4,
+	DOUBLE_GREATER_THAN = 5,
+	GREATER_THAN = 6,
+	DOUBLE_LESS_THAN = 7,
+	LESS_THAN = 8,	
+	DEFAULT = 9
+}			t_valuetype;
+
 t_list		*init_env(char **envp);
 void		print_env(t_list *env);
 void		free_env(t_list *env);
@@ -32,7 +45,7 @@ void		print_token(t_list *token);
 void		free_token_list(t_list *token);
 int			isnotsp(char *line);
 int			ft_mot(char *line);
-int			typval(char *value);
+t_valuetype	typval(char *value);
 
 typedef struct s_env
 {
