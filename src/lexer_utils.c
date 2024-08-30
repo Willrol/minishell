@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:02:32 by aditer            #+#    #+#             */
-/*   Updated: 2024/08/30 07:47:42 by aditer           ###   ########.fr       */
+/*   Updated: 2024/08/30 13:31:10 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,15 @@ t_valuetype	typval(char *value)
 		return (PIPE);
 	else
 		return (0);
+}
+
+void	lexer_error(t_list **token, t_token *node_token)
+{
+	ft_putstr_fd("Error: Syntax error near unexpected token ", 2);
+	ft_putchar_fd('\'', 2);
+	ft_putstr_fd(node_token->value, 2);
+	ft_putstr_fd("\'\n", 2);
+	free(node_token->value);
+	free(node_token);
+	free_token_list(*token);
 }

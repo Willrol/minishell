@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:06:36 by aditer            #+#    #+#             */
-/*   Updated: 2024/08/30 07:36:01 by aditer           ###   ########.fr       */
+/*   Updated: 2024/08/30 13:37:44 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	process_double_quote(const char *line, t_list **token)
 		j++;
 	if (!line[j])
 	{
-		ft_putstr_fd("Error: Unclosed double quote.\n", 2);
+		ft_putstr_fd("Error: Unclosed quote.\n", 2);
 		free_token_list(*token);
 		return (FAILURE);
 	}
@@ -63,12 +63,10 @@ t_valuetype	process_token(char *line, t_list **token, int *flag,
 		return (FAILURE);
 	}
 	node_token->value = ft_substr(line, 0, isnotsp(line));
-	if (*flag == 1 && (*tmptype == typval(node_token->value) || *tmptype > 3))
+	if ((*flag == 1 && (*tmptype == typval(node_token->value) || *tmptype > 4))
+		|| !line[1])
 	{
-		printf("error\n");
-		free(node_token->value);
-		free(node_token);
-		free_token_list(*token);
+		lexer_error(token, node_token);
 		return (FAILURE);
 	}
 	node_token->type = typval(node_token->value);
@@ -93,6 +91,9 @@ void	lexer(char *line)
 
 	flag = 0;
 	token = NULL;
+	if (line[0] == '|')
+		return (ft_putstr_fd("Error: Syntax error near unexpected token '|'\n",
+				2));
 	while (line[0])
 	{
 		skip_spaces(&line);

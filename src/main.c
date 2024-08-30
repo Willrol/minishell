@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:39:34 by aditer            #+#    #+#             */
-/*   Updated: 2024/08/30 08:35:13 by aditer           ###   ########.fr       */
+/*   Updated: 2024/08/30 13:30:36 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,10 @@ char	*read_input(void)
 int	main(int argc, char **argv, char **envp)
 {
 	t_list	*env;
+	char	*input;
 
 	(void)argc;
 	(void)argv;
-	char *input;
-
 	env = init_env(envp);
 	if (!env)
 		return (EXIT_FAILURE);
@@ -41,7 +40,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 		lexer(input);
 		free(input);
-
 	}
 	free_env(env);
 	return (0);
