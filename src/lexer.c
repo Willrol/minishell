@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:06:36 by aditer            #+#    #+#             */
-/*   Updated: 2024/08/30 13:37:44 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/02 08:10:07 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_valuetype	process_token(char *line, t_list **token, int *flag,
 	}
 	node_token->value = ft_substr(line, 0, isnotsp(line));
 	if ((*flag == 1 && (*tmptype == typval(node_token->value) || *tmptype > 4))
-		|| !line[1])
+		|| !line[1] || (!line[2] && line[1] == line[0]))
 	{
 		lexer_error(token, node_token);
 		return (FAILURE);

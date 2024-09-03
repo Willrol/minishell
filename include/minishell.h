@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:40:02 by aditer            #+#    #+#             */
-/*   Updated: 2024/08/30 13:11:59 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/03 07:28:28 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_token
 {
 	char	*value;
 	int		type;
+
 }			t_token;
 
 t_list		*init_env(char **envp);
