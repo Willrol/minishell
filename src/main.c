@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:39:34 by aditer            #+#    #+#             */
-/*   Updated: 2024/08/30 13:30:36 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/06 12:52:28 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ char	*read_input(void)
 	char	*line;
 
 	line = readline("minishell$ ");
+	add_history(line);
 	return (line);
 }
 
@@ -41,6 +42,7 @@ int	main(int argc, char **argv, char **envp)
 		lexer(input);
 		free(input);
 	}
+	// print_env(env);	
 	free_env(env);
 	return (0);
 }

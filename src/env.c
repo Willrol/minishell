@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 11:00:59 by aditer            #+#    #+#             */
-/*   Updated: 2024/08/28 14:11:18 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/05 14:06:28 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,13 @@ t_list	*init_env(char **envp)
 		if (!node_env->name)
 			return (NULL);
 		ft_strlcpy(node_env->name, envp[i], limit);
-		node_env->content = limit + envp[i];
+		node_env->content = ft_strdup(limit + envp[i]);
 		tmp = ft_lstnew(node_env);
 		if (!tmp)
 			return (NULL);
 		ft_lstadd_back(&env, tmp);
 	}
 	return (env);
-}
-
-void	print_env(t_list *env)
-{
-	t_list	*tmp;
-
-	tmp = env;
-	while (tmp)
-	{
-		printf("%s=%s\n", ((t_env *)tmp->content)->name,
-			((t_env *)tmp->content)->content);
-		tmp = tmp->next;
-	}
 }
 
 void	free_env(t_list *env)
@@ -63,6 +50,7 @@ void	free_env(t_list *env)
 	{
 		tmp = env->next;
 		free(((t_env *)env->content)->name);
+		free(((t_env *)env->content)->content);
 		free(env->content);
 		free(env);
 		env = tmp;

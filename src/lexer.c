@@ -6,11 +6,40 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:06:36 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/02 08:10:07 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/04 09:46:16 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	check_closed_quotes(char *value)
+{
+	int	i;
+	int	single_quote;
+	int	double_quote;
+
+	i = -1;
+	single_quote = 0;
+	double_quote = 0;
+	while (value[++i])
+	{
+		if (value[i] == '\'' && !double_quote)
+			single_quote = !single_quote;
+		if (value[i] == '"' && !single_quote)
+			double_quote = !double_quote;
+	}
+	if (single_quote && !double_quote)
+	{
+		ft_putstr_fd("Error: Unclosed single quote.\n", 2);
+		return (FAILURE);
+	}
+	else if (double_quote && !single_quote)
+	{
+		ft_putstr_fd("Error: Unclosed double quote.\n", 2);
+		return (FAILURE);
+	}
+	return (SUCCESS);
+}
 
 int	wordintake(char *line, t_list **token, int *flag)
 {
@@ -22,33 +51,16 @@ int	wordintake(char *line, t_list **token, int *flag)
 	if (!node_token)
 		return (FAILURE);
 	node_token->value = ft_substr(line, 0, j);
+	if (check_closed_quotes(node_token->value) == FAILURE)
+	{
+		free(node_token->value);
+		free(node_token);
+		return (FAILURE);
+	}
 	node_token->type = 0;
 	ft_lstadd_back(token, ft_lstnew(node_token));
 	*flag = 0;
 	return (j);
-}
-
-int	process_double_quote(const char *line, t_list **token)
-{
-	int		j;
-	t_token	*node_token;
-
-	j = 1;
-	while (line[j] && line[j] != line[0])
-		j++;
-	if (!line[j])
-	{
-		ft_putstr_fd("Error: Unclosed quote.\n", 2);
-		free_token_list(*token);
-		return (FAILURE);
-	}
-	node_token = calloc(1, sizeof(t_token));
-	if (!node_token)
-		return (FAILURE);
-	node_token->value = ft_substr(line, 0, j + 1);
-	node_token->type = typval(node_token->value);
-	ft_lstadd_back(token, ft_lstnew(node_token));
-	return (j + 1);
 }
 
 t_valuetype	process_token(char *line, t_list **token, int *flag,
@@ -97,10 +109,8 @@ void	lexer(char *line)
 	while (line[0])
 	{
 		skip_spaces(&line);
-		if (isnotsp(line) == 0)
+		if (isnotsp(line) == 0 || isnotsp(line) == 3)
 			err = wordintake(line, &token, &flag);
-		else if (isnotsp(line) == 3)
-			err = process_double_quote(line, &token);
 		else
 			err = process_token(line, &token, &flag, &tmptype);
 		line += err;

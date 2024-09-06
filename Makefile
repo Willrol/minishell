@@ -10,11 +10,17 @@ CFLAGS = -Wall -Werror -Wextra -Wunused -g3 -I./include
 
 SRC_DIR = src
 
-SRC = 	main.c			\
-		env.c			\
-		env2.c			\
-		lexer.c			\
-		lexer_utils.c
+SRC 	= 	main.c				\
+			env.c				\
+			env2.c				\
+			lexer.c				\
+			lexer_utils.c		\
+			builtins/cd.c		\
+			builtins/pwd.c		\
+			builtins/env.c		\
+			builtins/unset.c	\
+			builtins/echo.c
+
 
 OBJ_DIR = obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))

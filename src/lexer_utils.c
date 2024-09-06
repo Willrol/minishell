@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:02:32 by aditer            #+#    #+#             */
-/*   Updated: 2024/08/30 13:31:10 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/04 07:28:31 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	isnotsp(char *line)
 {
 	if (line[0] == '\'' || line[0] == '"')
 		return (3);
-	if (line[0] == '$' || line[0] == '>' || line[0] == '<' || line[0] == '|'
+	if (line[0] == '>' || line[0] == '<' || line[0] == '|'
 		|| line[0] == ' ')
 	{
 		if ((line[0] == '<' && line[1] == '<') || (line[0] == '>'
@@ -61,7 +61,7 @@ int	ft_mot(char *line)
 	int	j;
 
 	j = 0;
-	while (line[0] && isnotsp(line) == 0)
+	while (line[0] && (isnotsp(line) == 0 || isnotsp(line) == 3))
 	{
 		line++;
 		j++;
