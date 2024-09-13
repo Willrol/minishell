@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:06:36 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/04 09:46:16 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/13 15:23:49 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,28 @@ int	wordintake(char *line, t_list **token, int *flag)
 {
 	int		j;
 	t_token	*node_token;
+	t_list	*new_node;
 
 	j = ft_mot(line);
 	node_token = calloc(1, sizeof(t_token));
 	if (!node_token)
 		return (FAILURE);
 	node_token->value = ft_substr(line, 0, j);
-	if (check_closed_quotes(node_token->value) == FAILURE)
+	if (!node_token->value || check_closed_quotes(node_token->value) == FAILURE)
 	{
 		free(node_token->value);
 		free(node_token);
 		return (FAILURE);
 	}
 	node_token->type = 0;
-	ft_lstadd_back(token, ft_lstnew(node_token));
+	new_node = ft_lstnew(node_token);
+	if (!new_node)
+	{
+		free(node_token->value);
+		free(node_token);
+		return (FAILURE);
+	}
+	ft_lstadd_back(token, new_node);
 	*flag = 0;
 	return (j);
 }
@@ -94,7 +102,7 @@ void	skip_spaces(char **line)
 		(*line)++;
 }
 
-void	lexer(char *line)
+t_list	*lexer(char *line)
 {
 	int			err;
 	int			flag;
@@ -105,7 +113,7 @@ void	lexer(char *line)
 	token = NULL;
 	if (line[0] == '|')
 		return (ft_putstr_fd("Error: Syntax error near unexpected token '|'\n",
-				2));
+				2), NULL);
 	while (line[0])
 	{
 		skip_spaces(&line);
@@ -115,8 +123,7 @@ void	lexer(char *line)
 			err = process_token(line, &token, &flag, &tmptype);
 		line += err;
 		if (err == FAILURE)
-			return ;
+			return (NULL);
 	}
-	print_token(token);
-	free_token_list(token);
+	return (token);
 }

@@ -19,7 +19,8 @@ SRC 	= 	main.c				\
 			builtins/pwd.c		\
 			builtins/env.c		\
 			builtins/unset.c	\
-			builtins/echo.c
+			builtins/echo.c		\
+			parse_cmd.c
 
 
 OBJ_DIR = obj

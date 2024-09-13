@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:02:32 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/04 07:28:31 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/13 15:23:32 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ int	isnotsp(char *line)
 {
 	if (line[0] == '\'' || line[0] == '"')
 		return (3);
-	if (line[0] == '>' || line[0] == '<' || line[0] == '|'
-		|| line[0] == ' ')
+	if (line[0] == '>' || line[0] == '<' || line[0] == '|' || line[0] == ' ')
 	{
 		if ((line[0] == '<' && line[1] == '<') || (line[0] == '>'
 				&& line[1] == '>'))
@@ -76,18 +75,18 @@ t_valuetype	typval(char *value)
 	else if (value[0] == '"')
 		return (DOUBLE_QUOTE);
 	else if (value[0] == '$')
-		return (DOLLAR_SIGN);
+		return (DOLLAR);
 	else if (value[0] == '>')
 	{
 		if (value[1] == '>')
-			return (DOUBLE_GREATER_THAN);
-		return (GREATER_THAN);
+			return (APPEND);
+		return (OUT);
 	}
 	else if (value[0] == '<')
 	{
 		if (value[1] == '<')
-			return (DOUBLE_LESS_THAN);
-		return (LESS_THAN);
+			return (HERE_DOC);
+		return (IN);
 	}
 	else if (value[0] == '|')
 		return (PIPE);
