@@ -20,8 +20,8 @@ SRC 	= 	main.c				\
 			builtins/env.c		\
 			builtins/unset.c	\
 			builtins/echo.c		\
-			parse_cmd.c
-
+			parse_cmd.c			\
+			parse_cmd_utils.c
 
 OBJ_DIR = obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
