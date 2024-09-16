@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:18:40 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/13 14:44:31 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/16 09:09:53 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	take_cmd(t_list *token, t_parse_cmd *cmd)
 
 	token_tmp = token;
 	cmd_tmp = cmd;
-	i = -1;
+	i = 0;
 	cmd_tmp->argc = cpt_word(token_tmp);
 	cmd_tmp->argv = calloc(cmd_tmp->argc + 1, sizeof(char *));
 	if (!cmd_tmp->argv)
@@ -119,7 +119,10 @@ void	take_cmd(t_list *token, t_parse_cmd *cmd)
 			|| ((t_token *)token_tmp->content)->type == IN)
 			token_tmp = token_tmp->next;
 		else if (((t_token *)token_tmp->content)->type == WORD)
-			cmd_tmp->argv[++i] = ft_strdup(((t_token *)token_tmp->content)->value);
+		{
+			cmd_tmp->argv[i] = ft_strdup(((t_token *)token_tmp->content)->value);
+			i++;
+		}
 		cmd_tmp->argv[i] = NULL;
 		token_tmp = token_tmp->next;
 	}
