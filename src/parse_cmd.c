@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:18:40 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/16 11:20:10 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:59:41 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,17 @@ void	print_parser_cmd(t_parse_cmd *cmd)
 		while (redir)
 		{
 			printf("file_name: %s\n", redir->file_name);
-			printf("type: %d\n", redir->type);
+			if (redir->type == APPEND)
+				printf("type: APPEND\n");
+			else if (redir->type == OUT)
+				printf("type: OUT\n");
+			else if (redir->type == HERE_DOC)
+				printf("type: HERE_DOC\n");
+			else if (redir->type == IN)
+				printf("type: IN\n");
 			redir = redir->next;
 		}
+		printf("///////////////////////////////////////////\n");
 		tmp = tmp->next;
 	}
 }

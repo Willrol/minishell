@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:06:36 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/13 15:23:49 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/16 14:26:26 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,6 @@ int	wordintake(char *line, t_list **token, int *flag)
 	if (!node_token)
 		return (FAILURE);
 	node_token->value = ft_substr(line, 0, j);
-	if (!node_token->value || check_closed_quotes(node_token->value) == FAILURE)
-	{
-		free(node_token->value);
-		free(node_token);
-		return (FAILURE);
-	}
 	node_token->type = 0;
 	new_node = ft_lstnew(node_token);
 	if (!new_node)
@@ -114,6 +108,8 @@ t_list	*lexer(char *line)
 	if (line[0] == '|')
 		return (ft_putstr_fd("Error: Syntax error near unexpected token '|'\n",
 				2), NULL);
+	if (check_closed_quotes(line) == FAILURE)
+		return (NULL);
 	while (line[0])
 	{
 		skip_spaces(&line);
