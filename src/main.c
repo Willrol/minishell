@@ -6,13 +6,13 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:39:34 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/13 15:24:55 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/17 08:19:57 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*read_input(void)
+char	*read_input(t_list *env)
 {
 	char	*line;
 
@@ -20,6 +20,7 @@ char	*read_input(void)
 	if (!line)
 	{
 		ft_putstr_fd("exit\n", 1);
+		free_env(env);
 		exit(0);
 	}
 	add_history(line);
@@ -39,7 +40,7 @@ int	main(int argc, char **argv, char **envp)
 		return (EXIT_FAILURE);
 	while (1)
 	{
-		input = ft_strtrim(read_input(), " ");
+		input = ft_strtrim(read_input(env), " ");
 		if (strncmp(input, "exit", 4) == 0)
 		{
 			free(input);
