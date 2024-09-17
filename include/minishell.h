@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:40:02 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/16 10:30:31 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:51:13 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,5 @@ void		cd(int argc, char **argv, t_list *env);
 void		pwd(void);
 void		echo(int argc, char **argv);
 void		print_env(t_list *env);
-
-void		init_parser_cmd(t_list *token);
 
 #endif

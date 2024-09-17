@@ -6,7 +6,7 @@
 #    By: aditer <aditer@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 13:05:07 by aditer            #+#    #+#              #
-#    Updated: 2024/08/23 07:41:56 by aditer           ###   ########.fr        #
+#    Updated: 2024/09/17 13:52:18 by aditer           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,6 +66,7 @@ SRCS_PUT			=	$(addprefix $(SRCS_PUT_DIR)/, $(SRCS_PUT_LIST))
 #ft_str
 SRCS_STR_DIR		=	ft_str
 SRCS_STR_LIST		=	ft_split.c			\
+						ft_str_replace.c	\
 						ft_strchr.c			\
 						ft_strdup.c			\
 						ft_striteri.c		\

@@ -5,6 +5,7 @@
 		"minishell.h": "c",
 		"cstdlib": "c",
 		"readline.h": "c",
-		"ast.h": "c"
+		"ast.h": "c",
+		"type_traits": "c"
 	}
 }

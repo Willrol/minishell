@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 09:59:09 by aditer            #+#    #+#             */
-/*   Updated: 2024/08/23 07:42:13 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/17 13:52:54 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strjoin3(char const *s1, char const *s2,
 						char const *s3);
 char				**ft_split(char const *s, char c);
+char				*ft_str_replace(char *str, char *old, char *new);
 int					count_words(char const *s, char c);
 void				free_split(char **split_result);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));

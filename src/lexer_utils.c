@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:02:32 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/17 08:14:27 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/17 14:55:33 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ int	isnotsp(char *line)
 
 int	ft_mot(char *line)
 {
-	int	j;
-	char quote;
+	int		j;
+	char	quote;
 
 	j = 0;
 	while (line[0] && isnotsp(line) == 0 && line[0] != ' ')
