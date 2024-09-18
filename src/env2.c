@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 08:11:12 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/06 09:37:38 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/18 16:11:20 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ t_list	*search_env(t_list *env, char *name)
 {
 	t_list	*tmp;
 
+	if (!name || !*name)
+		return (NULL);
 	tmp = env;
 	while (tmp)
 	{

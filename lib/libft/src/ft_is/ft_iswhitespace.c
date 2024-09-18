@@ -1,42 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*   ft_iswhitespace.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/09 11:16:47 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/18 15:33:07 by aditer           ###   ########.fr       */
+/*   Created: 2024/09/18 16:12:27 by aditer            #+#    #+#             */
+/*   Updated: 2024/09/18 16:26:35 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *big, const char *little, size_t len)
+int	ft_iswhitespace(int c)
 {
-	size_t	i;
-	int		j;
-	char	*res;
-
-	i = 0;
-	if (little[i] == 0)
-		return ((char *)big);
-	if (len == 0)
-		return (NULL);
-	while (big[i] && i < len)
-	{
-		if (big[i] == little[0])
-		{
-			res = (char *)big + i;
-			j = 0;
-			while (big[i + j] == little[j] && i + j < len)
-			{
-				if (little[j + 1] == 0)
-					return (res);
-				j++;
-			}
-		}
-		i++;
-	}
-	return (NULL);
+	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
+		|| c == '\r')
+		return (1);
+	return (0);
 }

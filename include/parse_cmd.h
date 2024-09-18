@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 16:40:03 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/17 14:53:01 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/18 14:56:20 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ t_parse_cmd					*init_parser_cmd(t_list *token);
 void						expand(t_parse_cmd *cmd, t_list *env);
 
 void						print_parser_cmd(t_parse_cmd *cmd);
+void						remove_quote(char **argv);
 
 #endif

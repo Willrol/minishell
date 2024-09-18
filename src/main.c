@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:39:34 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/17 14:09:22 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/18 16:11:15 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,14 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		}
 		token = lexer(input);
+		if (!token)
+		{
+			free(input);
+			continue ;
+		}
 		cmd = init_parser_cmd(token);
 		expand(cmd, env);
+		printf("________________________\n");
 		print_parser_cmd(cmd);
 		free(input);
 		free_token_list(token);

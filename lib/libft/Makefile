@@ -6,7 +6,7 @@
 #    By: aditer <aditer@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 13:05:07 by aditer            #+#    #+#              #
-#    Updated: 2024/09/17 13:52:18 by aditer           ###   ########.fr        #
+#    Updated: 2024/09/18 16:14:54 by aditer           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,8 @@ SRCS_IS_LIST		=	ft_isalnum.c		\
 						ft_isalpha.c		\
 						ft_isascii.c		\
 						ft_isdigit.c		\
-						ft_isprint.c
+						ft_isprint.c		\
+						ft_iswhitespace.c
 SRCS_IS				=	$(addprefix $(SRCS_IS_DIR)/, $(SRCS_IS_LIST))
 
 #ft_lst

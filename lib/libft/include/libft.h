@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 09:59:09 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/17 13:52:54 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/18 16:13:15 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int					ft_isascii(int c);
 int					ft_isprint(int c);
 int					ft_toupper(int c);
 int					ft_tolower(int c);
+int					ft_iswhitespace(int c);
 int					ft_atoi(const char *nptr);
 char				*ft_itoa(int n);
 size_t				ft_strlen(const char *s);
