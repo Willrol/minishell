@@ -6,6 +6,8 @@
 		"cstdlib": "c",
 		"readline.h": "c",
 		"ast.h": "c",
-		"type_traits": "c"
+		"type_traits": "c",
+		"utmp.h": "c",
+		"parse_cmd.h": "c"
 	}
 }

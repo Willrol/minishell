@@ -6,24 +6,11 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:02:32 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/17 14:55:33 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/23 13:38:14 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	print_token(t_list *token)
-{
-	t_list	*tmp;
-
-	tmp = token;
-	while (tmp)
-	{
-		printf("%s\n", ((t_token *)tmp->content)->value);
-		printf("%d\n", ((t_token *)tmp->content)->type);
-		tmp = tmp->next;
-	}
-}
 
 void	free_token_list(t_list *token)
 {

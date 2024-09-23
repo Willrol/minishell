@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 14:16:41 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/18 16:29:04 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/23 13:34:13 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	remove_quote(char **argv)
 	int		j;
 	char	quote;
 
-	i = 0;
-	while (argv[i])
+	i = -1;
+	while (argv[++i])
 	{
 		j = 0;
 		while (argv[i][j])
@@ -56,9 +56,35 @@ void	remove_quote(char **argv)
 				while (argv[i][j] && argv[i][j] != quote)
 					j++;
 				if (argv[i][j] == quote)
+				{
 					argv[i] = remove_char(argv[i], j);
+					continue ;
+				}
 			}
 			j++;
+		}
+	}
+}
+
+void	remove_quote_redir(char **file_name)
+{
+	int		i;
+	char	quote;
+
+	i = 0;
+	while ((*file_name)[i])
+	{
+		if ((*file_name)[i] == '\'' || (*file_name)[i] == '"')
+		{
+			quote = (*file_name)[i];
+			(*file_name) = remove_char((*file_name), i);
+			while ((*file_name)[i] && (*file_name)[i] != quote)
+				i++;
+			if ((*file_name)[i] == quote)
+			{
+				(*file_name) = remove_char((*file_name), i);
+				continue ;
+			}
 		}
 		i++;
 	}

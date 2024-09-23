@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 08:11:12 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/18 16:11:20 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/23 13:21:00 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_list	*search_env(t_list *env, char *name)
 	tmp = env;
 	while (tmp)
 	{
-		if (!ft_strncmp(((t_env *)tmp->content)->name, name, ft_strlen(name)))
+		if (!ft_strcmp(((t_env *)tmp->content)->name, name))
 			return (tmp);
 		tmp = tmp->next;
 	}

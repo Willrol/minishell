@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:40:02 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/17 14:51:13 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/20 12:43:57 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdbool.h>
+# include <utmp.h>
 
 # define FAILURE -1
 # define SUCCESS 0
@@ -33,6 +34,12 @@ typedef enum e_valuetype
 	HERE_DOC,
 	IN,
 }			t_valuetype;
+
+typedef struct s_backupdata
+{
+	char	*username;
+	char	*path;
+}			t_backupdata;
 
 typedef struct s_env
 {
@@ -54,10 +61,12 @@ char		**get_env_tab(t_list *env);
 t_list		*search_env(t_list *env, char *name);
 void		add_env(t_list **env, char *name, char *content);
 void		remove_env(t_list **env, char *name);
+char		*get_username(void);
 
 t_list		*lexer(char *line);
 void		print_token(t_list *token);
 void		free_token_list(t_list *token);
+void		free_backup(t_backupdata backup);
 int			isnotsp(char *line);
 int			ft_mot(char *line);
 void		lexer_error(t_list **token, t_token *node_token);

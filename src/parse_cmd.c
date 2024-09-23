@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:18:40 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/17 14:55:02 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/20 12:40:26 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,5 @@ t_parse_cmd	*init_parser_cmd(t_list *token)
 	t_tmp = token;
 	cmd_tmp = cmd;
 	take_redirection(t_tmp, cmd_tmp);
-	print_parser_cmd(cmd);
 	return (cmd);
 }

@@ -23,7 +23,10 @@ SRC 	= 	main.c				\
 			parse_cmd.c			\
 			parse_cmd_utils.c	\
 			expand.c			\
-			quote.c
+			expand_redir.c		\
+			expand_utils.c		\
+			quote.c				\
+			minishell_utils.c
 
 OBJ_DIR = obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
