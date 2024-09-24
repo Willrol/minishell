@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:40:02 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/20 12:43:57 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/24 15:34:18 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,11 @@ typedef struct s_token
 }			t_token;
 
 t_list		*init_env(char **envp);
-void		print_env(t_list *env);
 void		free_env(t_list *env);
 char		**get_env_tab(t_list *env);
 t_list		*search_env(t_list *env, char *name);
 void		add_env(t_list **env, char *name, char *content);
-void		remove_env(t_list **env, char *name);
+int			remove_env(t_list **env, char **argv);
 char		*get_username(void);
 
 t_list		*lexer(char *line);
@@ -72,9 +71,9 @@ int			ft_mot(char *line);
 void		lexer_error(t_list **token, t_token *node_token);
 t_valuetype	typval(char *value);
 
-void		cd(int argc, char **argv, t_list *env);
-void		pwd(void);
-void		echo(int argc, char **argv);
-void		print_env(t_list *env);
+int		cd(int argc, char **argv, t_list *env);
+int		pwd(void);
+int		echo(int argc, char **argv);
+int		print_env(t_list *env);
 
 #endif

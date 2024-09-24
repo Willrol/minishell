@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:39:34 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/20 14:56:50 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/24 15:40:26 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,6 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		input = ft_strtrim(read_input(env, backup), " ");
-		if (strncmp(input, "exit", 4) == 0)
-		{
-			free(input);
-			break ;
-		}
 		token = lexer(input);
 		if (!token)
 		{
@@ -62,7 +57,8 @@ int	main(int argc, char **argv, char **envp)
 		}
 		cmd = init_parser_cmd(token);
 		expand(cmd, env, backup);
-		print_parser_cmd(cmd);
+		// print_parser_cmd(cmd);
+		execution(env, &backup, cmd);
 		free(input);
 		free_token_list(token);
 		free_parse_cmd(cmd);

@@ -18,6 +18,7 @@ SRC 	= 	main.c				\
 			builtins/cd.c		\
 			builtins/pwd.c		\
 			builtins/env.c		\
+			builtins/export.c	\
 			builtins/unset.c	\
 			builtins/echo.c		\
 			parse_cmd.c			\
@@ -26,7 +27,10 @@ SRC 	= 	main.c				\
 			expand_redir.c		\
 			expand_utils.c		\
 			quote.c				\
-			minishell_utils.c
+			minishell_utils.c	\
+			exec/exec.c			\
+			exec/exec_utils.c	\
+			exec/is_a_builtin.c
 
 OBJ_DIR = obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))

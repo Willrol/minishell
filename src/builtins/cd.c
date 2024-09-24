@@ -6,13 +6,13 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:53:28 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/05 14:00:52 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/24 15:52:37 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	cd_home(t_list *env)
+int	cd_home(t_list *env)
 {
 	t_list	*node_env;
 	t_list	*oldpwd;
@@ -22,12 +22,12 @@ void	cd_home(t_list *env)
 	if (!node_env)
 	{
 		ft_putstr_fd("cd: HOME not set\n", 2);
-		return ;
+		return (FAILURE);
 	}
 	if (chdir(((t_env *)node_env->content)->content) == -1)
 	{
 		ft_putstr_fd("cd: HOME not set\n", 2);
-		return ;
+		return (FAILURE);
 	}
 	oldpwd = search_env(env, "PWD");
 	if (oldpwd)
@@ -38,9 +38,10 @@ void	cd_home(t_list *env)
 		add_env(&env, "PWD", cwd);
 		free(cwd);
 	}
+	return(SUCCESS);
 }
 
-void	cd_tiret(t_list *env)
+int	cd_tiret(t_list *env)
 {
 	t_list	*oldpwd;
 	t_list	*pwd;
@@ -50,7 +51,7 @@ void	cd_tiret(t_list *env)
 	if (chdir(((t_env *)pwd->content)->content) == -1)
 	{
 		ft_putstr_fd("cd: No such file or directory\n", 2);
-		return ;
+		return (FAILURE);
 	}
 	oldpwd = search_env(env, "PWD");
 	if (oldpwd)
@@ -61,9 +62,10 @@ void	cd_tiret(t_list *env)
 		add_env(&env, "PWD", cwd);
 		free(cwd);
 	}
+	return(SUCCESS);
 }
 
-void	cd_arg(t_list *env, char *path)
+int	cd_arg(t_list *env, char *path)
 {
 	t_list	*oldpwd;
 	char	*cwd;
@@ -71,7 +73,7 @@ void	cd_arg(t_list *env, char *path)
 	if (chdir(path) == -1)
 	{
 		ft_putstr_fd("cd: No such file or directory\n", 2);
-		return ;
+		return (FAILURE);
 	}
 	oldpwd = search_env(env, "PWD");
 	if (oldpwd)
@@ -82,14 +84,14 @@ void	cd_arg(t_list *env, char *path)
 		add_env(&env, "PWD", cwd);
 		free(cwd);
 	}
+	return(SUCCESS);
 }
 
-void	cd(int argc, char **argv, t_list *env)
+int	cd(int argc, char **argv, t_list *env)
 {
-	if (argc == 2)
-		cd_home(env);
-	else if (argc == 3 && !ft_strncmp(argv[2], "-", 1))
-		cd_tiret(env);
-	else if (argc == 3)
-		cd_arg(env, argv[2]);
+	if (argc == 1)
+		return(cd_home(env));
+	else if (argc == 2 && !ft_strncmp(argv[1], "-", 1))
+		return(cd_tiret(env));
+	return(cd_arg(env, argv[1]));
 }

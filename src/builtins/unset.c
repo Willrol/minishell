@@ -6,34 +6,42 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:26:27 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/05 15:02:18 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/24 15:33:51 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	remove_env(t_list **env, char *name)
+int	remove_env(t_list **env, char **argv)
 {
 	t_list	*tmp;
 	t_list	*prev;
+	int		i;
 
 	tmp = *env;
 	prev = NULL;
-	while (tmp)
+	i = 1;
+	while (argv[i])
 	{
-		if (!ft_strncmp(((t_env *)tmp->content)->name, name, ft_strlen(name)))
+		while (tmp)
 		{
-			if (prev)
-				prev->next = tmp->next;
-			else
-				*env = tmp->next;
-			free(((t_env *)tmp->content)->name);
-			free(((t_env *)tmp->content)->content);
-			free(tmp->content);
-			free(tmp);
-			return ;
+			if (!ft_strncmp(((t_env *)tmp->content)->name, argv[i],
+					ft_strlen(argv[i])))
+			{
+				if (prev)
+					prev->next = tmp->next;
+				else
+					*env = tmp->next;
+				free(((t_env *)tmp->content)->name);
+				free(((t_env *)tmp->content)->content);
+				free(tmp->content);
+				free(tmp);
+				break ;
+			}
+			prev = tmp;
+			tmp = tmp->next;
 		}
-		prev = tmp;
-		tmp = tmp->next;
+		i++;
 	}
+	return (SUCCESS);
 }

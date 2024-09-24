@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 16:40:03 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/23 13:09:06 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/24 15:19:25 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ typedef struct s_parse_cmd
 	char					**argv;
 	int						argc;
 	pid_t					pid;
+	int						fd_in;
+	int						fd_out;
 	t_redirection			*redirection;
 	struct s_parse_cmd		*next;
 }							t_parse_cmd;
@@ -52,5 +54,9 @@ void						remove_quote_redir(char **file_name);
 int							ft_strlen_nowhitespace(char *str);
 int							get_end(char *str, int j);
 char						*tilde_expander(char *str, char *username, int *j);
+
+int							is_a_builtin(t_list *env, t_parse_cmd *cmd);
+int							execution(t_list *env, t_backupdata *shell,
+								t_parse_cmd *cmd);
 
 #endif

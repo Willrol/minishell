@@ -1,0 +1,34 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   is_a_builtin.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/24 08:10:19 by aditer            #+#    #+#             */
+/*   Updated: 2024/09/24 15:54:10 by aditer           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "parse_cmd.h"
+#include "minishell.h"
+
+int	is_a_builtin(t_list *env, t_parse_cmd *cmd)
+{
+	if (!ft_strcmp(cmd->value, "echo"))
+		return (echo(cmd->argc, cmd->argv));
+	if (!ft_strcmp(cmd->value, "cd"))
+		return (cd(cmd->argc, cmd->argv, env));
+	if (!ft_strcmp(cmd->value, "pwd"))
+		return (pwd());
+	// if (!ft_strcmp(cmd->value, "export"))
+	// 	return (add_env(cmd->argc, cmd->argv));
+	if (!ft_strcmp(cmd->value, "unset"))
+		return (remove_env(&env, cmd->argv));
+	if (!ft_strcmp(cmd->value, "env"))
+		return (print_env(env));
+	// if (!ft_strcmp(cmd->value, "exit"))
+	// 	return (exit(cmd->argc, cmd->argv));
+	return (FAILURE);
+
+}
