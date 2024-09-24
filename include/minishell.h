@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:40:02 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/24 15:34:18 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/24 16:58:07 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,7 @@ int		cd(int argc, char **argv, t_list *env);
 int		pwd(void);
 int		echo(int argc, char **argv);
 int		print_env(t_list *env);
+int		ft_export(t_list **env, char **argv);
+
 
 #endif
