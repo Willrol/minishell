@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 13:11:08 by aditer            #+#    #+#             */
-/*   Updated: 2024/06/04 15:12:32 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/24 18:33:18 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	int	i;
-
-	i = 0;
 	if (!s || !fd)
 		return ;
 	write(fd, s, ft_strlen(s));

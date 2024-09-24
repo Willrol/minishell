@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:26:27 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/24 15:33:51 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/24 18:00:15 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,14 @@ int	remove_env(t_list **env, char **argv)
 	t_list	*prev;
 	int		i;
 
-	tmp = *env;
-	prev = NULL;
 	i = 1;
 	while (argv[i])
 	{
+		tmp = *env;
+		prev = NULL;
 		while (tmp)
 		{
-			if (!ft_strncmp(((t_env *)tmp->content)->name, argv[i],
-					ft_strlen(argv[i])))
+			if (!ft_strcmp(((t_env *)tmp->content)->name, argv[i]))
 			{
 				if (prev)
 					prev->next = tmp->next;
