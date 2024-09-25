@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:40:02 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/25 08:49:44 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/25 13:27:48 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <readline/readline.h>
 # include <stdbool.h>
 # include <utmp.h>
+#include <errno.h>
+
 
 # define FAILURE -1
 # define SUCCESS 0

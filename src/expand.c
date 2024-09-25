@@ -6,19 +6,24 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:13:10 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/25 08:41:24 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/25 10:32:15 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse_cmd.h"
 
-static char	*dollar_expander(char *str, int *j, t_list *env)
+static char	*dollar_expander(char *str, int *j, t_list *env, t_minishell backup)
 {
 	char	*tmp;
 	char	*expand;
 	char	*dollar;
 	t_list	*exp_env;
 
+	if (str[*j + 1] == '?' )
+	{
+		tmp = question_mark_expander(str, j, backup);
+		return (tmp);
+	}
 	expand = "";
 	dollar = ft_substr(str, *j, get_end(str, *j));
 	exp_env = search_env(env, dollar + 1);
@@ -54,7 +59,7 @@ void	search_dollar(char **argv, t_list *env, t_minishell backup)
 				double_quote = !double_quote;
 			if (argv[i][j] == '$' && !simple_quote && ft_iswhitespace(argv[i][j
 					+ 1]) == 0 && argv[i][j + 1] != 0 && argv[i][j + 1] != '~')
-				argv[i] = dollar_expander(argv[i], &j, env);
+				argv[i] = dollar_expander(argv[i], &j, env, backup);
 		}
 	}
 }

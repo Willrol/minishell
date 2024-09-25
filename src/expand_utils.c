@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 14:31:09 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/23 13:35:34 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/25 14:15:50 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,17 @@ char	*tilde_expander(char *str, char *username, int *j)
 	tmp = ft_str_replace(str, "~", expanded_tilde);
 	free(expanded_tilde);
 	*j += ft_strlen(username) - 1;
+	return (tmp);
+}
+
+char	*question_mark_expander(char *str, int *j, t_minishell backup)
+{
+	char *tmp;
+	char *expand;
+
+	expand = ft_itoa(backup.exit_status);
+	tmp = ft_str_replace(str, "$?", expand);
+	*j += ft_strlen(expand) - 1;
+	free (expand);
 	return (tmp);
 }

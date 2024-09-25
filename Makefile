@@ -30,7 +30,7 @@ SRC 	= 	main.c				\
 			minishell_utils.c	\
 			exec/exec.c			\
 			exec/exec_utils.c	\
-			exec/is_a_builtin.c
+			exec/process_builtin.c
 
 OBJ_DIR = obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))

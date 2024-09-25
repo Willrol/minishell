@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:39:34 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/25 08:49:37 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/25 18:05:09 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,15 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_list			*env;
 	t_list			*token;
-	t_minishell		backup;
+	t_minishell		minishell;
 	t_parse_cmd		*cmd;
 	char			*input;
 
 	(void)argc;
 	(void)argv;
-	backup.username = get_username();
-	backup.path = "/home/aditer/.local/funcheck/host:/home/aditer/bin:\
+	minishell.exit_status = 0;
+	minishell.username = get_username();
+	minishell.path = "/home/aditer/.local/funcheck/host:/home/aditer/bin:\
 	/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:\
 	/usr/local/games:/snap/bin";
 	env = init_env(envp);
@@ -48,7 +49,7 @@ int	main(int argc, char **argv, char **envp)
 		return (EXIT_FAILURE);
 	while (1)
 	{
-		input = ft_strtrim(read_input(env, backup), " ");
+		input = ft_strtrim(read_input(env, minishell), " ");
 		token = lexer(input);
 		if (!token)
 		{
@@ -56,14 +57,14 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		cmd = init_parser_cmd(token);
-		expand(cmd, env, backup);
-		// print_parser_cmd(cmd);
-		execution(env, &backup, cmd);
-		free(input);
 		free_token_list(token);
+		free(input);
+		expand(cmd, env, minishell);
+		// print_parser_cmd(cmd);
+		execution(env, &minishell, cmd);
 		free_parse_cmd(cmd);
 	}
-	free(backup.username);
+	free(minishell.username);
 	// print_env(env);
 	free_env(env);
 	return (0);

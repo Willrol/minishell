@@ -1,19 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_a_builtin.c                                     :+:      :+:    :+:   */
+/*   process_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 08:10:19 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/24 16:59:45 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/09/25 17:00:27 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse_cmd.h"
 #include "minishell.h"
+#include "parse_cmd.h"
 
-int	is_a_builtin(t_list *env, t_parse_cmd *cmd)
+int	is_a_builtin(t_parse_cmd *cmd)
+{
+	if (!ft_strcmp(cmd->value, "echo"))
+		return(SUCCESS);
+	if (!ft_strcmp(cmd->value, "cd"))
+		return(SUCCESS);
+	if (!ft_strcmp(cmd->value, "pwd"))
+		return(SUCCESS);
+	if (!ft_strcmp(cmd->value, "export"))
+		return(SUCCESS);
+	if (!ft_strcmp(cmd->value, "unset"))
+		return(SUCCESS);
+	if (!ft_strcmp(cmd->value, "env"))
+		return(SUCCESS);
+	// if (!ft_strcmp(cmd->value, "exit"))
+	// 	return (exit(cmd->argc, cmd->argv));
+	return (FAILURE);
+}
+
+int	exec_builtin(t_list *env, t_parse_cmd *cmd)
 {
 	if (!ft_strcmp(cmd->value, "echo"))
 		return (echo(cmd->argc, cmd->argv));
@@ -30,5 +49,4 @@ int	is_a_builtin(t_list *env, t_parse_cmd *cmd)
 	// if (!ft_strcmp(cmd->value, "exit"))
 	// 	return (exit(cmd->argc, cmd->argv));
 	return (FAILURE);
-
 }

@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:53:28 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/25 08:31:52 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/25 10:32:48 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	cd_home(t_list *env)
 		add_env(&env, "PWD", cwd);
 		free(cwd);
 	}
-	return(SUCCESS);
+	return (SUCCESS);
 }
 
 int	cd_tiret(t_list *env)
@@ -62,7 +62,7 @@ int	cd_tiret(t_list *env)
 		add_env(&env, "PWD", cwd);
 		free(cwd);
 	}
-	return(SUCCESS);
+	return (SUCCESS);
 }
 
 int	cd_arg(t_list *env, char *path)
@@ -84,14 +84,14 @@ int	cd_arg(t_list *env, char *path)
 		add_env(&env, "PWD", cwd);
 		free(cwd);
 	}
-	return(SUCCESS);
+	return (SUCCESS);
 }
 
 int	cd(int argc, char **argv, t_list *env)
 {
 	if (argc == 1)
-		return(cd_home(env));
+		return (cd_home(env));
 	else if (argc == 2 && !ft_strncmp(argv[1], "-", 1))
-		return(cd_tiret(env));
-	return(cd_arg(env, argv[1]));
+		return (cd_tiret(env));
+	return (cd_arg(env, argv[1]));
 }
