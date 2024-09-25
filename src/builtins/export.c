@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:26:24 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/24 17:47:00 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/09/25 09:37:53 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	add_env(t_list **env, char *name, char *content)
 		if (content[0] != '\0')
 			node_env->content = ft_strdup(content);
 		else
-			node_env->content = ft_strdup("\"\"");
+			node_env->content = ft_strdup("");
 		tmp = ft_lstnew(node_env);
 		if (!tmp)
 			return ;

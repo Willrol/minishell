@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:13:10 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/23 13:51:34 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/25 08:41:24 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	*dollar_expander(char *str, int *j, t_list *env)
 	return (tmp);
 }
 
-void	search_dollar(char **argv, t_list *env, t_backupdata backup)
+void	search_dollar(char **argv, t_list *env, t_minishell backup)
 {
 	int	i;
 	int	j;
@@ -59,7 +59,7 @@ void	search_dollar(char **argv, t_list *env, t_backupdata backup)
 	}
 }
 
-void	expand(t_parse_cmd *cmd, t_list *env, t_backupdata backup)
+void	expand(t_parse_cmd *cmd, t_list *env, t_minishell backup)
 {
 	while (cmd)
 	{

@@ -6,14 +6,14 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:39:34 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/24 15:40:26 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/25 08:49:37 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parse_cmd.h"
 
-char	*read_input(t_list *env, t_backupdata backup)
+char	*read_input(t_list *env, t_minishell backup)
 {
 	char	*line;
 
@@ -33,7 +33,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_list			*env;
 	t_list			*token;
-	t_backupdata	backup;
+	t_minishell		backup;
 	t_parse_cmd		*cmd;
 	char			*input;
 

@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 14:16:09 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/23 13:36:01 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/25 08:41:24 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	*dollar_expander_redir(char *str, int *i, t_list *env)
 	return (tmp);
 }
 
-void	search_dollar_redir(char **file_name, t_list *env, t_backupdata backup)
+void	search_dollar_redir(char **file_name, t_list *env, t_minishell backup)
 {
 	int	i;
 	int	simple_quote;
@@ -56,7 +56,7 @@ void	search_dollar_redir(char **file_name, t_list *env, t_backupdata backup)
 	}
 }
 
-void	expand_redir(t_parse_cmd *cmd, t_list *env, t_backupdata backup)
+void	expand_redir(t_parse_cmd *cmd, t_list *env, t_minishell backup)
 {
 	t_redirection	*current_redir;
 

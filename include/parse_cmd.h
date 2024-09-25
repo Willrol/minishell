@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 16:40:03 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/24 15:19:25 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/25 08:41:24 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void						add_last(t_redirection *redir,
 								t_parse_cmd *cmd_tmp);
 t_parse_cmd					*init_parser_cmd(t_list *token);
 void						expand(t_parse_cmd *cmd, t_list *env,
-								t_backupdata backup);
+								t_minishell backup);
 void						expand_redir(t_parse_cmd *cmd, t_list *env,
-								t_backupdata backup);
+								t_minishell backup);
 
 void						print_parser_cmd(t_parse_cmd *cmd);
 void						remove_quote(char **argv);
@@ -56,7 +56,7 @@ int							get_end(char *str, int j);
 char						*tilde_expander(char *str, char *username, int *j);
 
 int							is_a_builtin(t_list *env, t_parse_cmd *cmd);
-int							execution(t_list *env, t_backupdata *shell,
+int							execution(t_list *env, t_minishell *shell,
 								t_parse_cmd *cmd);
 
 #endif
