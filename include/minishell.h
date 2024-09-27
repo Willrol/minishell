@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:40:02 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/25 13:27:48 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/26 11:48:45 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,15 @@
 # include <readline/readline.h>
 # include <stdbool.h>
 # include <utmp.h>
-#include <errno.h>
+# include <errno.h>
+# include <sys/wait.h>
+# include <unistd.h>
 
 
 # define FAILURE -1
 # define SUCCESS 0
+# define WRITE 1
+# define READ 0
 
 typedef enum e_valuetype
 {
@@ -42,6 +46,10 @@ typedef struct s_minishell
 	char	*username;
 	char	*path;
 	int		exit_status;
+	int		pipe_fd[2];
+	int		prev_pipe_fd_out;
+	int		fd_in;
+	int		fd_out;
 }			t_minishell;
 
 typedef struct s_env

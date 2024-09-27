@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 16:40:03 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/25 17:00:40 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/26 11:43:24 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ typedef struct s_parse_cmd
 	char					**argv;
 	int						argc;
 	pid_t					pid;
-	int						fd_in;
-	int						fd_out;
 	t_redirection			*redirection;
 	struct s_parse_cmd		*next;
 }							t_parse_cmd;
