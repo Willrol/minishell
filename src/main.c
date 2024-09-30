@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:39:34 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/25 18:05:09 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/29 15:07:02 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		cmd = init_parser_cmd(token);
+		minishell.cmd = cmd;
 		free_token_list(token);
 		free(input);
 		expand(cmd, env, minishell);

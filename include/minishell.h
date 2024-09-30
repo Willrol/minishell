@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:40:02 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/26 11:48:45 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/29 15:08:00 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef enum e_valuetype
 	IN,
 }			t_valuetype;
 
+typedef struct s_parse_cmd t_parse_cmd;
+
 typedef struct s_minishell
 {
 	char	*username;
@@ -50,6 +52,7 @@ typedef struct s_minishell
 	int		prev_pipe_fd_out;
 	int		fd_in;
 	int		fd_out;
+	t_parse_cmd *cmd;
 }			t_minishell;
 
 typedef struct s_env

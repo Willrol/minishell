@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 11:08:22 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/27 11:14:16 by aditer           ###   ########.fr       */
+/*   Updated: 2024/09/30 12:01:36 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	child_process(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 	else
 		ret = exec_command(env, cmd);
 	free_env(env);
-	free_parse_cmd(cmd);
+	free_parse_cmd(shell->cmd);
 	free(shell->username);
 	exit(ret);
 }
@@ -104,7 +104,12 @@ void	parent_process(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 	if (cmd->next == NULL)
 	{
 		waitpid(cmd->pid, &status, 0);
-		shell->exit_status = WIFEXITED(status);
+	    if (WIFEXITED(status))
+        {
+            shell->exit_status = WEXITSTATUS(status);
+        }
+		else
+			shell->exit_status = 1;
 	}
 }
 
