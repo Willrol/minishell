@@ -10,27 +10,29 @@ CFLAGS = -Wall -Werror -Wextra -Wunused -g3 -I./include
 
 SRC_DIR = src
 
-SRC 	= 	main.c				\
-			env.c				\
-			env2.c				\
-			lexer.c				\
-			lexer_utils.c		\
-			builtins/cd.c		\
-			builtins/pwd.c		\
-			builtins/env.c		\
-			builtins/export.c	\
-			builtins/unset.c	\
-			builtins/echo.c		\
-			parse_cmd.c			\
-			parse_cmd_utils.c	\
-			expand.c			\
-			expand_redir.c		\
-			expand_utils.c		\
-			quote.c				\
-			minishell_utils.c	\
-			exec/exec.c			\
-			exec/exec_utils.c	\
-			exec/process_builtin.c
+SRC 	= 	main.c					\
+			env.c					\
+			env2.c					\
+			lexer.c					\
+			lexer_utils.c			\
+			builtins/cd.c			\
+			builtins/pwd.c			\
+			builtins/env.c			\
+			builtins/export.c		\
+			builtins/unset.c		\
+			builtins/echo.c			\
+			parse_cmd.c				\
+			parse_cmd_utils.c		\
+			expand.c				\
+			expand_redir.c			\
+			expand_utils.c			\
+			quote.c					\
+			minishell_utils.c		\
+			exec/exec.c				\
+			exec/exec_utils.c		\
+			exec/process_builtin.c	\
+			exec/redirection.c		\
+			exec/exec_cmd.c
 
 OBJ_DIR = obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
