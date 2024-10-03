@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:18:40 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/20 12:40:26 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/03 11:15:21 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	take_cmd(t_list *t_tmp, t_parse_cmd *cmd_tmp)
 
 	i = 0;
 	cmd_tmp->argc = cpt_word(t_tmp);
-	cmd_tmp->argv = calloc(cmd_tmp->argc + 1, sizeof(char *));
+	cmd_tmp->argv = ft_calloc(cmd_tmp->argc + 1, sizeof(char *));
 	if (!cmd_tmp->argv)
 		return ;
 	cmd_tmp->pid = -1;
@@ -103,7 +103,7 @@ void	take_redirection(t_list *t_tmp, t_parse_cmd *cmd_tmp)
 	{
 		if (sign_chk(((t_token *)t_tmp->content)->type) == 1)
 		{
-			redir = calloc(1, sizeof(t_redirection));
+			redir = ft_calloc(1, sizeof(t_redirection));
 			if (!redir)
 				return ;
 			redir->type = ((t_token *)t_tmp->content)->type;
@@ -130,7 +130,7 @@ t_parse_cmd	*init_parser_cmd(t_list *token)
 	t_list		*t_tmp;
 	t_parse_cmd	*cmd_tmp;
 
-	cmd = calloc(1, sizeof(t_parse_cmd));
+	cmd = ft_calloc(1, sizeof(t_parse_cmd));
 	if (!cmd)
 		return (NULL);
 	t_tmp = token;

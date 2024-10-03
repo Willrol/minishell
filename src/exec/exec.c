@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 11:08:22 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/02 14:51:21 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/03 12:51:39 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,11 @@ void	do_fork(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 
 int	execution(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 {
-	bool has_pipe;
-	t_parse_cmd *tmp;
-	
+	bool		has_pipe;
+	t_parse_cmd	*tmp;
+
 	tmp = cmd;
 	has_pipe = (tmp->next != NULL);
-
 	set_fd(shell);
 	while (tmp)
 	{

@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:06:36 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/16 14:26:26 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/03 11:15:21 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	wordintake(char *line, t_list **token, int *flag)
 	t_list	*new_node;
 
 	j = ft_mot(line);
-	node_token = calloc(1, sizeof(t_token));
+	node_token = ft_calloc(1, sizeof(t_token));
 	if (!node_token)
 		return (FAILURE);
 	node_token->value = ft_substr(line, 0, j);
@@ -70,7 +70,7 @@ t_valuetype	process_token(char *line, t_list **token, int *flag,
 {
 	t_token	*node_token;
 
-	node_token = calloc(1, sizeof(t_token));
+	node_token = ft_calloc(1, sizeof(t_token));
 	if (!node_token)
 	{
 		free_token_list(*token);

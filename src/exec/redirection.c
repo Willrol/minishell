@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:53 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/02 14:37:33 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/03 13:41:09 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,12 @@ int	redirection_append(t_minishell *shell, t_parse_cmd *cmd)
 
 int	handle_redirection(t_minishell *shell, t_parse_cmd *cmd)
 {
-	t_redirection *redir;
+	t_redirection	*redir;
 
 	redir = cmd->redirection;
 	while (redir)
 	{
-		if (redir->type == IN)
+		if (redir->type == IN || redir->type == HERE_DOC)
 		{
 			if (redirection_in(shell, cmd) == FAILURE)
 				return (FAILURE);

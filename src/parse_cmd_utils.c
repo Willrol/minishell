@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 11:18:35 by rderkaza          #+#    #+#             */
-/*   Updated: 2024/09/16 11:20:01 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/03 11:15:21 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	sign_chk(int type)
 
 int	to_next_cmd(t_list *t_tmp, t_parse_cmd *cmd_tmp)
 {
-	cmd_tmp->next = calloc(1, sizeof(t_parse_cmd));
+	cmd_tmp->next = ft_calloc(1, sizeof(t_parse_cmd));
 	if (!cmd_tmp->next)
 		return (1);
 	cmd_tmp->pid = -1;

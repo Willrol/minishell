@@ -6,10 +6,11 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:39:34 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/29 15:07:02 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/03 14:53:35 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "exec.h"
 #include "minishell.h"
 #include "parse_cmd.h"
 
@@ -31,11 +32,11 @@ char	*read_input(t_list *env, t_minishell backup)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_list			*env;
-	t_list			*token;
-	t_minishell		minishell;
-	t_parse_cmd		*cmd;
-	char			*input;
+	t_list		*env;
+	t_list		*token;
+	t_minishell	minishell;
+	t_parse_cmd	*cmd;
+	char		*input;
 
 	(void)argc;
 	(void)argv;
@@ -62,7 +63,9 @@ int	main(int argc, char **argv, char **envp)
 		free(input);
 		expand(cmd, env, minishell);
 		// print_parser_cmd(cmd);
+		search_here_doc(env, &minishell, cmd);
 		execution(env, &minishell, cmd);
+		unlink_here_doc(cmd);
 		free_parse_cmd(cmd);
 	}
 	free(minishell.username);
