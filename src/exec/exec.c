@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 11:08:22 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/03 12:51:39 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/04 12:53:32 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	child_process(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 		exit(1);
 	}
 	if (cmd->value != NULL)
-		ret = do_command(env, cmd);
+		ret = do_command(env, shell, cmd);
 	free_child(env, shell);
 	exit(ret);
 }

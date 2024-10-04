@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 11:15:32 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/02 14:28:02 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/04 12:49:05 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,5 @@ void	set_fd(t_minishell *shell)
 	shell->prev_pipe_fd_out = -1;
 	shell->fd_in = -1;
 	shell->fd_out = -1;
+	shell->fd_save = -1;
 }

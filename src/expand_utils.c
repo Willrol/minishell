@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 14:31:09 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/25 14:15:50 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/04 13:03:34 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ char	*tilde_expander(char *str, char *username, int *j)
 	return (tmp);
 }
 
-char	*question_mark_expander(char *str, int *j, t_minishell backup)
+char	*question_mark_expander(char *str, int *j, t_minishell shell)
 {
 	char *tmp;
 	char *expand;
 
-	expand = ft_itoa(backup.exit_status);
+	expand = ft_itoa(shell.exit_status);
 	tmp = ft_str_replace(str, "$?", expand);
 	*j += ft_strlen(expand) - 1;
 	free (expand);

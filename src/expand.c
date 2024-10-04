@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:13:10 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/25 10:32:15 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/04 13:36:15 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*dollar_expander(char *str, int *j, t_list *env, t_minishell backup)
 	char	*dollar;
 	t_list	*exp_env;
 
-	if (str[*j + 1] == '?' )
+	if (str[*j + 1] == '?')
 	{
 		tmp = question_mark_expander(str, j, backup);
 		return (tmp);
@@ -59,7 +59,9 @@ void	search_dollar(char **argv, t_list *env, t_minishell backup)
 				double_quote = !double_quote;
 			if (argv[i][j] == '$' && !simple_quote && ft_iswhitespace(argv[i][j
 					+ 1]) == 0 && argv[i][j + 1] != 0 && argv[i][j + 1] != '~')
+			{
 				argv[i] = dollar_expander(argv[i], &j, env, backup);
+			}
 		}
 	}
 }
@@ -75,8 +77,9 @@ void	expand(t_parse_cmd *cmd, t_list *env, t_minishell backup)
 			continue ;
 		}
 		search_dollar(cmd->argv, env, backup);
-		free(cmd->value);
+		split_expand(&cmd->argc, &cmd->argv);
 		remove_quote(cmd->argv);
+		free(cmd->value);
 		cmd->value = ft_strdup(cmd->argv[0]);
 		expand_redir(cmd, env, backup);
 		cmd = cmd->next;

@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 16:40:03 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/03 13:07:44 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/04 13:35:17 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,6 @@ int							get_end(char *str, int j);
 char						*tilde_expander(char *str, char *username, int *j);
 char						*question_mark_expander(char *str, int *j,
 								t_minishell backup);
+void						split_expand(int *argc, char ***argv);
 
 #endif

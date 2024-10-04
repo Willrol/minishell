@@ -21,11 +21,13 @@ SRC 	= 	main.c					\
 			builtins/export.c		\
 			builtins/unset.c		\
 			builtins/echo.c			\
+			builtins/exit.c			\
 			parse_cmd.c				\
 			parse_cmd_utils.c		\
 			expand.c				\
 			expand_redir.c			\
 			expand_utils.c			\
+			split_expand.c			\
 			quote.c					\
 			minishell_utils.c		\
 			exec/exec.c				\
