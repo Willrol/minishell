@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 11:15:32 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/04 12:49:05 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/07 15:14:20 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	free_child(t_list *env, t_minishell *shell)
 	free_env(env);
 	free_parse_cmd(shell->cmd);
 	free(shell->username);
+	free(shell->path);
 }
 
 void	error_exec(char *str)

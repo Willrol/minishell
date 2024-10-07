@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:53:28 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/25 10:32:48 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/07 13:55:42 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,22 @@ int	cd_tiret(t_list *env)
 	char	*cwd;
 
 	pwd = search_env(env, "OLDPWD");
+	if(!pwd)
+	{
+		ft_putstr_fd("cd: OLDPWD not set\n", 2);
+		return (1);
+	}
 	if (chdir(((t_env *)pwd->content)->content) == -1)
 	{
 		ft_putstr_fd("cd: No such file or directory\n", 2);
-		return (FAILURE);
+		return (1);
 	}
 	oldpwd = search_env(env, "PWD");
+	if(!oldpwd)
+	{
+		remove_env(&env, "OLDPWD");
+		return (SUCCESS);
+	}
 	if (oldpwd)
 		add_env(&env, "OLDPWD", ((t_env *)oldpwd->content)->content);
 	cwd = getcwd(NULL, 0);
@@ -73,7 +83,7 @@ int	cd_arg(t_list *env, char *path)
 	if (chdir(path) == -1)
 	{
 		ft_putstr_fd("cd: No such file or directory\n", 2);
-		return (FAILURE);
+		return (1);
 	}
 	oldpwd = search_env(env, "PWD");
 	if (oldpwd)

@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 08:10:19 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/04 12:37:37 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/07 13:36:06 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	exec_builtin(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 	if (!ft_strcmp(cmd->value, "export"))
 		return (ft_export(&env, cmd->argv));
 	if (!ft_strcmp(cmd->value, "unset"))
-		return (remove_env(&env, cmd->argv));
+		return (unset(&env, cmd->argv));
 	if (!ft_strcmp(cmd->value, "env"))
 		return (print_env(env));
 	if (!ft_strcmp(cmd->value, "exit"))

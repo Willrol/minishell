@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:26:24 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/25 09:50:17 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/07 14:01:53 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,6 @@ int	ft_export(t_list **env, char **argv)
 		add_env(env, tmp1, tmp2);
 		free_tmps(tmp1, tmp2);
 		i++;
-	}
-	if (i == 1)
-	{
-		print_env(*env);
 	}
 	return (SUCCESS);
 }

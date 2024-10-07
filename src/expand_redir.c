@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 14:16:09 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/25 13:48:15 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/07 13:57:45 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	expand_redir(t_parse_cmd *cmd, t_list *env, t_minishell backup)
 	current_redir = cmd->redirection;
 	while (current_redir)
 	{
-		if (current_redir->file_name)
+		if (current_redir->file_name && current_redir->type != HERE_DOC)
 		{
 			search_dollar_redir(&(current_redir->file_name), env, backup);
 			remove_quote_redir(&(current_redir->file_name));

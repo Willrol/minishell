@@ -6,13 +6,13 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:26:27 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/24 18:00:15 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/07 13:36:06 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	remove_env(t_list **env, char **argv)
+int	unset(t_list **env, char **argv)
 {
 	t_list	*tmp;
 	t_list	*prev;
