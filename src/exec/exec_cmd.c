@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:44 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/07 16:06:17 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/07 17:27:17 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*exec(t_list *env, t_parse_cmd *cmd)
 	int		i;
 
 	path_node = search_env(env, "PATH");
+	if (!path_node)
+		return (ft_strdup(cmd->value));
 	path = ft_strdup(((t_env *)path_node->content)->content);
 	i = 0;
 	if (path)
