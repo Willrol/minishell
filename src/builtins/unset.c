@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:26:27 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/07 13:36:06 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/07 16:27:12 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_temp(t_list *tmp)
+{
+	free(((t_env *)tmp->content)->name);
+	free(((t_env *)tmp->content)->content);
+	free(tmp->content);
+	free(tmp);
+}
 
 int	unset(t_list **env, char **argv)
 {
@@ -18,8 +26,8 @@ int	unset(t_list **env, char **argv)
 	t_list	*prev;
 	int		i;
 
-	i = 1;
-	while (argv[i])
+	i = 0;
+	while (argv[++i])
 	{
 		tmp = *env;
 		prev = NULL;
@@ -31,16 +39,12 @@ int	unset(t_list **env, char **argv)
 					prev->next = tmp->next;
 				else
 					*env = tmp->next;
-				free(((t_env *)tmp->content)->name);
-				free(((t_env *)tmp->content)->content);
-				free(tmp->content);
-				free(tmp);
+				free_temp(tmp);
 				break ;
 			}
 			prev = tmp;
 			tmp = tmp->next;
 		}
-		i++;
 	}
 	return (SUCCESS);
 }

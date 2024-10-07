@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:26:24 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/07 14:01:53 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/07 16:06:43 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ int	ft_export(t_list **env, char **argv)
 
 void	add_env(t_list **env, char *name, char *content)
 {
-	t_list *tmp;
-	t_env *node_env;
+	t_list	*tmp;
+	t_env	*node_env;
 
 	tmp = search_env(*env, name);
 	if (tmp)

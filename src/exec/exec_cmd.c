@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:44 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/04 10:16:56 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/07 16:06:17 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	exec_command(t_list *env, t_parse_cmd *cmd)
 int	do_command(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 {
 	int	ret;
-	
+
 	if (is_a_builtin(cmd) == SUCCESS)
 		ret = exec_builtin(env, shell, cmd);
 	else

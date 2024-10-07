@@ -3,20 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:34:54 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/03 14:36:55 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/07 16:31:16 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
+void	active_doc(t_redirection *redirection, int fd)
+{
+	char	*line;
+
+	while (1)
+	{
+		line = readline("> ");
+		if (!line || !ft_strcmp(line, redirection->file_name))
+		{
+			free(line);
+			break ;
+		}
+		write(fd, line, ft_strlen(line));
+		write(fd, "\n", 1);
+		free(line);
+	}
+}
+
 void	here_doc(t_list *env, t_minishell *shell, t_redirection *redirection,
 		int i)
 {
 	int		fd;
-	char	*line;
 	char	*nb;
 	char	*file_name;
 
@@ -30,30 +47,35 @@ void	here_doc(t_list *env, t_minishell *shell, t_redirection *redirection,
 		error_exec("here_doc");
 		return ;
 	}
-	while (1)
-	{
-		line = readline("> ");
-		if (!line || !ft_strcmp(line, redirection->file_name))
-		{
-			free(line);
-			break ;
-		}
-		write(fd, line, ft_strlen(line));
-		write(fd, "\n", 1);
-		free(line);
-	}
+	active_doc(redirection, fd);
 	close(fd);
 	free_child(env, shell);
 	exit(0);
+}
+
+void	call_doc(t_list *env, t_minishell *shell, t_redirection *redir, int i)
+{
+	pid_t	pid;
+	char	*nb;
+
+	pid = fork();
+	if (pid == -1)
+		error_exec("fork");
+	if (pid == 0)
+		here_doc(env, shell, redir, i);
+	else
+		waitpid(pid, NULL, 0);
+	nb = ft_itoa(i);
+	free(redir->file_name);
+	redir->file_name = ft_strjoin(".tmp", nb);
+	free(nb);
 }
 
 void	search_here_doc(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 {
 	t_parse_cmd		*tmp;
 	t_redirection	*redir;
-	pid_t			pid;
 	int				i;
-	char			*nb;
 
 	tmp = cmd;
 	i = 0;
@@ -64,17 +86,7 @@ void	search_here_doc(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 		{
 			if (redir->type == HERE_DOC)
 			{
-				pid = fork();
-				if (pid == -1)
-					error_exec("fork");
-				if (pid == 0)
-					here_doc(env, shell, redir, i);
-				else
-					waitpid(pid, NULL, 0);
-				nb = ft_itoa(i);
-				free(redir->file_name);
-				redir->file_name = ft_strjoin(".tmp", nb);
-				free(nb);
+				call_doc(env, shell, redir, i);
 			}
 			i++;
 			redir = redir->next;
@@ -85,8 +97,8 @@ void	search_here_doc(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 
 void	unlink_here_doc(t_parse_cmd *cmd)
 {
-	t_parse_cmd *tmp;
-	t_redirection *redir;
+	t_parse_cmd		*tmp;
+	t_redirection	*redir;
 
 	tmp = cmd;
 	while (tmp)

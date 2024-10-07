@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:13:10 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/04 13:36:15 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/07 16:10:20 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,7 @@ void	search_dollar(char **argv, t_list *env, t_minishell backup)
 				double_quote = !double_quote;
 			if (argv[i][j] == '$' && !simple_quote && ft_iswhitespace(argv[i][j
 					+ 1]) == 0 && argv[i][j + 1] != 0 && argv[i][j + 1] != '~')
-			{
 				argv[i] = dollar_expander(argv[i], &j, env, backup);
-			}
 		}
 	}
 }

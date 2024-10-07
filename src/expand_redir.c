@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   expand_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 14:16:09 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/07 13:57:45 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/07 16:09:56 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse_cmd.h"
 
-static char	*dollar_expander_redir(char *str, int *i, t_list *env, t_minishell backup)
+static char	*dollar_expander_redir(char *str, int *i, t_list *env,
+		t_minishell backup)
 {
 	char	*tmp;
 	char	*expand;

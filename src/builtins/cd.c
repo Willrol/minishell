@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:53:28 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/07 13:55:42 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/07 16:15:16 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,15 @@ int	cd_home(t_list *env)
 	return (SUCCESS);
 }
 
+int	print_error(int flag)
+{
+	if (flag == 1)
+		ft_putstr_fd("cd: OLDPWD not set\n", 2);
+	else
+		ft_putstr_fd("cd: No such file or directory\n", 2);
+	return (1);
+}
+
 int	cd_tiret(t_list *env)
 {
 	t_list	*oldpwd;
@@ -48,18 +57,12 @@ int	cd_tiret(t_list *env)
 	char	*cwd;
 
 	pwd = search_env(env, "OLDPWD");
-	if(!pwd)
-	{
-		ft_putstr_fd("cd: OLDPWD not set\n", 2);
-		return (1);
-	}
+	if (!pwd)
+		return (print_error(1));
 	if (chdir(((t_env *)pwd->content)->content) == -1)
-	{
-		ft_putstr_fd("cd: No such file or directory\n", 2);
-		return (1);
-	}
+		return (print_error(2));
 	oldpwd = search_env(env, "PWD");
-	if(!oldpwd)
+	if (!oldpwd)
 	{
 		remove_env(&env, "OLDPWD");
 		return (SUCCESS);

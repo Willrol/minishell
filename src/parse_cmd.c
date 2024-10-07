@@ -3,47 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:18:40 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/03 11:15:21 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/07 16:08:19 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse_cmd.h"
 
-void	print_parser_cmd(t_parse_cmd *cmd)
-{
-	t_parse_cmd		*tmp;
-	t_redirection	*redir;
+// void	print_parser_cmd(t_parse_cmd *cmd)
+// {
+// 	t_parse_cmd		*tmp;
+// 	t_redirection	*redir;
 
-	tmp = cmd;
-	while (tmp)
-	{
-		printf("value: %s\n", tmp->value);
-		printf("argc: %d\n", tmp->argc);
-		printf("argv: ");
-		for (int i = 0; i < tmp->argc; i++)
-			printf("%s ", tmp->argv[i]);
-		printf("\n");
-		redir = tmp->redirection;
-		while (redir)
-		{
-			printf("file_name: %s\n", redir->file_name);
-			if (redir->type == APPEND)
-				printf("type: APPEND\n");
-			else if (redir->type == OUT)
-				printf("type: OUT\n");
-			else if (redir->type == HERE_DOC)
-				printf("type: HERE_DOC\n");
-			else if (redir->type == IN)
-				printf("type: IN\n");
-			redir = redir->next;
-		}
-		printf("______________________________________________\n");
-		tmp = tmp->next;
-	}
-}
+// 	tmp = cmd;
+// 	while (tmp)
+// 	{
+// 		printf("value: %s\n", tmp->value);
+// 		printf("argc: %d\n", tmp->argc);
+// 		printf("argv: ");
+// 		for (int i = 0; i < tmp->argc; i++)
+// 			printf("%s ", tmp->argv[i]);
+// 		printf("\n");
+// 		redir = tmp->redirection;
+// 		while (redir)
+// 		{
+// 			printf("file_name: %s\n", redir->file_name);
+// 			if (redir->type == APPEND)
+// 				printf("type: APPEND\n");
+// 			else if (redir->type == OUT)
+// 				printf("type: OUT\n");
+// 			else if (redir->type == HERE_DOC)
+// 				printf("type: HERE_DOC\n");
+// 			else if (redir->type == IN)
+// 				printf("type: IN\n");
+// 			redir = redir->next;
+// 		}
+// 		printf("______________________________________________\n");
+// 		tmp = tmp->next;
+// 	}
+// }
 
 int	cpt_word(t_list *token)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 14:31:09 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/04 13:03:34 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/07 16:07:39 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ char	*tilde_expander(char *str, char *username, int *j)
 
 char	*question_mark_expander(char *str, int *j, t_minishell shell)
 {
-	char *tmp;
-	char *expand;
+	char	*tmp;
+	char	*expand;
 
 	expand = ft_itoa(shell.exit_status);
 	tmp = ft_str_replace(str, "$?", expand);
