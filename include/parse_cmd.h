@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 16:40:03 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/04 13:35:17 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/08 09:20:20 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void						remove_quote(char **argv);
 void						remove_quote_redir(char **file_name);
 int							ft_strlen_nowhitespace(char *str);
 int							get_end(char *str, int j);
-char						*tilde_expander(char *str, char *username, int *j);
+char						*tilde_expander(char *str, t_list *env, char *username, int *j);
 char						*question_mark_expander(char *str, int *j,
 								t_minishell backup);
 void						split_expand(int *argc, char ***argv);

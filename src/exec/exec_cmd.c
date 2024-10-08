@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:44 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/07 17:27:17 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/08 08:51:53 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ char	*exec(t_list *env, t_parse_cmd *cmd)
 		}
 		ft_free_tab(split_path);
 	}
-	return (path);
+	free(path);
+	return (ft_strdup(cmd->value));
 }
 
 int	exec_command(t_list *env, t_parse_cmd *cmd)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:13:10 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/07 16:10:20 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/08 09:15:51 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	search_dollar(char **argv, t_list *env, t_minishell backup)
 		while (argv[i][++j] != 0)
 		{
 			if (argv[i][j] == '~' && ft_strlen_nowhitespace(argv[i]) == 1)
-				argv[i] = tilde_expander(argv[i], backup.username, &j);
+				argv[i] = tilde_expander(argv[i], env, backup.username, &j);
 			if (argv[i][j] == '\'' && !double_quote)
 				simple_quote = !simple_quote;
 			if (argv[i][j] == '"' && !simple_quote)

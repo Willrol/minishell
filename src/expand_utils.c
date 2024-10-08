@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 14:31:09 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/07 16:07:39 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/08 09:26:51 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,17 @@ int	get_end(char *str, int j)
 	return (i);
 }
 
-char	*tilde_expander(char *str, char *username, int *j)
+char	*tilde_expander(char *str, t_list *env, char *username, int *j)
 {
 	char	*tmp;
 	char	*expanded_tilde;
+	t_list	*node;
 
-	expanded_tilde = ft_strjoin("/home/", username);
+	node = search_env(env, "HOME");
+	if (node)
+		expanded_tilde = ft_strdup(((t_env *)node->content)->content);
+	if (!node)
+		expanded_tilde = ft_strjoin("/home/", username);
 	tmp = ft_str_replace(str, "~", expanded_tilde);
 	free(expanded_tilde);
 	*j += ft_strlen(username) - 1;
