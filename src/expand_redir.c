@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 14:16:09 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/07 16:09:56 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/08 09:35:32 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	search_dollar_redir(char **file_name, t_list *env, t_minishell backup)
 	while ((*file_name)[i] != 0)
 	{
 		if ((*file_name)[i] == '~' && ft_strlen_nowhitespace(*file_name) == 1)
-			*file_name = tilde_expander(*file_name, backup.username, &i);
+			*file_name = tilde_expander(*file_name, env, backup.username, &i);
 		if ((*file_name)[i] == '\'' && !double_quote)
 			simple_quote = !simple_quote;
 		if ((*file_name)[i] == '"' && !simple_quote)
