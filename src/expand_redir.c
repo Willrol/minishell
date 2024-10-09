@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 14:16:09 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/08 12:52:55 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/09 14:40:27 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	search_dollar_redir(char **file_name, t_list *env, t_minishell *shell)
 		if ((*file_name)[i] == '~' && ft_strlen_nowhitespace(*file_name) == 1)
 			*file_name = tilde_expander(*file_name, env, shell->username, &i);
 		if (*file_name == NULL)
-			free_shell(shell, env);
+			error_malloc(shell, env);
 		if ((*file_name)[i] == '\'' && !double_quote)
 			simple_quote = !simple_quote;
 		if ((*file_name)[i] == '"' && !simple_quote)
@@ -66,7 +66,7 @@ void	search_dollar_redir(char **file_name, t_list *env, t_minishell *shell)
 			+ 1] != 0 && (*file_name)[i + 1] != '~')
 			*file_name = dollar_expander_redir(*file_name, &i, env, shell);
 		if (!(*file_name))
-			free_shell(shell, env);
+			error_malloc(shell, env);
 		i++;
 	}
 }
@@ -82,7 +82,7 @@ void	expand_redir(t_parse_cmd *cmd, t_list *env, t_minishell *shell)
 		{
 			search_dollar_redir(&(current_redir->file_name), env, shell);
 			if (remove_quote_redir(&(current_redir->file_name)) == FAILURE)
-				free_shell(shell, env);
+				error_malloc(shell, env);
 		}
 		current_redir = current_redir->next;
 	}

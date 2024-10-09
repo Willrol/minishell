@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:40:02 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/08 17:39:54 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/09 15:56:56 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,14 @@
 # include <sys/wait.h>
 # include <unistd.h>
 # include <utmp.h>
+# include <signal.h>
 
 # define FAILURE -1
 # define SUCCESS 0
 # define WRITE 1
 # define READ 0
+
+extern int	sigflag;
 
 typedef enum e_valuetype
 {
@@ -94,4 +97,7 @@ int							ft_export(t_list **env, char **argv);
 int							exit_builtin(t_list *env, t_minishell *shell,
 								t_parse_cmd *cmd);
 void						free_shell(t_minishell *shell, t_list *env);
+void						error_print(char *str, char *cmd_name);
+void						error_malloc(t_minishell *shell, t_list *env);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:34:54 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/08 14:33:04 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/09 16:43:52 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,16 @@ void	active_doc(t_redirection *redirection, int fd)
 {
 	char	*line;
 
+	
 	while (1)
 	{
+		
+		if (sigflag == 1)
+		{
+			break ;
+		}
 		line = readline("> ");
-		if (!line || !ft_strcmp(line, redirection->file_name))
+		if (!line || !ft_strcmp(line, redirection->file_name) || sigflag == 1)
 		{
 			free(line);
 			break ;
@@ -39,11 +45,11 @@ void	here_doc(t_list *env, t_minishell *shell, t_redirection *redirection,
 
 	nb = ft_itoa(i);
 	if (!nb)
-		free_shell(shell, env);
+		error_malloc(shell, env);
 	file_name = ft_strjoin(".tmp", nb);
 	free(nb);
 	if (!file_name)
-		free_shell(shell, env);
+		error_malloc(shell, env);
 	fd = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	free(file_name);
 	if (fd == -1)
@@ -62,6 +68,7 @@ void	call_doc(t_list *env, t_minishell *shell, t_redirection *redir, int i)
 	pid_t	pid;
 	char	*nb;
 
+	sigflag = 0;
 	pid = fork();
 	if (pid == -1)
 		error_exec("fork");
@@ -71,12 +78,12 @@ void	call_doc(t_list *env, t_minishell *shell, t_redirection *redir, int i)
 		waitpid(pid, NULL, 0);
 	nb = ft_itoa(i);
 	if (!nb)
-		free_shell(shell, env);
+		error_malloc(shell, env);
 	free(redir->file_name);
 	redir->file_name = ft_strjoin(".tmp", nb);
 	free(nb);
 	if (!redir->file_name)
-		free_shell(shell, env);
+		error_malloc(shell, env);
 }
 
 void	search_here_doc(t_list *env, t_minishell *shell, t_parse_cmd *cmd)

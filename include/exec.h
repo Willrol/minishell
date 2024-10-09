@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 09:52:45 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/04 10:18:31 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/09 13:54:31 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	free_child(t_list *env, t_minishell *shell);
 void	error_exec(char *str);
 void	set_fd(t_minishell *shell);
 int		handle_redirection(t_minishell *shell, t_parse_cmd *cmd);
-int		exec_command(t_list *env, t_parse_cmd *cmd);
+int		exec_command(t_list *env, t_minishell *shell, t_parse_cmd *cmd);
 void	exec_solo_builtin(t_list *env, t_minishell *shell, t_parse_cmd *tmp);
 int		do_command(t_list *env, t_minishell *shell, t_parse_cmd *cmd);
 void	search_here_doc(t_list *env, t_minishell *shell, t_parse_cmd *cmd);

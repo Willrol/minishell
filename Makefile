@@ -36,7 +36,8 @@ SRC 	= 	main.c					\
 			exec/redirection.c		\
 			exec/exec_cmd.c			\
 			exec/here_doc.c			\
-			free.c
+			free.c					\
+			error.c
 
 OBJ_DIR = obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))

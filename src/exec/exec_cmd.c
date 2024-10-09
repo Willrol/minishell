@@ -6,13 +6,13 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:44 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/08 08:51:53 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/09 14:09:54 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-char	*exec(t_list *env, t_parse_cmd *cmd)
+char	*exec(t_list *env,t_minishell *shell, t_parse_cmd *cmd)
 {
 	t_list	*path_node;
 	char	*path;
@@ -21,19 +21,19 @@ char	*exec(t_list *env, t_parse_cmd *cmd)
 
 	path_node = search_env(env, "PATH");
 	if (!path_node)
-		return (ft_strdup(cmd->value));
-	path = ft_strdup(((t_env *)path_node->content)->content);
-	i = 0;
+		path = shell->path;
+	else
+		path = ft_strdup(((t_env *)path_node->content)->content);
+	i = -1;
 	if (path)
 	{
 		split_path = ft_split(path, ':');
-		while (split_path[i])
+		while (split_path[++i])
 		{
 			free(path);
 			path = ft_strjoin3(split_path[i], "/", cmd->value);
 			if (access(path, F_OK | X_OK) == 0)
 				return (ft_free_tab(split_path), path);
-			i++;
 		}
 		ft_free_tab(split_path);
 	}
@@ -41,12 +41,12 @@ char	*exec(t_list *env, t_parse_cmd *cmd)
 	return (ft_strdup(cmd->value));
 }
 
-int	exec_command(t_list *env, t_parse_cmd *cmd)
+int	exec_command(t_list *env,t_minishell *shell, t_parse_cmd *cmd)
 {
 	char	*path;
 	char	**env_tab;
 
-	path = exec(env, cmd);
+	path = exec(env, shell, cmd);
 	env_tab = get_env_tab(env);
 	if (execve(path, cmd->argv, env_tab) == FAILURE)
 	{
@@ -65,6 +65,6 @@ int	do_command(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 	if (is_a_builtin(cmd) == SUCCESS)
 		ret = exec_builtin(env, shell, cmd);
 	else
-		ret = exec_command(env, cmd);
+		ret = exec_command(env, shell, cmd);
 	return (ret);
 }

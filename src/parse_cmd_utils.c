@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 11:18:35 by rderkaza          #+#    #+#             */
-/*   Updated: 2024/10/08 17:50:35 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/09 11:20:11 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ int	to_next_cmd(t_list *t_tmp, t_parse_cmd *cmd_tmp)
 		return (FAILURE);
 	cmd_tmp->pid = -1;
 	t_tmp = t_tmp->next;
-	take_cmd(t_tmp, cmd_tmp->next);
+	if (take_cmd(t_tmp, cmd_tmp->next) == FAILURE)
+		return (FAILURE);
 	return (SUCCESS);
 }
 

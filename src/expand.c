@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:13:10 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/08 14:29:34 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/09 14:40:37 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	search_dollar(char **argv, t_list *env, t_minishell *shell)
 			if (argv[i][j] == '~' && ft_strlen_nowhitespace(argv[i]) == 1)
 				argv[i] = tilde_expander(argv[i], env, shell->username, &j);
 			if (argv[i] == NULL)
-				free_shell(shell, env);
+				error_malloc(shell, env);
 			if (argv[i][j] == '\'' && !double_quote)
 				simple_quote = !simple_quote;
 			if (argv[i][j] == '"' && !simple_quote)
@@ -69,7 +69,7 @@ void	search_dollar(char **argv, t_list *env, t_minishell *shell)
 					+ 1]) == 0 && argv[i][j + 1] != 0 && argv[i][j + 1] != '~')
 				argv[i] = dollar_expander(argv[i], &j, env, shell);
 			if (!argv[i])
-				free_shell(shell, env);
+				error_malloc(shell, env);
 		}
 	}
 }
@@ -86,9 +86,9 @@ void	expand(t_parse_cmd *cmd, t_list *env, t_minishell *shell)
 		}
 		search_dollar(cmd->argv, env, shell);
 		if (split_expand(&cmd->argc, &cmd->argv) == FAILURE)
-			free_shell(shell, env);
+			error_malloc(shell, env);
 		if (remove_quote(cmd->argv) == FAILURE)
-			free_shell(shell, env);
+			error_malloc(shell, env);
 		free(cmd->value);
 		cmd->value = ft_strdup(cmd->argv[0]);
 		expand_redir(cmd, env, shell);

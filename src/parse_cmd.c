@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:18:40 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/09 09:50:52 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/09 12:59:37 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,6 @@ int	take_cmd(t_list *t_tmp, t_parse_cmd *cmd_tmp)
 		return (FAILURE);
 	if (cmd_tmp->argc > 0)
 		cmd_tmp->value = ft_strdup(cmd_tmp->argv[0]);
-	if (!cmd_tmp->value)
-		return (FAILURE);
 	return (SUCCESS);
 }
 

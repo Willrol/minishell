@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:06:36 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/08 14:50:30 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/09 13:11:06 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ t_list	*lexer(char *line)
 	int			flag;
 	t_list		*token;
 	t_valuetype	tmptype;
-	char	*tmp;
+	char		*tmp;
 
 	flag = 0;
 	token = NULL;

@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:43:12 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/08 17:50:44 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/09 14:35:28 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	free_shell(t_minishell *shell, t_list *env)
 		close(shell->fd_save);
 	if (shell->path)
 		free(shell->path);
-	exit(1);
 }
 
 void	free_env(t_list *env)

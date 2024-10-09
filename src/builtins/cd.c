@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:53:28 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/07 16:15:16 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/09 14:27:07 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "exec.h"
 
 int	cd_home(t_list *env)
 {
@@ -22,12 +23,12 @@ int	cd_home(t_list *env)
 	if (!node_env)
 	{
 		ft_putstr_fd("cd: HOME not set\n", 2);
-		return (FAILURE);
+		return (1);
 	}
 	if (chdir(((t_env *)node_env->content)->content) == -1)
 	{
-		ft_putstr_fd("cd: HOME not set\n", 2);
-		return (FAILURE);
+		ft_putstr_fd("cd: No such file or directory\n", 2);
+		return (1);
 	}
 	oldpwd = search_env(env, "PWD");
 	if (oldpwd)
@@ -85,7 +86,7 @@ int	cd_arg(t_list *env, char *path)
 
 	if (chdir(path) == -1)
 	{
-		ft_putstr_fd("cd: No such file or directory\n", 2);
+		error_print(path, "cd");
 		return (1);
 	}
 	oldpwd = search_env(env, "PWD");
@@ -106,5 +107,11 @@ int	cd(int argc, char **argv, t_list *env)
 		return (cd_home(env));
 	else if (argc == 2 && !ft_strncmp(argv[1], "-", 1))
 		return (cd_tiret(env));
-	return (cd_arg(env, argv[1]));
+	else if (argc == 2)
+		return (cd_arg(env, argv[1]));
+	else
+	{
+		ft_putstr_fd("cd: too many arguments\n", 2);
+		return (1);
+	}
 }

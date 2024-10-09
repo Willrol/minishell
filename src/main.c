@@ -6,13 +6,15 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:39:34 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/09 10:41:52 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/09 17:16:42 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "minishell.h"
 #include "parse_cmd.h"
+
+int sigflag = 0;
 
 char	*read_input(t_list *env, t_minishell shell)
 {
@@ -55,6 +57,24 @@ char	*get_path(void)
 	return (path);
 }
 
+void	quith(int sig)
+{
+	if (sig == SIGINT)
+	{
+    sigflag = 1;
+    rl_done = 1;
+    rl_replace_line("", 0);
+    rl_on_new_line();
+    rl_redisplay();
+	}
+	else if (sig == SIGQUIT)
+	{
+		sigflag = 0;
+		
+	}
+}
+
+
 int	main(const int argc, const char **argv, char **envp)
 {
 	t_list		*env;
@@ -74,42 +94,37 @@ int	main(const int argc, const char **argv, char **envp)
 	shell.username = get_username();
 	shell.path = get_path();
 	if (!shell.username || !shell.path)
-		free_shell(&shell, NULL);
+		error_malloc(&shell, NULL);
 	if (!envp)
 	{
 		pwd = getcwd(NULL, 0);
 		if (add_env(&env, "PWD", pwd) == FAILURE)
-			free_shell(&shell, env);
+			error_malloc(&shell, env);
 		free(pwd);
 		if (add_env(&env, "SHLVL", "0") == FAILURE)
-			free_shell(&shell, env);
+			error_malloc(&shell, env);
 		if (add_env(&env, "_", "/usr/bin/env") == FAILURE)
-			free_shell(&shell, env);
+			error_malloc(&shell, env);
 	}
 	else
 		env = init_env(&shell, envp);
-
 	while (true)
 	{
+		signal(SIGINT, quith);
+		signal(SIGQUIT, quith);
 		shell.cmd = NULL;
 		input = read_input(env, shell);
 		new_input = ft_strtrim(input, " ");
 		free(input);
 		if (!new_input)
-			free_shell(&shell, env);
+			error_malloc(&shell, env);
 		token = lexer(new_input);
-		if (!token)
-		{
-			if (new_input)
-				free(new_input);
-			free_shell(&shell, env);
-		}
 		cmd = init_parser_cmd(token);
 		if (cmd == NULL)
 		{
 			free_token_list(token);
 			free(new_input);
-			free_shell(&shell, env);
+			error_malloc(&shell, env);
 		}
 		shell.cmd = cmd;
 		free_token_list(token);
