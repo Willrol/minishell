@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 16:40:03 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/08 09:20:20 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/08 14:29:47 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_parse_cmd
 	struct s_parse_cmd		*next;
 }							t_parse_cmd;
 
-void						take_cmd(t_list *t_tmp, t_parse_cmd *cmd_tmp);
+int							take_cmd(t_list *t_tmp, t_parse_cmd *cmd_tmp);
 void						free_redirection(t_redirection *redir);
 void						free_parse_cmd(t_parse_cmd *cmd);
 int							sign_chk(int type);
@@ -42,18 +42,19 @@ void						add_last(t_redirection *redir,
 								t_parse_cmd *cmd_tmp);
 t_parse_cmd					*init_parser_cmd(t_list *token);
 void						expand(t_parse_cmd *cmd, t_list *env,
-								t_minishell backup);
+								t_minishell *shell);
 void						expand_redir(t_parse_cmd *cmd, t_list *env,
-								t_minishell backup);
+								t_minishell *shell);
 
 void						print_parser_cmd(t_parse_cmd *cmd);
-void						remove_quote(char **argv);
-void						remove_quote_redir(char **file_name);
+int							remove_quote(char **argv);
+int							remove_quote_redir(char **file_name);
 int							ft_strlen_nowhitespace(char *str);
 int							get_end(char *str, int j);
-char						*tilde_expander(char *str, t_list *env, char *username, int *j);
+char						*tilde_expander(char *str, t_list *env,
+								char *username, int *j);
 char						*question_mark_expander(char *str, int *j,
-								t_minishell backup);
-void						split_expand(int *argc, char ***argv);
+								t_minishell *shell);
+int						split_expand(int *argc, char ***argv);
 
 #endif

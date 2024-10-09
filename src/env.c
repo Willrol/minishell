@@ -6,13 +6,13 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 11:00:59 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/25 17:45:28 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/08 17:06:15 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	*init_env(char **envp)
+t_list	*init_env(t_minishell *shell, char **envp)
 {
 	t_list	*env;
 	t_list	*tmp;
@@ -26,35 +26,32 @@ t_list	*init_env(char **envp)
 	{
 		node_env = ft_calloc(1, sizeof(t_env));
 		if (!node_env)
-			return (NULL);
+			free_shell(shell, env);
 		limit = ft_strchr(envp[i], '=') - envp[i] + 1;
 		node_env->name = ft_calloc(limit, sizeof(char));
 		if (!node_env->name)
-			return (NULL);
+		{
+			free(node_env);
+			free_shell(shell, env);
+		}
 		ft_strlcpy(node_env->name, envp[i], limit);
 		node_env->content = ft_strdup(limit + envp[i]);
+		if (!node_env->content)
+		{
+			free(node_env->name);
+			free(node_env);
+			free_shell(shell, env);
+		}
 		tmp = ft_lstnew(node_env);
 		if (!tmp)
-			return (NULL);
+		{
+			free(node_env->name);
+			free(node_env);
+			free_shell(shell, env);
+		}
 		ft_lstadd_back(&env, tmp);
 	}
 	return (env);
-}
-
-void	free_env(t_list *env)
-{
-	t_list	*tmp;
-
-	tmp = env;
-	while (env)
-	{
-		tmp = env->next;
-		free(((t_env *)env->content)->name);
-		free(((t_env *)env->content)->content);
-		free(env->content);
-		free(env);
-		env = tmp;
-	}
 }
 
 char	**get_env_tab(t_list *env)

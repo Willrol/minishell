@@ -6,7 +6,7 @@
 #    By: aditer <aditer@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 13:05:07 by aditer            #+#    #+#              #
-#    Updated: 2024/09/18 16:14:54 by aditer           ###   ########.fr        #
+#    Updated: 2024/10/08 17:25:34 by aditer           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -128,7 +128,7 @@ NAME		=	libft.a
 
 # Compiler
 CC			=	cc
-CFLAGS		=	-Wall -Werror -Wextra
+CFLAGS		=	-Wall -Werror -Wextra -g3
 OPTIONS		=	-I $(INCDIR)
 
 #Progress bar

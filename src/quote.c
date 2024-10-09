@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 14:16:41 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/23 13:34:13 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/08 12:52:35 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ char	*remove_char(char *str, int index)
 
 	new_str = ft_calloc(ft_strlen(str) + 1, sizeof(char));
 	if (!new_str)
+	{
+		free(str);
 		return (NULL);
+	}
 	i = 0;
 	j = 0;
 	while (str[i])
@@ -37,7 +40,7 @@ char	*remove_char(char *str, int index)
 	return (new_str);
 }
 
-void	remove_quote(char **argv)
+int	remove_quote(char **argv)
 {
 	int		i;
 	int		j;
@@ -53,20 +56,25 @@ void	remove_quote(char **argv)
 			{
 				quote = argv[i][j];
 				argv[i] = remove_char(argv[i], j);
+				if (!argv[i])
+					return (FAILURE);
 				while (argv[i][j] && argv[i][j] != quote)
 					j++;
 				if (argv[i][j] == quote)
 				{
 					argv[i] = remove_char(argv[i], j);
+					if(!argv[i])
+						return (FAILURE);
 					continue ;
 				}
 			}
 			j++;
 		}
 	}
+	return (SUCCESS);
 }
 
-void	remove_quote_redir(char **file_name)
+int	remove_quote_redir(char **file_name)
 {
 	int		i;
 	char	quote;
@@ -78,14 +86,19 @@ void	remove_quote_redir(char **file_name)
 		{
 			quote = (*file_name)[i];
 			(*file_name) = remove_char((*file_name), i);
+			if(!(*file_name))
+				return (FAILURE);
 			while ((*file_name)[i] && (*file_name)[i] != quote)
 				i++;
 			if ((*file_name)[i] == quote)
 			{
 				(*file_name) = remove_char((*file_name), i);
+				if(!(*file_name))
+					return (FAILURE);
 				continue ;
 			}
 		}
 		i++;
 	}
+	return(SUCCESS);
 }

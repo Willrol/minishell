@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 14:31:09 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/08 09:26:51 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/08 12:46:30 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,30 @@ char	*tilde_expander(char *str, t_list *env, char *username, int *j)
 		expanded_tilde = ft_strdup(((t_env *)node->content)->content);
 	if (!node)
 		expanded_tilde = ft_strjoin("/home/", username);
+	if (!expanded_tilde)
+		return (NULL);
 	tmp = ft_str_replace(str, "~", expanded_tilde);
 	free(expanded_tilde);
+	if (!tmp)
+		return (NULL);
 	*j += ft_strlen(username) - 1;
 	return (tmp);
 }
 
-char	*question_mark_expander(char *str, int *j, t_minishell shell)
+char	*question_mark_expander(char *str, int *j, t_minishell *shell)
 {
 	char	*tmp;
 	char	*expand;
 
-	expand = ft_itoa(shell.exit_status);
+	expand = ft_itoa(shell->exit_status);
+	if (!expand)
+		return (NULL);
 	tmp = ft_str_replace(str, "$?", expand);
+	if (!tmp)
+	{
+		free(expand);
+		return (NULL);
+	}
 	*j += ft_strlen(expand) - 1;
 	free (expand);
 	return (tmp);

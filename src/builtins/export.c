@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:26:24 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/07 16:06:43 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/08 15:31:16 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	ft_export(t_list **env, char **argv)
 	return (SUCCESS);
 }
 
-void	add_env(t_list **env, char *name, char *content)
+int	add_env(t_list **env, char *name, char *content)
 {
 	t_list	*tmp;
 	t_env	*node_env;
@@ -93,20 +93,36 @@ void	add_env(t_list **env, char *name, char *content)
 	{
 		free(((t_env *)tmp->content)->content);
 		((t_env *)tmp->content)->content = ft_strdup(content);
+		if (!((t_env *)tmp->content)->content)
+			return (FAILURE);
 	}
 	else
 	{
 		node_env = ft_calloc(1, sizeof(t_env));
 		if (!node_env)
-			return ;
+			return (FAILURE);
 		node_env->name = ft_strdup(name);
+		if (!node_env->name)
+			return (FAILURE);
 		if (content[0] != '\0')
+		{
 			node_env->content = ft_strdup(content);
+			if (!node_env->content)
+				return (FAILURE);
+		}
 		else
+		{
 			node_env->content = ft_strdup("");
+			if (!node_env->content)
+				return (FAILURE);
+		}
 		tmp = ft_lstnew(node_env);
 		if (!tmp)
-			return ;
+		{
+			free(node_env);
+			return (FAILURE);
+		}
 		ft_lstadd_back(env, tmp);
 	}
+	return (SUCCESS);
 }

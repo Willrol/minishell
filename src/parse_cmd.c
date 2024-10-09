@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:18:40 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/07 16:08:19 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/09 09:50:52 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	cpt_word(t_list *token)
 	return (count);
 }
 
-void	take_cmd(t_list *t_tmp, t_parse_cmd *cmd_tmp)
+int	take_cmd(t_list *t_tmp, t_parse_cmd *cmd_tmp)
 {
 	int	i;
 
@@ -74,7 +74,7 @@ void	take_cmd(t_list *t_tmp, t_parse_cmd *cmd_tmp)
 	cmd_tmp->argc = cpt_word(t_tmp);
 	cmd_tmp->argv = ft_calloc(cmd_tmp->argc + 1, sizeof(char *));
 	if (!cmd_tmp->argv)
-		return ;
+		return (FAILURE);
 	cmd_tmp->pid = -1;
 	while (t_tmp && ((t_token *)t_tmp->content)->type != PIPE)
 	{
@@ -83,19 +83,24 @@ void	take_cmd(t_list *t_tmp, t_parse_cmd *cmd_tmp)
 		else if (((t_token *)t_tmp->content)->type == WORD)
 		{
 			cmd_tmp->argv[i] = ft_strdup(((t_token *)t_tmp->content)->value);
+			if (!cmd_tmp->argv[i])
+				return (FAILURE);
 			i++;
 		}
 		cmd_tmp->argv[i] = NULL;
 		t_tmp = t_tmp->next;
 	}
-	if (t_tmp && ((t_token *)t_tmp->content)->type == PIPE)
-		if (to_next_cmd(t_tmp, cmd_tmp) == 1)
-			return ;
+	if (t_tmp && ((t_token *)t_tmp->content)->type == PIPE && to_next_cmd(t_tmp,
+			cmd_tmp) == FAILURE)
+		return (FAILURE);
 	if (cmd_tmp->argc > 0)
 		cmd_tmp->value = ft_strdup(cmd_tmp->argv[0]);
+	if (!cmd_tmp->value)
+		return (FAILURE);
+	return (SUCCESS);
 }
 
-void	take_redirection(t_list *t_tmp, t_parse_cmd *cmd_tmp)
+int	take_redirection(t_list *t_tmp, t_parse_cmd *cmd_tmp)
 {
 	t_redirection	*redir;
 
@@ -105,10 +110,15 @@ void	take_redirection(t_list *t_tmp, t_parse_cmd *cmd_tmp)
 		{
 			redir = ft_calloc(1, sizeof(t_redirection));
 			if (!redir)
-				return ;
+				return (FAILURE);
 			redir->type = ((t_token *)t_tmp->content)->type;
 			t_tmp = t_tmp->next;
 			redir->file_name = ft_strdup(((t_token *)t_tmp->content)->value);
+			if (!redir->file_name)
+			{
+				free(redir);
+				return (FAILURE);
+			}
 			redir->next = NULL;
 			if (cmd_tmp->redirection == NULL)
 				cmd_tmp->redirection = redir;
@@ -122,6 +132,7 @@ void	take_redirection(t_list *t_tmp, t_parse_cmd *cmd_tmp)
 		t_tmp = t_tmp->next;
 		take_redirection(t_tmp, cmd_tmp->next);
 	}
+	return(SUCCESS);
 }
 
 t_parse_cmd	*init_parser_cmd(t_list *token)
@@ -135,9 +146,15 @@ t_parse_cmd	*init_parser_cmd(t_list *token)
 		return (NULL);
 	t_tmp = token;
 	cmd_tmp = cmd;
-	take_cmd(t_tmp, cmd_tmp);
+	if (take_cmd(t_tmp, cmd_tmp) == FAILURE)
+	{
+		return (NULL);
+	}
 	t_tmp = token;
 	cmd_tmp = cmd;
-	take_redirection(t_tmp, cmd_tmp);
+	if (take_redirection(t_tmp, cmd_tmp) == FAILURE)
+	{
+		return (NULL);
+	}
 	return (cmd);
 }

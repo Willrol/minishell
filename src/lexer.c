@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:06:36 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/03 11:15:21 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/08 14:50:30 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ int	wordintake(char *line, t_list **token, int *flag)
 	if (!node_token)
 		return (FAILURE);
 	node_token->value = ft_substr(line, 0, j);
+	if (!node_token->value)
+	{
+		free(node_token);
+		return (FAILURE);
+	}
 	node_token->type = 0;
 	new_node = ft_lstnew(node_token);
 	if (!new_node)
@@ -77,6 +82,12 @@ t_valuetype	process_token(char *line, t_list **token, int *flag,
 		return (FAILURE);
 	}
 	node_token->value = ft_substr(line, 0, isnotsp(line));
+	if (!node_token->value)
+	{
+		free(node_token);
+		free_token_list(*token);
+		return (FAILURE);
+	}
 	if ((*flag == 1 && (*tmptype == typval(node_token->value) || *tmptype > 4))
 		|| !line[1] || (!line[2] && line[1] == line[0]))
 	{
@@ -102,24 +113,26 @@ t_list	*lexer(char *line)
 	int			flag;
 	t_list		*token;
 	t_valuetype	tmptype;
+	char	*tmp;
 
 	flag = 0;
 	token = NULL;
-	if (line[0] == '|')
+	tmp = line;
+	if (tmp[0] == '|')
 		return (ft_putstr_fd("Error: Syntax error near unexpected token '|'\n",
 				2), NULL);
-	if (check_closed_quotes(line) == FAILURE)
+	if (check_closed_quotes(tmp) == FAILURE)
 		return (NULL);
-	while (line[0])
+	while (tmp[0])
 	{
-		skip_spaces(&line);
-		if (isnotsp(line) == 0 || isnotsp(line) == 3)
-			err = wordintake(line, &token, &flag);
+		skip_spaces(&tmp);
+		if (isnotsp(tmp) == 0 || isnotsp(tmp) == 3)
+			err = wordintake(tmp, &token, &flag);
 		else
-			err = process_token(line, &token, &flag, &tmptype);
-		line += err;
+			err = process_token(tmp, &token, &flag, &tmptype);
 		if (err == FAILURE)
 			return (NULL);
+		tmp += err;
 	}
 	return (token);
 }

@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 13:05:48 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/04 14:30:20 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/08 17:06:11 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	count_word(char *str)
 	return (count);
 }
 
-static void	do_split(char ***argv, char ***new_argv, int i, int nb)
+static int	do_split(char ***argv, char ***new_argv, int i, int nb)
 {
 	int		j;
 	int		k;
@@ -59,13 +59,26 @@ static void	do_split(char ***argv, char ***new_argv, int i, int nb)
 	while (j != i)
 	{
 		(*new_argv)[j] = ft_strdup((*argv)[j]);
+		if (!(*new_argv)[j])
+		{
+			ft_free_tab((*new_argv));
+			return (FAILURE);
+		}
 		j++;
 	}
 	split = ft_split((*argv)[i], ' ');
+	if (!split)
+		return (FAILURE);
 	k = 0;
 	while (split[k])
 	{
 		(*new_argv)[j] = ft_strdup(split[k]);
+		if (!(*new_argv)[j])
+		{
+			ft_free_tab(split);
+			ft_free_tab((*new_argv));
+			return (FAILURE);
+		}
 		j++;
 		k++;
 	}
@@ -73,11 +86,17 @@ static void	do_split(char ***argv, char ***new_argv, int i, int nb)
 	while ((*argv)[j - nb + 1])
 	{
 		(*new_argv)[j] = ft_strdup((*argv)[j - nb + 1]);
+		if (!(*new_argv)[j])
+		{
+			ft_free_tab((*new_argv));
+			return (FAILURE);
+		}
 		j++;
 	}
+	return (SUCCESS);
 }
 
-void	split_expand(int *argc, char ***argv)
+int	split_expand(int *argc, char ***argv)
 {
 	int		i;
 	int		nb;
@@ -92,7 +111,13 @@ void	split_expand(int *argc, char ***argv)
 		if (nb > 1)
 		{
 			new_argv = ft_calloc((*argc) + 1, sizeof(char *));
-			do_split(argv, &new_argv, i, nb);
+			if (!new_argv)
+				return (FAILURE);
+			if (do_split(argv, &new_argv, i, nb) == FAILURE)
+			{
+				ft_free_tab((new_argv));
+				return (FAILURE);
+			}
 		}
 		i++;
 	}
@@ -101,4 +126,5 @@ void	split_expand(int *argc, char ***argv)
 		ft_free_tab((*argv));
 		(*argv) = new_argv;
 	}
+	return (SUCCESS);
 }

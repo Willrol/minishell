@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:40:02 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/07 13:37:42 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/08 17:39:54 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,11 @@ typedef struct s_token
 
 }							t_token;
 
-t_list						*init_env(char **envp);
+t_list						*init_env(t_minishell *shell, char **envp);
 void						free_env(t_list *env);
 char						**get_env_tab(t_list *env);
 t_list						*search_env(t_list *env, char *name);
-void						add_env(t_list **env, char *name, char *content);
+int							add_env(t_list **env, char *name, char *content);
 int							remove_env(t_list **env, char *str);
 int							unset(t_list **env, char **argv);
 char						*get_username(void);
@@ -93,5 +93,5 @@ int							print_env(t_list *env);
 int							ft_export(t_list **env, char **argv);
 int							exit_builtin(t_list *env, t_minishell *shell,
 								t_parse_cmd *cmd);
-
+void						free_shell(t_minishell *shell, t_list *env);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:34:54 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/07 16:31:16 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/08 14:33:04 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,12 @@ void	here_doc(t_list *env, t_minishell *shell, t_redirection *redirection,
 	char	*file_name;
 
 	nb = ft_itoa(i);
+	if (!nb)
+		free_shell(shell, env);
 	file_name = ft_strjoin(".tmp", nb);
 	free(nb);
+	if (!file_name)
+		free_shell(shell, env);
 	fd = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	free(file_name);
 	if (fd == -1)
@@ -66,9 +70,13 @@ void	call_doc(t_list *env, t_minishell *shell, t_redirection *redir, int i)
 	else
 		waitpid(pid, NULL, 0);
 	nb = ft_itoa(i);
+	if (!nb)
+		free_shell(shell, env);
 	free(redir->file_name);
 	redir->file_name = ft_strjoin(".tmp", nb);
 	free(nb);
+	if (!redir->file_name)
+		free_shell(shell, env);
 }
 
 void	search_here_doc(t_list *env, t_minishell *shell, t_parse_cmd *cmd)

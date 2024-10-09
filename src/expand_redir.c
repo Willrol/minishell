@@ -6,14 +6,14 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 14:16:09 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/08 09:35:32 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/08 12:52:55 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse_cmd.h"
 
 static char	*dollar_expander_redir(char *str, int *i, t_list *env,
-		t_minishell backup)
+		t_minishell *shell)
 {
 	char	*tmp;
 	char	*expand;
@@ -22,21 +22,27 @@ static char	*dollar_expander_redir(char *str, int *i, t_list *env,
 
 	if (str[*i + 1] == '?')
 	{
-		tmp = question_mark_expander(str, i, backup);
+		tmp = question_mark_expander(str, i, shell);
+		if (!tmp)
+			return (NULL);
 		return (tmp);
 	}
 	expand = "";
 	dollar = ft_substr(str, *i, get_end(str, *i));
+	if (!dollar)
+		return (NULL);
 	exp_env = search_env(env, dollar + 1);
 	if (exp_env != NULL)
 		expand = ((t_env *)exp_env->content)->content;
 	tmp = ft_str_replace(str, dollar, expand);
 	free(dollar);
+	if (!tmp)
+		return (NULL);
 	*i += ft_strlen(expand) - 1;
 	return (tmp);
 }
 
-void	search_dollar_redir(char **file_name, t_list *env, t_minishell backup)
+void	search_dollar_redir(char **file_name, t_list *env, t_minishell *shell)
 {
 	int	i;
 	int	simple_quote;
@@ -45,11 +51,12 @@ void	search_dollar_redir(char **file_name, t_list *env, t_minishell backup)
 	i = 0;
 	simple_quote = 0;
 	double_quote = 0;
-	(void)backup;
 	while ((*file_name)[i] != 0)
 	{
 		if ((*file_name)[i] == '~' && ft_strlen_nowhitespace(*file_name) == 1)
-			*file_name = tilde_expander(*file_name, env, backup.username, &i);
+			*file_name = tilde_expander(*file_name, env, shell->username, &i);
+		if (*file_name == NULL)
+			free_shell(shell, env);
 		if ((*file_name)[i] == '\'' && !double_quote)
 			simple_quote = !simple_quote;
 		if ((*file_name)[i] == '"' && !simple_quote)
@@ -57,12 +64,14 @@ void	search_dollar_redir(char **file_name, t_list *env, t_minishell backup)
 		if ((*file_name)[i] == '$' && !simple_quote
 			&& ft_iswhitespace((*file_name)[i + 1]) == 0 && (*file_name)[i
 			+ 1] != 0 && (*file_name)[i + 1] != '~')
-			*file_name = dollar_expander_redir(*file_name, &i, env, backup);
+			*file_name = dollar_expander_redir(*file_name, &i, env, shell);
+		if (!(*file_name))
+			free_shell(shell, env);
 		i++;
 	}
 }
 
-void	expand_redir(t_parse_cmd *cmd, t_list *env, t_minishell backup)
+void	expand_redir(t_parse_cmd *cmd, t_list *env, t_minishell *shell)
 {
 	t_redirection	*current_redir;
 
@@ -71,8 +80,9 @@ void	expand_redir(t_parse_cmd *cmd, t_list *env, t_minishell backup)
 	{
 		if (current_redir->file_name && current_redir->type != HERE_DOC)
 		{
-			search_dollar_redir(&(current_redir->file_name), env, backup);
-			remove_quote_redir(&(current_redir->file_name));
+			search_dollar_redir(&(current_redir->file_name), env, shell);
+			if (remove_quote_redir(&(current_redir->file_name)) == FAILURE)
+				free_shell(shell, env);
 		}
 		current_redir = current_redir->next;
 	}

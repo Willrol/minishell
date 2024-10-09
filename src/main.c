@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:39:34 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/08 09:29:52 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/09 10:41:52 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@ char	*get_path(void)
 		return (NULL);
 	path = get_next_line(fd);
 	split = ft_split(path, '"');
+	if (!split)
+	{
+		free(path);
+		close(fd);
+		return (NULL);
+	}
 	free(path);
 	path = ft_strdup(split[1]);
 	ft_free_tab(split);
@@ -49,52 +55,71 @@ char	*get_path(void)
 	return (path);
 }
 
-int	main(int argc, char **argv, char **envp)
+int	main(const int argc, const char **argv, char **envp)
 {
 	t_list		*env;
 	t_list		*token;
-	t_minishell	minishell;
+	t_minishell	shell;
 	t_parse_cmd	*cmd;
 	char		*input;
 	char		*pwd;
+	char		*new_input;
 
-	(void)argc;
 	(void)argv;
-	minishell.exit_status = 0;
-	minishell.username = get_username();
-	minishell.path = get_path();
-	env = init_env(envp);
-	if (!env)
+	if (argc != 1)
+		return (1);
+	ft_bzero(&shell, sizeof(t_minishell));
+	ft_bzero(&token, sizeof(t_list));
+	shell.exit_status = 0;
+	shell.username = get_username();
+	shell.path = get_path();
+	if (!shell.username || !shell.path)
+		free_shell(&shell, NULL);
+	if (!envp)
 	{
 		pwd = getcwd(NULL, 0);
-		add_env(&env, "PWD", pwd);
+		if (add_env(&env, "PWD", pwd) == FAILURE)
+			free_shell(&shell, env);
 		free(pwd);
-		add_env(&env, "SHLVL", "0");
-		add_env(&env, "_", "/usr/bin/env");
+		if (add_env(&env, "SHLVL", "0") == FAILURE)
+			free_shell(&shell, env);
+		if (add_env(&env, "_", "/usr/bin/env") == FAILURE)
+			free_shell(&shell, env);
 	}
-	while (1)
+	else
+		env = init_env(&shell, envp);
+
+	while (true)
 	{
-		input = ft_strtrim(read_input(env, minishell), " ");
-		token = lexer(input);
+		shell.cmd = NULL;
+		input = read_input(env, shell);
+		new_input = ft_strtrim(input, " ");
+		free(input);
+		if (!new_input)
+			free_shell(&shell, env);
+		token = lexer(new_input);
 		if (!token)
 		{
-			free(input);
-			continue ;
+			if (new_input)
+				free(new_input);
+			free_shell(&shell, env);
 		}
 		cmd = init_parser_cmd(token);
-		minishell.cmd = cmd;
+		if (cmd == NULL)
+		{
+			free_token_list(token);
+			free(new_input);
+			free_shell(&shell, env);
+		}
+		shell.cmd = cmd;
 		free_token_list(token);
-		free(input);
-		expand(cmd, env, minishell);
-		// print_parser_cmd(cmd);
-		search_here_doc(env, &minishell, cmd);
-		execution(env, &minishell, cmd);
+		free(new_input);
+		expand(cmd, env, &shell);
+		search_here_doc(env, &shell, cmd);
+		execution(env, &shell, cmd);
 		unlink_here_doc(cmd);
 		free_parse_cmd(cmd);
 	}
-	free(minishell.username);
-	free(minishell.path);
-	// print_env(env);
-	free_env(env);
+	free_shell(&shell, env);
 	return (0);
 }

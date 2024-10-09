@@ -35,7 +35,8 @@ SRC 	= 	main.c					\
 			exec/process_builtin.c	\
 			exec/redirection.c		\
 			exec/exec_cmd.c			\
-			exec/here_doc.c
+			exec/here_doc.c			\
+			free.c
 
 OBJ_DIR = obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))

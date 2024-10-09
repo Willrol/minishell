@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 11:18:35 by rderkaza          #+#    #+#             */
-/*   Updated: 2024/10/04 12:46:36 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/08 17:50:35 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	free_redirection(t_redirection *redir)
 	while (redir)
 	{
 		tmp = redir->next;
-		free(redir->file_name);
+		if (redir->file_name)
+			free(redir->file_name);
 		free(redir);
 		redir = tmp;
 	}
@@ -61,11 +62,11 @@ int	to_next_cmd(t_list *t_tmp, t_parse_cmd *cmd_tmp)
 {
 	cmd_tmp->next = ft_calloc(1, sizeof(t_parse_cmd));
 	if (!cmd_tmp->next)
-		return (1);
+		return (FAILURE);
 	cmd_tmp->pid = -1;
 	t_tmp = t_tmp->next;
 	take_cmd(t_tmp, cmd_tmp->next);
-	return (0);
+	return (SUCCESS);
 }
 
 void	add_last(t_redirection *redir, t_parse_cmd *cmd_tmp)
