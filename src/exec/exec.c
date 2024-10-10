@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 11:08:22 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/09 17:19:10 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/10 17:23:22 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,12 @@ void	child_process(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 	}
 	if (cmd->value != NULL)
 		ret = do_command(env, shell, cmd);
+	
 	free_child(env, shell);
 	exit(ret);
 }
 
-void	parent_process(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
+void	parent_process(t_list *env, t_minishell *shell, t_parse_cmd *cmd, bool has_pipe)
 {
 	int	status;
 
@@ -55,16 +56,22 @@ void	parent_process(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 	if (cmd->next == NULL)
 	{
 		waitpid(cmd->pid, &status, 0);
-		if (WIFEXITED(status))
+		if (WIFSIGNALED(status))
 		{
-			shell->exit_status = WEXITSTATUS(status);
+			shell->exit_status = 128 + WTERMSIG(status);
+			if (WTERMSIG(status) == SIGQUIT && has_pipe == false)
+				ft_putstr_fd("Quit (core dumped)\n", 1);
+			if (WTERMSIG(status) == SIGINT && has_pipe == false)
+				ft_putstr_fd("\n", 1);
 		}
+		else if (WIFEXITED(status))
+			shell->exit_status = WEXITSTATUS(status);
 		else
 			shell->exit_status = 1;
 	}
 }
 
-void	do_fork(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
+void	do_fork(t_list *env, t_minishell *shell, t_parse_cmd *cmd, bool has_pipe)
 {
 	if (cmd->next != NULL)
 	{
@@ -82,11 +89,13 @@ void	do_fork(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 	}
 	if (cmd->pid == 0)
 	{
+		signal(SIGINT, handle);
+		signal(SIGQUIT, handle_sigquit);
 		child_process(env, shell, cmd);
 	}
 	else
 	{
-		parent_process(env, shell, cmd);
+		parent_process(env, shell, cmd, has_pipe);
 	}
 }
 
@@ -94,6 +103,7 @@ int	execution(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 {
 	bool		has_pipe;
 	t_parse_cmd	*tmp;
+	int			status;
 
 	tmp = cmd;
 	has_pipe = (tmp->next != NULL);
@@ -103,10 +113,18 @@ int	execution(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 		if (!has_pipe && tmp->value != NULL && is_a_builtin(tmp) == SUCCESS)
 			exec_solo_builtin(env, shell, tmp);
 		else
-			do_fork(env, shell, tmp);
+			do_fork(env, shell, tmp, has_pipe);
 		tmp = tmp->next;
 	}
-	while (wait(NULL) > 0)
-		;
+	while (waitpid(-1, &status, 0) > 0)
+	{
+		if (WIFSIGNALED(status))
+		{
+			if (WTERMSIG(status) == SIGQUIT)
+				ft_putstr_fd("Quit (core dumped)\n", 1);
+			if (WTERMSIG(status) == SIGINT)
+				ft_putstr_fd("\n", 1);
+		}
+	}
 	return (SUCCESS);
 }

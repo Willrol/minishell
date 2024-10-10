@@ -6,11 +6,18 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:34:54 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/09 16:43:52 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/10 18:18:56 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+void	handle_sigint_hd(int sig)
+{
+	sigflag = sig;
+	ft_putstr_fd("\n", 1);
+	close(STDIN_FILENO);
+}
 
 void	active_doc(t_redirection *redirection, int fd)
 {
@@ -25,7 +32,7 @@ void	active_doc(t_redirection *redirection, int fd)
 			break ;
 		}
 		line = readline("> ");
-		if (!line || !ft_strcmp(line, redirection->file_name) || sigflag == 1)
+		if (!line || !ft_strcmp(line, redirection->file_name) || sigflag == SIGINT)
 		{
 			free(line);
 			break ;
@@ -43,6 +50,7 @@ void	here_doc(t_list *env, t_minishell *shell, t_redirection *redirection,
 	char	*nb;
 	char	*file_name;
 
+	signal(SIGINT, handle_sigint_hd);
 	nb = ft_itoa(i);
 	if (!nb)
 		error_malloc(shell, env);
@@ -75,7 +83,10 @@ void	call_doc(t_list *env, t_minishell *shell, t_redirection *redir, int i)
 	if (pid == 0)
 		here_doc(env, shell, redir, i);
 	else
+	{
+		signal(SIGINT, SIG_IGN);
 		waitpid(pid, NULL, 0);
+	}
 	nb = ft_itoa(i);
 	if (!nb)
 		error_malloc(shell, env);

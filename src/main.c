@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:39:34 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/09 17:16:42 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/10 17:58:23 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int sigflag = 0;
 char	*read_input(t_list *env, t_minishell shell)
 {
 	char	*line;
-
 	line = readline("minishell$ ");
 	if (!line)
 	{
@@ -56,24 +55,43 @@ char	*get_path(void)
 	close(fd);
 	return (path);
 }
-
-void	quith(int sig)
+void	handle(int sig)
 {
-	if (sig == SIGINT)
-	{
-    sigflag = 1;
-    rl_done = 1;
-    rl_replace_line("", 0);
-    rl_on_new_line();
-    rl_redisplay();
-	}
-	else if (sig == SIGQUIT)
-	{
-		sigflag = 0;
-		
-	}
+	sigflag = sig;
 }
 
+void	handle_sigint(int sig)
+{
+	sigflag = sig;
+	ft_putstr_fd("\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
+void	handle_sigquit(int sig)
+{
+	sigflag = sig;
+	ft_putstr_fd("Quit (core dumped)\n", 1);
+}
+
+void	add_shlvl(t_list *env)
+{
+	t_list	*shlvl;
+	char	*shlvl_str;
+	int		shlvl_int;
+
+	shlvl = search_env(env, "SHLVL");
+	if (!shlvl)
+		return ;
+	shlvl_int = ft_atoi(((t_env *)shlvl->content)->content);
+	shlvl_int++;
+	shlvl_str = ft_itoa(shlvl_int);
+	if (!shlvl_str)
+		return ;
+	free(((t_env *)shlvl->content)->content);
+	((t_env *)shlvl->content)->content = shlvl_str;
+}
 
 int	main(const int argc, const char **argv, char **envp)
 {
@@ -108,10 +126,11 @@ int	main(const int argc, const char **argv, char **envp)
 	}
 	else
 		env = init_env(&shell, envp);
+	add_shlvl(env);
 	while (true)
 	{
-		signal(SIGINT, quith);
-		signal(SIGQUIT, quith);
+		signal(SIGINT, handle_sigint);
+		signal(SIGQUIT, SIG_IGN);
 		shell.cmd = NULL;
 		input = read_input(env, shell);
 		new_input = ft_strtrim(input, " ");
@@ -131,6 +150,8 @@ int	main(const int argc, const char **argv, char **envp)
 		free(new_input);
 		expand(cmd, env, &shell);
 		search_here_doc(env, &shell, cmd);
+		signal(SIGINT, handle);
+		signal(SIGQUIT, SIG_IGN);
 		execution(env, &shell, cmd);
 		unlink_here_doc(cmd);
 		free_parse_cmd(cmd);

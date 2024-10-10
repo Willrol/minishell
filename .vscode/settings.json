@@ -8,6 +8,7 @@
 		"ast.h": "c",
 		"type_traits": "c",
 		"utmp.h": "c",
-		"parse_cmd.h": "c"
+		"parse_cmd.h": "c",
+		"exec.h": "c"
 	}
 }
