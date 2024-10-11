@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 11:08:22 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/10 17:23:22 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/11 13:06:37 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,14 @@ void	child_process(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 	}
 	if (cmd->value != NULL)
 		ret = do_command(env, shell, cmd);
-	
 	free_child(env, shell);
 	exit(ret);
 }
 
-void	parent_process(t_list *env, t_minishell *shell, t_parse_cmd *cmd, bool has_pipe)
+void	parent_process(t_minishell *shell, t_parse_cmd *cmd, bool has_pipe)
 {
 	int	status;
 
-	(void)env;
 	if (shell->prev_pipe_fd_out != -1)
 		close(shell->prev_pipe_fd_out);
 	if (shell->pipe_fd[WRITE] != -1)
@@ -71,7 +69,8 @@ void	parent_process(t_list *env, t_minishell *shell, t_parse_cmd *cmd, bool has_
 	}
 }
 
-void	do_fork(t_list *env, t_minishell *shell, t_parse_cmd *cmd, bool has_pipe)
+void	do_fork(t_list *env, t_minishell *shell, t_parse_cmd *cmd,
+		bool has_pipe)
 {
 	if (cmd->next != NULL)
 	{
@@ -95,7 +94,18 @@ void	do_fork(t_list *env, t_minishell *shell, t_parse_cmd *cmd, bool has_pipe)
 	}
 	else
 	{
-		parent_process(env, shell, cmd, has_pipe);
+		parent_process(shell, cmd, has_pipe);
+	}
+}
+
+void	wait_signal(int status)
+{
+	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGQUIT)
+			ft_putstr_fd("Quit (core dumped)\n", 1);
+		if (WTERMSIG(status) == SIGINT)
+			ft_putstr_fd("\n", 1);
 	}
 }
 
@@ -117,14 +127,6 @@ int	execution(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 		tmp = tmp->next;
 	}
 	while (waitpid(-1, &status, 0) > 0)
-	{
-		if (WIFSIGNALED(status))
-		{
-			if (WTERMSIG(status) == SIGQUIT)
-				ft_putstr_fd("Quit (core dumped)\n", 1);
-			if (WTERMSIG(status) == SIGINT)
-				ft_putstr_fd("\n", 1);
-		}
-	}
+		wait_signal(status);
 	return (SUCCESS);
 }

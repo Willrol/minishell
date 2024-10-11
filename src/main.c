@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:39:34 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/10 17:58:23 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/11 15:40:11 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 #include "minishell.h"
 #include "parse_cmd.h"
 
-int sigflag = 0;
+int		g_sigflag = 0;
 
 char	*read_input(t_list *env, t_minishell shell)
 {
 	char	*line;
+
 	line = readline("minishell$ ");
 	if (!line)
 	{
@@ -55,14 +56,15 @@ char	*get_path(void)
 	close(fd);
 	return (path);
 }
+
 void	handle(int sig)
 {
-	sigflag = sig;
+	g_sigflag = sig;
 }
 
 void	handle_sigint(int sig)
 {
-	sigflag = sig;
+	g_sigflag = sig;
 	ft_putstr_fd("\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -71,7 +73,7 @@ void	handle_sigint(int sig)
 
 void	handle_sigquit(int sig)
 {
-	sigflag = sig;
+	g_sigflag = sig;
 	ft_putstr_fd("Quit (core dumped)\n", 1);
 }
 
@@ -103,6 +105,7 @@ int	main(const int argc, const char **argv, char **envp)
 	char		*pwd;
 	char		*new_input;
 
+	env = NULL;
 	(void)argv;
 	if (argc != 1)
 		return (1);
@@ -113,7 +116,7 @@ int	main(const int argc, const char **argv, char **envp)
 	shell.path = get_path();
 	if (!shell.username || !shell.path)
 		error_malloc(&shell, NULL);
-	if (!envp)
+	if (!envp || !*envp)
 	{
 		pwd = getcwd(NULL, 0);
 		if (add_env(&env, "PWD", pwd) == FAILURE)
@@ -125,7 +128,7 @@ int	main(const int argc, const char **argv, char **envp)
 			error_malloc(&shell, env);
 	}
 	else
-		env = init_env(&shell, envp);
+		env = init_env(&shell, envp, -1);
 	add_shlvl(env);
 	while (true)
 	{
@@ -137,7 +140,7 @@ int	main(const int argc, const char **argv, char **envp)
 		free(input);
 		if (!new_input)
 			error_malloc(&shell, env);
-		token = lexer(new_input);
+		token = lexer(new_input, 0);
 		cmd = init_parser_cmd(token);
 		if (cmd == NULL)
 		{

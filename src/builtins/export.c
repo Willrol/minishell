@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:26:24 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/08 15:31:16 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/11 14:01:53 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,6 @@ int	count_equal(char *av)
 	return (i);
 }
 
-static void	free_tmps(char *tab1, char *tab2)
-{
-	free(tab1);
-	free(tab2);
-}
-
 int	ft_export(t_list **env, char **argv)
 {
 	int		i;
@@ -83,6 +77,23 @@ int	ft_export(t_list **env, char **argv)
 	return (SUCCESS);
 }
 
+t_env	*add_node(char *name, char *content)
+{
+	t_env	*node_env;
+
+	node_env = ft_calloc(1, sizeof(t_env));
+	if (!node_env)
+		return (NULL);
+	node_env->name = ft_strdup(name);
+	if (content[0] != '\0')
+		node_env->content = ft_strdup(content);
+	else
+		node_env->content = ft_strdup("");
+	if (!node_env->name || !node_env->content)
+		return (NULL);
+	return (node_env);
+}
+
 int	add_env(t_list **env, char *name, char *content)
 {
 	t_list	*tmp;
@@ -98,24 +109,9 @@ int	add_env(t_list **env, char *name, char *content)
 	}
 	else
 	{
-		node_env = ft_calloc(1, sizeof(t_env));
+		node_env = add_node(name, content);
 		if (!node_env)
 			return (FAILURE);
-		node_env->name = ft_strdup(name);
-		if (!node_env->name)
-			return (FAILURE);
-		if (content[0] != '\0')
-		{
-			node_env->content = ft_strdup(content);
-			if (!node_env->content)
-				return (FAILURE);
-		}
-		else
-		{
-			node_env->content = ft_strdup("");
-			if (!node_env->content)
-				return (FAILURE);
-		}
 		tmp = ft_lstnew(node_env);
 		if (!tmp)
 		{

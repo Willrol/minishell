@@ -1,32 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/24 08:20:58 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/11 15:23:53 by rderkaza         ###   ########.fr       */
+/*   Created: 2024/10/11 14:14:24 by rderkaza          #+#    #+#             */
+/*   Updated: 2024/10/11 14:20:00 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "exec.h"
 
-void	error_malloc(t_minishell *shell, t_list *env)
+void	handle_sigint_hd(int sig)
 {
-	if (shell)
-		free_shell(shell, env);
-	ft_putstr_fd("Error: Malloc failed.\n", 2);
-	exit(1);
-}
-
-void	error_print(char *str, char *cmd_name)
-{
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(cmd_name, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(strerror(errno), 2);
-	ft_putstr_fd("\n", 2);
+	g_sigflag = sig;
+	ft_putstr_fd("\n", 1);
+	close(STDIN_FILENO);
 }

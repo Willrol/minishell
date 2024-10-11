@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:44 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/09 14:09:54 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/11 15:37:53 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-char	*exec(t_list *env,t_minishell *shell, t_parse_cmd *cmd)
+char	*exec(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 {
 	t_list	*path_node;
 	char	*path;
@@ -24,13 +24,16 @@ char	*exec(t_list *env,t_minishell *shell, t_parse_cmd *cmd)
 		path = shell->path;
 	else
 		path = ft_strdup(((t_env *)path_node->content)->content);
+	if (!path)
+		return (NULL);
 	i = -1;
 	if (path)
 	{
 		split_path = ft_split(path, ':');
 		while (split_path[++i])
 		{
-			free(path);
+			if (path)
+				free(path);
 			path = ft_strjoin3(split_path[i], "/", cmd->value);
 			if (access(path, F_OK | X_OK) == 0)
 				return (ft_free_tab(split_path), path);
@@ -41,7 +44,7 @@ char	*exec(t_list *env,t_minishell *shell, t_parse_cmd *cmd)
 	return (ft_strdup(cmd->value));
 }
 
-int	exec_command(t_list *env,t_minishell *shell, t_parse_cmd *cmd)
+int	exec_command(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 {
 	char	*path;
 	char	**env_tab;

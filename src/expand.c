@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:13:10 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/09 14:40:37 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/11 16:06:15 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,23 @@ static char	*dollar_expander(char *str, int *j, t_list *env, t_minishell *shell)
 	return (tmp);
 }
 
+int	quote_state(char c, int quoted)
+{
+	if (c == '\'' && quoted != 2)
+		quoted = 1;
+	if (c == '"' && quoted != 1)
+		quoted = 2;
+	return (quoted);
+}
+
 void	search_dollar(char **argv, t_list *env, t_minishell *shell)
 {
 	int	i;
 	int	j;
-	int	simple_quote;
-	int	double_quote;
+	int	quoted;
 
 	i = -1;
-	simple_quote = 0;
-	double_quote = 0;
+	quoted = 0;
 	(void)shell;
 	while (argv[++i])
 	{
@@ -61,11 +68,8 @@ void	search_dollar(char **argv, t_list *env, t_minishell *shell)
 				argv[i] = tilde_expander(argv[i], env, shell->username, &j);
 			if (argv[i] == NULL)
 				error_malloc(shell, env);
-			if (argv[i][j] == '\'' && !double_quote)
-				simple_quote = !simple_quote;
-			if (argv[i][j] == '"' && !simple_quote)
-				double_quote = !double_quote;
-			if (argv[i][j] == '$' && !simple_quote && ft_iswhitespace(argv[i][j
+			quoted = quote_state(argv[i][j], quoted);
+			if (argv[i][j] == '$' && quoted != 1 && ft_iswhitespace(argv[i][j
 					+ 1]) == 0 && argv[i][j + 1] != 0 && argv[i][j + 1] != '~')
 				argv[i] = dollar_expander(argv[i], &j, env, shell);
 			if (!argv[i])
@@ -85,7 +89,7 @@ void	expand(t_parse_cmd *cmd, t_list *env, t_minishell *shell)
 			continue ;
 		}
 		search_dollar(cmd->argv, env, shell);
-		if (split_expand(&cmd->argc, &cmd->argv) == FAILURE)
+		if (split_expand(&cmd->argc, &cmd->argv, -1) == FAILURE)
 			error_malloc(shell, env);
 		if (remove_quote(cmd->argv) == FAILURE)
 			error_malloc(shell, env);

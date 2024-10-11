@@ -36,6 +36,7 @@ SRC 	= 	main.c					\
 			exec/redirection.c		\
 			exec/exec_cmd.c			\
 			exec/here_doc.c			\
+			handler.c				\
 			free.c					\
 			error.c
 

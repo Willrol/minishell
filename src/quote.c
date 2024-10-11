@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 14:16:41 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/08 12:52:35 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/11 15:19:08 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,36 +40,43 @@ char	*remove_char(char *str, int index)
 	return (new_str);
 }
 
-int	remove_quote(char **argv)
+int	removing(char **argv, int i, int j)
 {
-	int		i;
-	int		j;
 	char	quote;
 
-	i = -1;
-	while (argv[++i])
+	while (argv[i][j])
 	{
-		j = 0;
-		while (argv[i][j])
+		if (argv[i][j] == '\'' || argv[i][j] == '"')
 		{
-			if (argv[i][j] == '\'' || argv[i][j] == '"')
+			quote = argv[i][j];
+			argv[i] = remove_char(argv[i], j);
+			if (!argv[i])
+				return (FAILURE);
+			while (argv[i][j] && argv[i][j] != quote)
+				j++;
+			if (argv[i][j] == quote)
 			{
-				quote = argv[i][j];
 				argv[i] = remove_char(argv[i], j);
 				if (!argv[i])
 					return (FAILURE);
-				while (argv[i][j] && argv[i][j] != quote)
-					j++;
-				if (argv[i][j] == quote)
-				{
-					argv[i] = remove_char(argv[i], j);
-					if(!argv[i])
-						return (FAILURE);
-					continue ;
-				}
+				continue ;
 			}
-			j++;
 		}
+		j++;
+	}
+	return (SUCCESS);
+}
+
+int	remove_quote(char **argv)
+{
+	int	i;
+
+	i = 0;
+	while (argv[i])
+	{
+		if (removing(argv, i, 0) == FAILURE)
+			return (FAILURE);
+		i++;
 	}
 	return (SUCCESS);
 }
@@ -86,19 +93,19 @@ int	remove_quote_redir(char **file_name)
 		{
 			quote = (*file_name)[i];
 			(*file_name) = remove_char((*file_name), i);
-			if(!(*file_name))
+			if (!(*file_name))
 				return (FAILURE);
 			while ((*file_name)[i] && (*file_name)[i] != quote)
 				i++;
 			if ((*file_name)[i] == quote)
 			{
 				(*file_name) = remove_char((*file_name), i);
-				if(!(*file_name))
+				if (!(*file_name))
 					return (FAILURE);
 				continue ;
 			}
 		}
 		i++;
 	}
-	return(SUCCESS);
+	return (SUCCESS);
 }

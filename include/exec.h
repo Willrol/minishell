@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 09:52:45 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/09 13:54:31 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/11 14:18:57 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "minishell.h"
 # include "parse_cmd.h"
+# include <signal.h>
 
 int		exec_builtin(t_list *env, t_minishell *shell, t_parse_cmd *cmd);
 int		is_a_builtin(t_parse_cmd *cmd);
@@ -28,5 +29,6 @@ void	exec_solo_builtin(t_list *env, t_minishell *shell, t_parse_cmd *tmp);
 int		do_command(t_list *env, t_minishell *shell, t_parse_cmd *cmd);
 void	search_here_doc(t_list *env, t_minishell *shell, t_parse_cmd *cmd);
 void	unlink_here_doc(t_parse_cmd *cmd);
+void	handle_sigint_hd(int sig);
 
 #endif

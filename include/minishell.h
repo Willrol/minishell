@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:40:02 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/10 14:27:22 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/11 15:40:20 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define WRITE 1
 # define READ 0
 
-extern int					sigflag;
+extern int					g_sigflag;
 
 typedef enum e_valuetype
 {
@@ -71,7 +71,7 @@ typedef struct s_token
 
 }							t_token;
 
-t_list						*init_env(t_minishell *shell, char **envp);
+t_list						*init_env(t_minishell *shell, char **envp, int i);
 void						free_env(t_list *env);
 char						**get_env_tab(t_list *env);
 t_list						*search_env(t_list *env, char *name);
@@ -80,7 +80,7 @@ int							remove_env(t_list **env, char *str);
 int							unset(t_list **env, char **argv);
 char						*get_username(void);
 
-t_list						*lexer(char *line);
+t_list						*lexer(char *line, int err);
 void						print_token(t_list *token);
 void						free_token_list(t_list *token);
 void						free_backup(t_minishell backup);
@@ -103,5 +103,9 @@ void						error_malloc(t_minishell *shell, t_list *env);
 void						handle_sigint(int sig);
 void						handle(int sig);
 void						handle_sigquit(int sig);
+
+
+//to organise later
+void						free_tmps(char *tab1, char *tab2);
 
 #endif

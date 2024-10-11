@@ -3,36 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:34:54 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/10 18:18:56 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/11 14:19:58 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-void	handle_sigint_hd(int sig)
-{
-	sigflag = sig;
-	ft_putstr_fd("\n", 1);
-	close(STDIN_FILENO);
-}
-
 void	active_doc(t_redirection *redirection, int fd)
 {
 	char	*line;
 
-	
 	while (1)
 	{
-		
-		if (sigflag == 1)
+		if (g_sigflag == 1)
 		{
 			break ;
 		}
 		line = readline("> ");
-		if (!line || !ft_strcmp(line, redirection->file_name) || sigflag == SIGINT)
+		if (!line || !ft_strcmp(line, redirection->file_name)
+			|| g_sigflag == SIGINT)
 		{
 			free(line);
 			break ;
@@ -76,7 +68,7 @@ void	call_doc(t_list *env, t_minishell *shell, t_redirection *redir, int i)
 	pid_t	pid;
 	char	*nb;
 
-	sigflag = 0;
+	g_sigflag = 0;
 	pid = fork();
 	if (pid == -1)
 		error_exec("fork");

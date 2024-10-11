@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 16:40:03 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/08 14:29:47 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/11 15:55:17 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,6 @@ char						*tilde_expander(char *str, t_list *env,
 								char *username, int *j);
 char						*question_mark_expander(char *str, int *j,
 								t_minishell *shell);
-int						split_expand(int *argc, char ***argv);
+int							split_expand(int *argc, char ***argv, int i);
 
 #endif

@@ -3,52 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 11:00:59 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/09 14:40:15 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/11 15:40:03 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	*init_env(t_minishell *shell, char **envp)
+void	free_node_env(t_env *node_env, t_minishell *shell, t_list *env)
+{
+	if (node_env)
+		free(node_env);
+	if (node_env->name)
+		free(node_env->name);
+	if (node_env->content)
+		free(node_env->content);
+	error_malloc(shell, env);
+}
+
+t_list	*init_env(t_minishell *shell, char **envp, int i)
 {
 	t_list	*env;
 	t_list	*tmp;
 	t_env	*node_env;
-	int		i;
 	int		limit;
 
-	i = -1;
 	env = NULL;
 	while (envp[++i])
 	{
 		node_env = ft_calloc(1, sizeof(t_env));
 		if (!node_env)
-			error_malloc(shell, env);
+			free_node_env(node_env, shell, env);
 		limit = ft_strchr(envp[i], '=') - envp[i] + 1;
 		node_env->name = ft_calloc(limit, sizeof(char));
 		if (!node_env->name)
-		{
-			free(node_env);
-			error_malloc(shell, env);
-		}
+			free_node_env(node_env, shell, env);
 		ft_strlcpy(node_env->name, envp[i], limit);
 		node_env->content = ft_strdup(limit + envp[i]);
 		if (!node_env->content)
-		{
-			free(node_env->name);
-			free(node_env);
-			error_malloc(shell, env);
-		}
+			free_node_env(node_env, shell, env);
 		tmp = ft_lstnew(node_env);
 		if (!tmp)
-		{
-			free(node_env->name);
-			free(node_env);
-			error_malloc(shell, env);
-		}
+			free_node_env(node_env, shell, env);
 		ft_lstadd_back(&env, tmp);
 	}
 	return (env);

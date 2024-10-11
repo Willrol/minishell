@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:06:36 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/09 13:11:06 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/11 14:35:25 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,7 @@ t_valuetype	process_token(char *line, t_list **token, int *flag,
 	}
 	if ((*flag == 1 && (*tmptype == typval(node_token->value) || *tmptype > 4))
 		|| !line[1] || (!line[2] && line[1] == line[0]))
-	{
-		lexer_error(token, node_token);
-		return (FAILURE);
-	}
+		return (lexer_error(token, node_token), FAILURE);
 	node_token->type = typval(node_token->value);
 	*tmptype = node_token->type;
 	ft_lstadd_back(token, ft_lstnew(node_token));
@@ -107,13 +104,12 @@ void	skip_spaces(char **line)
 		(*line)++;
 }
 
-t_list	*lexer(char *line)
+t_list	*lexer(char *line, int err)
 {
-	int			err;
 	int			flag;
 	t_list		*token;
-	t_valuetype	tmptype;
 	char		*tmp;
+	t_valuetype	tmptype;
 
 	flag = 0;
 	token = NULL;

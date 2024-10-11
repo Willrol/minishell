@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:18:40 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/09 12:59:37 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/11 08:18:47 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ int	take_redirection(t_list *t_tmp, t_parse_cmd *cmd_tmp)
 		t_tmp = t_tmp->next;
 		take_redirection(t_tmp, cmd_tmp->next);
 	}
-	return(SUCCESS);
+	return (SUCCESS);
 }
 
 t_parse_cmd	*init_parser_cmd(t_list *token)

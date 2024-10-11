@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:43:12 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/09 14:35:28 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/11 15:36:24 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	free_shell(t_minishell *shell, t_list *env)
 
 void	free_env(t_list *env)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	tmp = env;
 	while (env)
@@ -46,4 +46,10 @@ void	free_env(t_list *env)
 		free(env);
 		env = tmp;
 	}
+}
+
+void	free_tmps(char *tab1, char *tab2)
+{
+	free(tab1);
+	free(tab2);
 }
