@@ -6,7 +6,7 @@
 /*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 13:05:48 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/14 13:25:06 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:40:02 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ int	count_word(char *str)
 	return (count);
 }
 
-char	***make_ntab(char ***argv, char ***new_argv, int i, int j)
+char	***make_ntab(char ***argv, char ***new_argv, int i, int *j)
 {
-	while (++j != i)
+	while (++*j != i)
 	{
-		(*new_argv)[j] = ft_strdup((*argv)[j]);
-		if (!(*new_argv)[j])
+		(*new_argv)[*j] = ft_strdup((*argv)[*j]);
+		if (!(*new_argv)[*j])
 			return (ft_free_tab(*new_argv), NULL);
 	}
 	return (new_argv);
@@ -67,22 +67,22 @@ static int	do_split(char ***argv, char ***new_argv, int i, int nb)
 	char	**split;
 
 	j = -1;
-	new_argv = make_ntab(argv, new_argv, i, j);
+	new_argv = make_ntab(argv, new_argv, i, &j);
 	split = ft_split((*argv)[i], ' ');
 	if (!split || new_argv == NULL)
 		return (ft_free_tabs(split, *new_argv), FAILURE);
 	k = -1;
 	while (split[++k])
 	{
-		(*new_argv)[++j] = ft_strdup(split[k]);
-		if (!(*new_argv)[j])
+		(*new_argv)[j] = ft_strdup(split[k]);
+		if (!(*new_argv)[j++])
 			return (ft_free_tabs(split, *new_argv), FAILURE);
 	}
 	ft_free_tab(split);
-	while ((*argv)[++j - nb + 1])
+	while ((*argv)[j - nb + 1])
 	{
 		(*new_argv)[j] = ft_strdup((*argv)[j - nb + 1]);
-		if (!(*new_argv)[j])
+		if (!(*new_argv)[j++])
 			return (ft_free_tab(*new_argv), FAILURE);
 	}
 	return (SUCCESS);

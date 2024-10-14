@@ -6,7 +6,7 @@
 /*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:18:40 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/14 14:58:10 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:29:18 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,26 @@ int	cpt_word(t_list *token)
 	return (count);
 }
 
-t_parse_cmd	*store_words(t_list *tmp, t_parse_cmd *cmd)
+int	next_cmd(t_list *t_tmp, t_parse_cmd *cmd_tmp)
 {
-	int			i;
-	t_parse_cmd	*cmd_tmp;
-	t_list		*t_tmp;
+	if (t_tmp && ((t_token *)t_tmp->content)->type == PIPE && to_next_cmd(t_tmp,
+			cmd_tmp) == FAILURE)
+		return (FAILURE);
+	if (cmd_tmp->argc > 0)
+		cmd_tmp->value = ft_strdup(cmd_tmp->argv[0]);
+	return (SUCCESS);
+}
+
+int	take_cmd(t_list *t_tmp, t_parse_cmd *cmd_tmp)
+{
+	int	i;
 
 	i = 0;
-	cmd_tmp = cmd;
-	t_tmp = tmp;
+	cmd_tmp->argc = cpt_word(t_tmp);
+	cmd_tmp->argv = ft_calloc(cmd_tmp->argc + 1, sizeof(char *));
+	if (!cmd_tmp->argv)
+		return (FAILURE);
+	cmd_tmp->pid = -1;
 	while (t_tmp && ((t_token *)t_tmp->content)->type != PIPE)
 	{
 		if (sign_chk(((t_token *)t_tmp->content)->type) == 1)
@@ -89,24 +100,7 @@ t_parse_cmd	*store_words(t_list *tmp, t_parse_cmd *cmd)
 		cmd_tmp->argv[i] = NULL;
 		t_tmp = t_tmp->next;
 	}
-	return (SUCCESS);
-}
-
-int	take_cmd(t_list *t_tmp, t_parse_cmd *cmd_tmp)
-{
-	cmd_tmp->argc = cpt_word(t_tmp);
-	cmd_tmp->argv = ft_calloc(cmd_tmp->argc + 1, sizeof(char *));
-	if (!cmd_tmp->argv)
-		return (FAILURE);
-	cmd_tmp->pid = -1;
-	if (store_words(t_tmp, cmd_tmp) == NULL)
-		return (FAILURE);
-	if (t_tmp && ((t_token *)t_tmp->content)->type == PIPE && to_next_cmd(t_tmp,
-			cmd_tmp) == FAILURE)
-		return (FAILURE);
-	if (cmd_tmp->argc > 0)
-		cmd_tmp->value = ft_strdup(cmd_tmp->argv[0]);
-	return (SUCCESS);
+	return (next_cmd(t_tmp, cmd_tmp));
 }
 
 int	take_redirection(t_list *t_tmp, t_parse_cmd *cmd_tmp)
