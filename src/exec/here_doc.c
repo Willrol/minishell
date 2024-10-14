@@ -6,7 +6,7 @@
 /*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:34:54 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/14 13:56:07 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/14 16:38:19 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	here_doc(t_list *env, t_minishell *shell, t_redirection *redirection,
 	char	*nb;
 	char	*file_name;
 
-	signal(SIGINT, handle_sigint_hd);
+	signal(SIGINT, handle_here_doc);
 	nb = ft_itoa(i);
 	if (!nb)
 		error_malloc(shell, env);
@@ -60,10 +60,12 @@ void	here_doc(t_list *env, t_minishell *shell, t_redirection *redirection,
 	active_doc(redirection, fd);
 	close(fd);
 	free_child(env, shell);
+	if (g_sigflag == SIGINT)
+		exit (130);
 	exit(0);
 }
 
-void	call_doc(t_list *env, t_minishell *shell, t_redirection *redir, int i)
+int	call_doc(t_list *env, t_minishell *shell, t_redirection *redir, int i)
 {
 	pid_t	pid;
 	char	*nb;
@@ -75,10 +77,8 @@ void	call_doc(t_list *env, t_minishell *shell, t_redirection *redir, int i)
 	if (pid == 0)
 		here_doc(env, shell, redir, i);
 	else
-	{
-		signal(SIGINT, SIG_IGN);
-		waitpid(pid, NULL, 0);
-	}
+		if (here_parent(pid, shell) == FAILURE)
+			return (FAILURE);
 	nb = ft_itoa(i);
 	if (!nb)
 		error_malloc(shell, env);
@@ -87,9 +87,10 @@ void	call_doc(t_list *env, t_minishell *shell, t_redirection *redir, int i)
 	free(nb);
 	if (!redir->file_name)
 		error_malloc(shell, env);
+	return (SUCCESS);
 }
 
-void	search_here_doc(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
+int	search_here_doc(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 {
 	t_parse_cmd		*tmp;
 	t_redirection	*redir;
@@ -104,13 +105,17 @@ void	search_here_doc(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 		{
 			if (redir->type == HERE_DOC)
 			{
-				call_doc(env, shell, redir, i);
+				if (call_doc(env, shell, redir, i) == FAILURE)
+				{
+					return (FAILURE);
+				}
 			}
 			i++;
 			redir = redir->next;
 		}
 		tmp = tmp->next;
 	}
+	return (SUCCESS);
 }
 
 void	unlink_here_doc(t_parse_cmd *cmd)

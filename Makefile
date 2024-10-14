@@ -11,6 +11,7 @@ CFLAGS = -Wall -Werror -Wextra -Wunused -g3 -I./include
 SRC_DIR = src
 
 SRC 	= 	main.c					\
+			init.c					\
 			env.c					\
 			env2.c					\
 			lexer.c					\
@@ -37,6 +38,7 @@ SRC 	= 	main.c					\
 			exec/redirection.c		\
 			exec/exec_cmd.c			\
 			exec/here_doc.c			\
+			exec/here_doc_utils.c	\
 			handler.c				\
 			free.c					\
 			error.c

@@ -6,11 +6,15 @@
 /*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 13:05:48 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/14 15:40:02 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/14 16:54:28 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse_cmd.h"
+
+
+
+
 
 void	count_word_utils(char *str, int *count, int *i)
 {
@@ -49,65 +53,77 @@ int	count_word(char *str)
 	return (count);
 }
 
-char	***make_ntab(char ***argv, char ***new_argv, int i, int *j)
-{
-	while (++*j != i)
-	{
-		(*new_argv)[*j] = ft_strdup((*argv)[*j]);
-		if (!(*new_argv)[*j])
-			return (ft_free_tab(*new_argv), NULL);
-	}
-	return (new_argv);
-}
-
 static int	do_split(char ***argv, char ***new_argv, int i, int nb)
 {
 	int		j;
 	int		k;
 	char	**split;
 
-	j = -1;
-	new_argv = make_ntab(argv, new_argv, i, &j);
+	j = 0;
+	while (j != i)
+	{
+		(*new_argv)[j] = ft_strdup((*argv)[j]);
+		if (!(*new_argv)[j])
+		{
+			ft_free_tab((*new_argv));
+			return (FAILURE);
+		}
+		j++;
+	}
 	split = ft_split((*argv)[i], ' ');
-	if (!split || new_argv == NULL)
-		return (ft_free_tabs(split, *new_argv), FAILURE);
-	k = -1;
-	while (split[++k])
+	if (!split)
+		return (FAILURE);
+	k = 0;
+	while (split[k])
 	{
 		(*new_argv)[j] = ft_strdup(split[k]);
-		if (!(*new_argv)[j++])
-			return (ft_free_tabs(split, *new_argv), FAILURE);
+		if (!(*new_argv)[j])
+		{
+			ft_free_tab(split);
+			ft_free_tab((*new_argv));
+			return (FAILURE);
+		}
+		j++;
+		k++;
 	}
 	ft_free_tab(split);
 	while ((*argv)[j - nb + 1])
 	{
 		(*new_argv)[j] = ft_strdup((*argv)[j - nb + 1]);
-		if (!(*new_argv)[j++])
-			return (ft_free_tab(*new_argv), FAILURE);
+		if (!(*new_argv)[j])
+		{
+			ft_free_tab((*new_argv));
+			return (FAILURE);
+		}
+		j++;
 	}
 	return (SUCCESS);
 }
 
-int	split_expand(int *argc, char ***argv, int i)
+int	split_expand(int *argc, char ***argv)
 {
+	int		i;
 	int		nb;
 	char	**new_argv;
 
+	i = 0;
 	new_argv = NULL;
-	while ((*argv)[++i])
+	while ((*argv)[i])
 	{
 		nb = count_word((*argv)[i]);
 		(*argc) += nb - 1;
 		if (nb > 1)
 		{
 			new_argv = ft_calloc((*argc) + 1, sizeof(char *));
-			if (!new_argv || do_split(argv, &new_argv, i, nb) == FAILURE)
+			if (!new_argv)
+				return (FAILURE);
+			if (do_split(argv, &new_argv, i, nb) == FAILURE)
 			{
-				if (new_argv)
-					ft_free_tab((new_argv));
+				ft_free_tab((new_argv));
 				return (FAILURE);
 			}
 		}
+		i++;
 	}
 	if (new_argv != NULL)
 	{
@@ -116,3 +132,119 @@ int	split_expand(int *argc, char ***argv, int i)
 	}
 	return (SUCCESS);
 }
+
+// void	count_word_utils(char *str, int *count, int *i)
+// {
+// 	if (str[*i] == ' ')
+// 	{
+// 		(*count)++;
+// 		while (str[*i] && str[*i] == ' ')
+// 			(*i)++;
+// 	}
+// 	else
+// 		(*i)++;
+// }
+
+// int	count_tabs(char **argv)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while(argv[i])
+// 		i++;
+// 	return (i);
+// }
+
+// int	count_word(char *str)
+// {
+// 	int		i;
+// 	int		count;
+// 	char	quote;
+
+// 	i = 0;
+// 	count = 1;
+// 	quote = 0;
+// 	while (str[i])
+// 	{
+// 		if (str[i] == '\'' || str[i] == '"')
+// 		{
+// 			quote = str[i++];
+// 			while (str[i] && str[i] != quote)
+// 				i++;
+// 			if (str[i++] == quote)
+// 				continue ;
+// 		}
+// 		else
+// 			count_word_utils(str, &count, &i);
+// 	}
+// 	return (count);
+// }
+
+// char	***make_ntab(char ***argv, char ***new_argv, int i, int j)
+// {
+// 	while (++j != i)
+// 	{
+// 		(*new_argv)[j] = ft_strdup((*argv)[j]);
+// 		if (!(*new_argv)[j])
+// 			return (ft_free_tab(*new_argv), NULL);
+// 	}
+// 	return (new_argv);
+// }
+
+// static int	do_split(char ***argv, char ***new_argv, int i, int nb)
+// {
+// 	int		j;
+// 	int		k;
+// 	char	**split;
+
+// 	new_argv = make_ntab(argv, new_argv, i, -1);
+// 	split = ft_split((*argv)[i], ' ');
+// 	if (!split || new_argv == NULL)
+// 		return (ft_free_tabs(split, *new_argv), FAILURE);
+// 	j = count_tabs(split);
+// 	k = -1;
+// 	while (split[++k])
+// 	{
+// 		printf("j = %d\n", j);
+// 		(*new_argv)[j] = ft_strdup(split[k]);
+// 		if (!(*new_argv)[j++])
+// 			return (ft_free_tabs(split, *new_argv), FAILURE);
+// 	}
+// 	ft_free_tab(split);
+// 	while ((*argv)[j - nb + 1])
+// 	{
+// 		(*new_argv)[j] = ft_strdup((*argv)[j - nb + 1]);
+// 		if (!(*new_argv)[j++])
+// 			return (ft_free_tab(*new_argv), FAILURE);
+// 	}
+// 	return (SUCCESS);
+// }
+
+// int	split_expand(int *argc, char ***argv, int i)
+// {
+// 	int		nb;
+// 	char	**new_argv;
+
+// 	new_argv = NULL;
+// 	while ((*argv)[++i])
+// 	{
+// 		nb = count_word((*argv)[i]);
+// 		(*argc) += nb - 1;
+// 		if (nb > 1)
+// 		{
+// 			new_argv = ft_calloc((*argc) + 1, sizeof(char *));
+// 			if (!new_argv || do_split(argv, &new_argv, i, nb) == FAILURE)
+// 			{
+// 				if (new_argv)
+// 					ft_free_tab((new_argv));
+// 				return (FAILURE);
+// 			}
+// 		}
+// 	}
+// 	if (new_argv != NULL)
+// 	{
+// 		ft_free_tab((*argv));
+// 		(*argv) = new_argv;
+// 	}
+// 	return (SUCCESS);
+// }

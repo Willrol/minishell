@@ -6,7 +6,7 @@
 /*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 16:40:03 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/14 13:52:23 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/14 16:55:33 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ char						*tilde_expander(char *str, t_list *env,
 								char *username, int *j);
 char						*question_mark_expander(char *str, int *j,
 								t_minishell *shell);
-int							split_expand(int *argc, char ***argv, int i);
+// int							split_expand(int *argc, char ***argv, int i);
+int							split_expand(int *argc, char ***argv);
 
 #endif

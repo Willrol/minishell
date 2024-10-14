@@ -6,7 +6,7 @@
 /*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:40:02 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/14 13:24:39 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/14 16:23:27 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,12 @@ typedef struct s_token
 }							t_token;
 
 t_list						*init_env(t_minishell *shell, char **envp, int i);
+char						*init_input(t_list *env, t_minishell shell);
+void						init_shell_env(t_minishell *shell, t_list **env,
+								char **envp);
+char						*get_path(void);
+char						*read_input(t_list *env, t_minishell shell);
+
 char						**get_env_tab(t_list *env);
 t_list						*search_env(t_list *env, char *name);
 int							add_env(t_list **env, char *name, char *content);
@@ -105,5 +111,6 @@ void						handle_sigquit(int sig);
 void						free_env(t_list *env);
 void						free_shell(t_minishell *shell, t_list *env);
 void						free_tmps(char *tab1, char *tab2);
+char						*read_input(t_list *env, t_minishell shell);
 
 #endif
