@@ -24,6 +24,7 @@ SRC 	= 	main.c					\
 			builtins/exit.c			\
 			parse_cmd.c				\
 			parse_cmd_utils.c		\
+			parse_cmd_utils2.c		\
 			expand.c				\
 			expand_redir.c			\
 			expand_utils.c			\

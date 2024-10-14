@@ -6,7 +6,7 @@
 /*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 13:05:48 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/14 10:10:54 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:25:06 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,6 @@ int	count_word(char *str)
 			count_word_utils(str, &count, &i);
 	}
 	return (count);
-}
-
-void	ft_free_tabs(char **split, char **new_argv)
-{
-	if (split)
-		ft_free_tab(split);
-	if (new_argv)
-		ft_free_tab(new_argv);
 }
 
 char	***make_ntab(char ***argv, char ***new_argv, int i, int j)

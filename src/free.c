@@ -6,7 +6,7 @@
 /*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:43:12 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/11 15:36:24 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:25:18 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,12 @@ void	free_tmps(char *tab1, char *tab2)
 {
 	free(tab1);
 	free(tab2);
+}
+
+void	ft_free_tabs(char **split, char **new_argv)
+{
+	if (split)
+		ft_free_tab(split);
+	if (new_argv)
+		ft_free_tab(new_argv);
 }

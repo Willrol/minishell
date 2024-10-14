@@ -6,24 +6,34 @@
 /*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:44 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/11 15:37:53 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:23:34 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-char	*exec(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
+char	*make_path(t_list *env, t_minishell *shell)
 {
 	t_list	*path_node;
+	char	*path;
+
+	path_node = search_env(env, "PATH");
+	if (!path_node)
+		path = ft_strdup(shell->path);
+	else
+		path = ft_strdup(((t_env *)path_node->content)->content);
+	if (!path)
+		return (NULL);
+	return (path);
+}
+
+char	*exec(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
+{
 	char	*path;
 	char	**split_path;
 	int		i;
 
-	path_node = search_env(env, "PATH");
-	if (!path_node)
-		path = shell->path;
-	else
-		path = ft_strdup(((t_env *)path_node->content)->content);
+	path = make_path(env, shell);
 	if (!path)
 		return (NULL);
 	i = -1;
