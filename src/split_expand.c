@@ -6,7 +6,7 @@
 /*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 13:05:48 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/11 16:17:51 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/14 10:10:54 by rderkaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,22 +77,21 @@ static int	do_split(char ***argv, char ***new_argv, int i, int nb)
 	j = -1;
 	new_argv = make_ntab(argv, new_argv, i, j);
 	split = ft_split((*argv)[i], ' ');
-	if (!split || !new_argv)
+	if (!split || new_argv == NULL)
 		return (ft_free_tabs(split, *new_argv), FAILURE);
 	k = -1;
 	while (split[++k])
 	{
-		(*new_argv)[j] = ft_strdup(split[k]);
-		if (!(*new_argv)[j++])
+		(*new_argv)[++j] = ft_strdup(split[k]);
+		if (!(*new_argv)[j])
 			return (ft_free_tabs(split, *new_argv), FAILURE);
 	}
 	ft_free_tab(split);
-	while ((*argv)[j - nb + 1])
+	while ((*argv)[++j - nb + 1])
 	{
 		(*new_argv)[j] = ft_strdup((*argv)[j - nb + 1]);
 		if (!(*new_argv)[j])
 			return (ft_free_tab(*new_argv), FAILURE);
-		j++;
 	}
 	return (SUCCESS);
 }
