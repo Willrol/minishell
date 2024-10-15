@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:40:02 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/14 16:23:27 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:33:02 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,12 @@ void						free_env(t_list *env);
 void						free_shell(t_minishell *shell, t_list *env);
 void						free_tmps(char *tab1, char *tab2);
 char						*read_input(t_list *env, t_minishell shell);
+
+void						loop(t_minishell *shell, t_parse_cmd *cmd,
+								t_list *token, t_list *env);
+void						here_exec(t_minishell *shell, t_parse_cmd *cmd,
+								t_list *env);
+void						add_shlvl(t_list *env);
+char						*get_path(void);
 
 #endif

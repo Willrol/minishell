@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:44 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/14 13:23:34 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:50:55 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	exec_command(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 		ft_free_tab(env_tab);
 		return (127);
 	}
+	free(path);
 	return (SUCCESS);
 }
 

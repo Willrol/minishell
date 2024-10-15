@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 11:00:59 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/11 15:40:03 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:53:17 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 void	free_node_env(t_env *node_env, t_minishell *shell, t_list *env)
 {
 	if (node_env)
+	{
+		if (node_env->name)
+			free(node_env->name);
+		if (node_env->content)
+			free(node_env->content);
 		free(node_env);
-	if (node_env->name)
-		free(node_env->name);
-	if (node_env->content)
-		free(node_env->content);
+	}
 	error_malloc(shell, env);
 }
 

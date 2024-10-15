@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:13:10 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/11 16:06:15 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:26:58 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,16 @@ int	quote_state(char c, int quoted)
 	return (quoted);
 }
 
-void	search_dollar(char **argv, t_list *env, t_minishell *shell)
+bool	is_expandable(char **argv, int i, int j, int quoted)
+{
+	if (argv[i][j] == '$' && quoted != 1 && ft_iswhitespace(argv[i][j + 1]) == 0
+		&& argv[i][j + 1] != 0 && argv[i][j + 1] != '~')
+		return (true);
+	return (false);
+}
+
+void	search_dollar(char **argv, t_list *env, t_minishell *shell,
+		bool *is_expand)
 {
 	int	i;
 	int	j;
@@ -69,9 +78,10 @@ void	search_dollar(char **argv, t_list *env, t_minishell *shell)
 			if (argv[i] == NULL)
 				error_malloc(shell, env);
 			quoted = quote_state(argv[i][j], quoted);
-			if (argv[i][j] == '$' && quoted != 1 && ft_iswhitespace(argv[i][j
-					+ 1]) == 0 && argv[i][j + 1] != 0 && argv[i][j + 1] != '~')
+			if (is_expandable(argv, i, j, quoted))
 				argv[i] = dollar_expander(argv[i], &j, env, shell);
+			else
+				*is_expand = false;
 			if (!argv[i])
 				error_malloc(shell, env);
 		}
@@ -80,6 +90,9 @@ void	search_dollar(char **argv, t_list *env, t_minishell *shell)
 
 void	expand(t_parse_cmd *cmd, t_list *env, t_minishell *shell)
 {
+	bool	is_expand;
+
+	is_expand = true;
 	while (cmd)
 	{
 		if (cmd->argc == 0)
@@ -88,9 +101,12 @@ void	expand(t_parse_cmd *cmd, t_list *env, t_minishell *shell)
 			cmd = cmd->next;
 			continue ;
 		}
-		search_dollar(cmd->argv, env, shell);
-		if (split_expand(&cmd->argc, &cmd->argv, -1) == FAILURE)
-			error_malloc(shell, env);
+		search_dollar(cmd->argv, env, shell, &is_expand);
+		if (is_expand == true)
+		{
+			if (split_expand(&cmd->argc, &cmd->argv) == FAILURE)
+				error_malloc(shell, env);
+		}
 		if (remove_quote(cmd->argv) == FAILURE)
 			error_malloc(shell, env);
 		free(cmd->value);

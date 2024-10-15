@@ -10,37 +10,38 @@ CFLAGS = -Wall -Werror -Wextra -Wunused -g3 -I./include
 
 SRC_DIR = src
 
-SRC 	= 	main.c					\
-			init.c					\
-			env.c					\
-			env2.c					\
-			lexer.c					\
-			lexer_utils.c			\
-			builtins/cd.c			\
-			builtins/pwd.c			\
-			builtins/env.c			\
-			builtins/export.c		\
-			builtins/unset.c		\
-			builtins/echo.c			\
-			builtins/exit.c			\
-			parse_cmd.c				\
-			parse_cmd_utils.c		\
-			parse_cmd_utils2.c		\
-			expand.c				\
-			expand_redir.c			\
-			expand_utils.c			\
-			split_expand.c			\
-			quote.c					\
-			minishell_utils.c		\
-			exec/exec.c				\
-			exec/exec_utils.c		\
-			exec/process_builtin.c	\
-			exec/redirection.c		\
-			exec/exec_cmd.c			\
-			exec/here_doc.c			\
-			exec/here_doc_utils.c	\
-			handler.c				\
-			free.c					\
+SRC 	= 	main.c						\
+			init.c						\
+			env/env.c					\
+			env/env2.c					\
+			lexer/lexer.c				\
+			lexer/lexer_utils.c			\
+			builtins/cd.c				\
+			builtins/pwd.c				\
+			builtins/env.c				\
+			builtins/export.c			\
+			builtins/unset.c			\
+			builtins/echo.c				\
+			builtins/exit.c				\
+			parse/parse_cmd.c			\
+			parse/parse_cmd_utils.c		\
+			parse/parse_cmd_utils2.c	\
+			expand/expand.c				\
+			expand/expand_redir.c		\
+			expand/expand_utils.c		\
+			expand/split_expand.c		\
+			expand/split_expand_utils.c \
+			expand/quote.c				\
+			minishell_utils.c			\
+			exec/exec.c					\
+			exec/exec_utils.c			\
+			exec/process_builtin.c		\
+			exec/redirection.c			\
+			exec/exec_cmd.c				\
+			exec/here_doc.c				\
+			exec/here_doc_utils.c		\
+			handler.c					\
+			free.c						\
 			error.c
 
 OBJ_DIR = obj
