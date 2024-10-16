@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:26:14 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/24 18:32:26 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/16 14:51:06 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	echo(int argc, char **argv)
 	{
 		move = argv + 1;
 		n_flag = 0;
-		if (is_n_flag(*move))
+		while (*move && is_n_flag(*move))
 		{
 			n_flag = 1;
 			++move;

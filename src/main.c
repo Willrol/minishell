@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:39:34 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/15 17:31:24 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/16 13:54:43 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	main(const int argc, const char **argv, char **envp)
 	ft_bzero(&shell, sizeof(t_minishell));
 	ft_bzero(&token, sizeof(t_list));
 	init_shell_env(&shell, &env, envp);
+	shell.env = &env;
 	add_shlvl(env);
 	while (true)
 		loop(&shell, cmd, token, env);

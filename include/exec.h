@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 09:52:45 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/14 16:38:35 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/16 14:06:44 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,13 @@
 # include "parse_cmd.h"
 # include <signal.h>
 
-int		exec_builtin(t_list *env, t_minishell *shell, t_parse_cmd *cmd);
 int		is_a_builtin(t_parse_cmd *cmd);
 int		execution(t_list *env, t_minishell *shell, t_parse_cmd *cmd);
 void	free_child(t_list *env, t_minishell *shell);
 void	error_exec(char *str);
 void	set_fd(t_minishell *shell);
 int		exec_command(t_list *env, t_minishell *shell, t_parse_cmd *cmd);
-void	exec_solo_builtin(t_list *env, t_minishell *shell, t_parse_cmd *tmp);
+void	exec_solo_builtin(t_minishell *shell, t_parse_cmd *tmp);
 int		do_command(t_list *env, t_minishell *shell, t_parse_cmd *cmd);
 int		search_here_doc(t_list *env, t_minishell *shell, t_parse_cmd *cmd);
 int		here_parent(pid_t pid, t_minishell *shell);

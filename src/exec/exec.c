@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 11:08:22 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/11 13:06:37 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/16 14:06:49 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	execution(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 	while (tmp)
 	{
 		if (!has_pipe && tmp->value != NULL && is_a_builtin(tmp) == SUCCESS)
-			exec_solo_builtin(env, shell, tmp);
+			exec_solo_builtin(shell, tmp);
 		else
 			do_fork(env, shell, tmp, has_pipe);
 		tmp = tmp->next;

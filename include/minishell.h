@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:40:02 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/15 17:33:02 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/16 13:59:27 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_minishell
 	int						fd_out;
 	int						fd_save;
 	t_parse_cmd				*cmd;
+	t_list					**env;
 }							t_minishell;
 
 typedef struct s_env

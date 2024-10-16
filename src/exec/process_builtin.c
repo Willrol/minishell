@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 08:10:19 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/10 11:09:26 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/16 14:06:37 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,30 +31,30 @@ int	is_a_builtin(t_parse_cmd *cmd)
 	return (FAILURE);
 }
 
-int	exec_builtin(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
+int	exec_builtin(t_minishell *shell, t_parse_cmd *cmd)
 {
 	if (!ft_strcmp(cmd->value, "echo"))
 		return (echo(cmd->argc, cmd->argv));
 	if (!ft_strcmp(cmd->value, "cd"))
-		return (cd(cmd->argc, cmd->argv, env));
+		return (cd(cmd->argc, cmd->argv, *shell->env));
 	if (!ft_strcmp(cmd->value, "pwd"))
 		return (pwd());
 	if (!ft_strcmp(cmd->value, "export"))
-		return (ft_export(&env, cmd->argv));
+		return (ft_export(shell->env, cmd->argv));
 	if (!ft_strcmp(cmd->value, "unset"))
-		return (unset(&env, cmd->argv));
+		return (unset(shell->env, cmd->argv));
 	if (!ft_strcmp(cmd->value, "env"))
-		return (print_env(env));
+		return (print_env(*shell->env));
 	if (!ft_strcmp(cmd->value, "exit"))
-		return (exit_builtin(env, shell, cmd));
+		return (exit_builtin(*shell->env, shell, cmd));
 	return (FAILURE);
 }
 
-void	exec_solo_builtin(t_list *env, t_minishell *shell, t_parse_cmd *tmp)
+void	exec_solo_builtin(t_minishell *shell, t_parse_cmd *tmp)
 {
 	shell->fd_save = dup(STDOUT_FILENO);
 	handle_redirection(shell, tmp);
-	shell->exit_status = exec_builtin(env, shell, tmp);
+	shell->exit_status = exec_builtin(shell, tmp);
 	dup2(shell->fd_save, STDOUT_FILENO);
 	if (shell->fd_save != -1)
 		close(shell->fd_save);
