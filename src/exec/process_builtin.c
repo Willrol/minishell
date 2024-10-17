@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 08:10:19 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/17 08:09:38 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/17 12:05:57 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	exec_builtin(t_minishell *shell, t_parse_cmd *cmd)
 	if (!ft_strcmp(cmd->value, "pwd"))
 		return (pwd());
 	if (!ft_strcmp(cmd->value, "export"))
-		return (ft_export(shell->env, cmd->argv));
+		return (ft_export(shell->env, shell, cmd->argv));
 	if (!ft_strcmp(cmd->value, "unset"))
 		return (unset(shell->env, shell, cmd->argv));
 	if (!ft_strcmp(cmd->value, "env"))

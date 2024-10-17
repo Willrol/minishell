@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:40:02 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/17 08:10:52 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/17 13:22:09 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,14 @@ int							ft_mot(char *line);
 void						lexer_error(t_list **token, t_token *node_token);
 t_valuetype					typval(char *value);
 
+int							valid_name(char *str);
+int							count_equal(char *av);
 int							cd(int argc, char **argv, t_list *env);
 int							pwd(void);
 int							echo(int argc, char **argv);
 int							print_env(t_list *env);
-int							ft_export(t_list **env, char **argv);
+int							ft_export(t_list **env, t_minishell *shell,
+								char **argv);
 int							exit_builtin(t_list *env, t_minishell *shell,
 								t_parse_cmd *cmd);
 void						error_print(char *str, char *cmd_name);

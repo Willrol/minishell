@@ -20,6 +20,7 @@ SRC 	= 	main.c						\
 			builtins/pwd.c				\
 			builtins/env.c				\
 			builtins/export.c			\
+			builtins/export_utils.c		\
 			builtins/unset.c			\
 			builtins/echo.c				\
 			builtins/exit.c				\
