@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:07:26 by rderkaza          #+#    #+#             */
-/*   Updated: 2024/10/15 16:37:50 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/17 08:02:01 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,14 @@ void	init_shell_env(t_minishell *shell, t_list **env, char **envp)
 
 	shell->exit_status = 0;
 	shell->username = get_username();
-	shell->path = get_path();
-	if (!shell->username || !shell->path)
+	shell->path = NULL;
+	if (!shell->username)
 		error_malloc(shell, NULL);
 	if (!envp || !*envp)
 	{
+		shell->path = get_path();
+		if (!shell->path)
+			error_malloc(shell, NULL);
 		pwd = getcwd(NULL, 0);
 		if (add_env(env, "PWD", pwd) == FAILURE)
 			error_malloc(shell, *env);

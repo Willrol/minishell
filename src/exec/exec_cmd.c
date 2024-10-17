@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:44 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/15 15:50:55 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/17 08:54:53 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@ char	*make_path(t_list *env, t_minishell *shell)
 	t_list	*path_node;
 	char	*path;
 
+	path = NULL;
 	path_node = search_env(env, "PATH");
-	if (!path_node)
+	if (!path_node && shell->path)
 		path = ft_strdup(shell->path);
-	else
+	else if (path_node)
 		path = ft_strdup(((t_env *)path_node->content)->content);
 	if (!path)
 		return (NULL);
@@ -35,7 +36,7 @@ char	*exec(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 
 	path = make_path(env, shell);
 	if (!path)
-		return (NULL);
+		return (ft_strdup(cmd->value));
 	i = -1;
 	if (path)
 	{
@@ -77,7 +78,7 @@ int	do_command(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 	int	ret;
 
 	if (is_a_builtin(cmd) == SUCCESS)
-		ret = exec_builtin(env, shell, cmd);
+		ret = exec_builtin(shell, cmd);
 	else
 		ret = exec_command(env, shell, cmd);
 	return (ret);

@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:13:10 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/15 16:26:58 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/17 10:26:48 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,14 @@ int	quote_state(char c, int quoted)
 	return (quoted);
 }
 
-bool	is_expandable(char **argv, int i, int j, int quoted)
+bool	is_expandable(char *argv, int j, int quoted, bool *is_expand)
 {
-	if (argv[i][j] == '$' && quoted != 1 && ft_iswhitespace(argv[i][j + 1]) == 0
-		&& argv[i][j + 1] != 0 && argv[i][j + 1] != '~')
+	if (argv[j] == '$' && quoted != 1 && ft_iswhitespace(argv[j + 1]) == 0
+		&& argv[j + 1] != 0 && argv[j + 1] != '~')
+	{
+		*is_expand = true;
 		return (true);
+	}
 	return (false);
 }
 
@@ -78,10 +81,8 @@ void	search_dollar(char **argv, t_list *env, t_minishell *shell,
 			if (argv[i] == NULL)
 				error_malloc(shell, env);
 			quoted = quote_state(argv[i][j], quoted);
-			if (is_expandable(argv, i, j, quoted))
+			if (is_expandable(argv[i], j, quoted, is_expand))
 				argv[i] = dollar_expander(argv[i], &j, env, shell);
-			else
-				*is_expand = false;
 			if (!argv[i])
 				error_malloc(shell, env);
 		}
@@ -92,7 +93,7 @@ void	expand(t_parse_cmd *cmd, t_list *env, t_minishell *shell)
 {
 	bool	is_expand;
 
-	is_expand = true;
+	is_expand = false;
 	while (cmd)
 	{
 		if (cmd->argc == 0)
@@ -103,12 +104,11 @@ void	expand(t_parse_cmd *cmd, t_list *env, t_minishell *shell)
 		}
 		search_dollar(cmd->argv, env, shell, &is_expand);
 		if (is_expand == true)
-		{
 			if (split_expand(&cmd->argc, &cmd->argv) == FAILURE)
 				error_malloc(shell, env);
-		}
-		if (remove_quote(cmd->argv) == FAILURE)
-			error_malloc(shell, env);
+		if (is_expand == false)
+			if (remove_quote(cmd->argv) == FAILURE)
+				error_malloc(shell, env);
 		free(cmd->value);
 		cmd->value = ft_strdup(cmd->argv[0]);
 		expand_redir(cmd, env, shell);
