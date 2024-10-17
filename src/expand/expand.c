@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:13:10 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/17 10:26:48 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/17 13:39:10 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ void	expand(t_parse_cmd *cmd, t_list *env, t_minishell *shell)
 	is_expand = false;
 	while (cmd)
 	{
+		if (remove_quote(cmd->argv) == FAILURE)
+			error_malloc(shell, env);
 		if (cmd->argc == 0)
 		{
 			expand_redir(cmd, env, shell);
@@ -105,9 +107,6 @@ void	expand(t_parse_cmd *cmd, t_list *env, t_minishell *shell)
 		search_dollar(cmd->argv, env, shell, &is_expand);
 		if (is_expand == true)
 			if (split_expand(&cmd->argc, &cmd->argv) == FAILURE)
-				error_malloc(shell, env);
-		if (is_expand == false)
-			if (remove_quote(cmd->argv) == FAILURE)
 				error_malloc(shell, env);
 		free(cmd->value);
 		cmd->value = ft_strdup(cmd->argv[0]);
