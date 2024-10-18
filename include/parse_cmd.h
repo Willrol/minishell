@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 16:40:03 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/17 10:36:39 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/18 12:55:40 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int							split_expand(int *argc, char ***argv);
 
 void						is_quote(char c, bool *in_single_quote,
 								bool *in_double_quote);
+void						minus_quote(t_parse_cmd *cmd);
+int							quote_state(char c, int quoted);
 int							remove_quote(char **argv);
 int							remove_quote_redir(char **file_name);
 

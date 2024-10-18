@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 10:56:55 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/15 17:33:45 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/18 12:56:25 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	loop(t_minishell *shell, t_parse_cmd *cmd, t_list *token, t_list *env)
 	free(new_input);
 	shell->cmd = cmd;
 	free_token_list(token);
+	minus_quote(cmd);
 	expand(cmd, env, shell);
 	here_exec(shell, cmd, env);
 }

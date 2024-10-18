@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:27:37 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/15 16:26:48 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/18 12:34:39 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	is_quote(char c, bool *in_single_quote, bool *in_double_quote)
 {
-	if (c == '\'')
+	if (c == ('\'' * -1))
 	{
 		*in_single_quote = !(*in_single_quote);
 	}
-	else if (c == '\"')
+	else if (c == ('\"' * -1))
 	{
 		*in_double_quote = !(*in_double_quote);
 	}

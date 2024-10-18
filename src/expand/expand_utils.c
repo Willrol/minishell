@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 14:31:09 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/08 12:46:30 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/18 13:00:40 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,15 @@ char	*question_mark_expander(char *str, int *j, t_minishell *shell)
 		return (NULL);
 	}
 	*j += ft_strlen(expand) - 1;
-	free (expand);
+	free(expand);
 	return (tmp);
+}
+
+int	quote_state(char c, int quoted)
+{
+	if (c == ('\'' * -1) && !(quoted & 0b10))
+		quoted ^= 0b01;
+	if (c == ('"' * -1) && !(quoted & 0b01))
+		quoted ^= 0b10;
+	return (quoted);
 }

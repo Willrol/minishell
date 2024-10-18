@@ -33,6 +33,7 @@ SRC 	= 	main.c						\
 			expand/split_expand.c		\
 			expand/split_expand_utils.c \
 			expand/quote.c				\
+			expand/prepare_quote.c		\
 			minishell_utils.c			\
 			exec/exec.c					\
 			exec/exec_utils.c			\
