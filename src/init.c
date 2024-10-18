@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:07:26 by rderkaza          #+#    #+#             */
-/*   Updated: 2024/10/17 08:02:01 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/18 14:07:14 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,15 @@
 char	*init_input(t_list *env, t_minishell shell)
 {
 	char	*input;
-	char	*new_input;
+	char	*new_input1;
+	char	*new_input2;
 
 	input = read_input(env, shell);
-	new_input = ft_strtrim(input, " ");
+	new_input1 = ft_strtrim(input, " ");
+	new_input2 = ft_strtrim(new_input1, "\n");
+	free(new_input1);
 	free(input);
-	return (new_input);
+	return (new_input2);
 }
 
 void	init_shell_env(t_minishell *shell, t_list **env, char **envp)

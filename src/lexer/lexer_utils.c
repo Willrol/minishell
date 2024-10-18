@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:02:32 by aditer            #+#    #+#             */
-/*   Updated: 2024/09/23 13:38:14 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/18 14:02:02 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	ft_mot(char *line)
 	char	quote;
 
 	j = 0;
-	while (line[0] && isnotsp(line) == 0 && line[0] != ' ')
+	while (line[0] && isnotsp(line) == 0 && ft_iswhitespace(line[0]) == 0)
 	{
 		line++;
 		j++;

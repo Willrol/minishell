@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:06:36 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/11 14:35:25 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:59:19 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,9 @@ t_valuetype	process_token(char *line, t_list **token, int *flag,
 	return (isnotsp(line));
 }
 
-void	skip_spaces(char **line)
+void	skip_whitespace(char **line)
 {
-	while (**line == ' ')
+	while (**line && ft_iswhitespace(**line))
 		(*line)++;
 }
 
@@ -121,7 +121,7 @@ t_list	*lexer(char *line, int err)
 		return (NULL);
 	while (tmp[0])
 	{
-		skip_spaces(&tmp);
+		skip_whitespace(&tmp);
 		if (isnotsp(tmp) == 0 || isnotsp(tmp) == 3)
 			err = wordintake(tmp, &token, &flag);
 		else
