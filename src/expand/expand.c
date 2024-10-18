@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:13:10 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/18 12:38:46 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/18 13:47:28 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,13 @@ void	search_dollar(char **argv, t_list *env, t_minishell *shell,
 		{
 			if (argv[i][j] == '~' && ft_strlen_nowhitespace(argv[i]) == 1)
 				argv[i] = tilde_expander(argv[i], env, shell->username, &j);
+			if (!argv[i])
+				error_malloc(shell, env);
 			if (is_expandable(argv[i], j, quoted, is_expand))
 				argv[i] = dollar_expander(argv[i], &j, env, shell);
 			if (argv[i] == NULL)
 				error_malloc(shell, env);
 			quoted = quote_state(argv[i][j], quoted);
-			if (!argv[i])
-				error_malloc(shell, env);
 		}
 	}
 }
