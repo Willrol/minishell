@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:48:28 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/18 13:02:12 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/21 18:31:24 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,43 @@ static void	check_minus_quote(t_parse_cmd *tmp, int i, int *j)
 	}
 }
 
+static void	minus_quote_redir(t_parse_cmd *tmp)
+{
+	int				i;
+	char			quote;
+	t_redirection	*redir;
+
+	i = 0;
+	redir = tmp->redirection;
+	while (redir)
+	{
+		while (redir->file_name[i])
+		{
+			if (redir->file_name[i] == '\'' || redir->file_name[i] == '"')
+			{
+				quote = redir->file_name[i];
+				redir->file_name[i] *= -1;
+				while (redir->file_name[i] && redir->file_name[i] != quote)
+					i++;
+				redir->file_name[i] *= -1;
+			}
+			i++;
+		}
+		redir = redir->next;
+	}
+}
+
 void	minus_quote(t_parse_cmd *cmd)
 {
-	int			i;
-	int			j;
-	t_parse_cmd	*tmp;
+	int				i;
+	int				j;
+	t_parse_cmd		*tmp;
 
 	tmp = cmd;
 	while (tmp)
 	{
 		i = -1;
+		minus_quote_redir(tmp);
 		while (tmp->argv[++i])
 		{
 			j = -1;

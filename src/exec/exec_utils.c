@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 11:15:32 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/21 14:07:23 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/21 18:34:07 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,20 @@ void	set_fd(t_minishell *shell)
 	shell->fd_out = -1;
 	shell->fd_save_in = -1;
 	shell->fd_save_out = -1;
+}
+
+int	test_path(char *path)
+{
+	if (access(path, F_OK | X_OK) == -1)
+		return (CMD_NFOUND);
+	return (SUCCESS);
+}
+
+bool	is_dir(char *cmd)
+{
+	struct stat	path_stat;
+
+	if (stat(cmd, &path_stat) == -1)
+		return (false);
+	return (S_ISDIR(path_stat.st_mode));
 }

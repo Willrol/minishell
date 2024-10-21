@@ -1,4 +1,4 @@
-NAME  = shell
+NAME  = minishell
 
 LIBFT_DIR = lib/libft
 

@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:44 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/21 15:17:10 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/21 18:32:09 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,6 @@ char	*make_path(t_list *env, t_minishell *shell)
 	if (!path)
 		return (NULL);
 	return (path);
-}
-
-int	test_path(char *path)
-{
-	if (access(path, F_OK | X_OK) == -1)
-		return (127);
-	return (SUCCESS);
 }
 
 char	*exec(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
@@ -67,18 +60,15 @@ int	exec_command(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 {
 	char	*path;
 	char	**env_tab;
-	DIR		*dir;
 
-	path = exec(env, shell, cmd);
-	dir = opendir(path);
-	if (dir != NULL)
+	if (is_dir(cmd->value))
 	{
 		error_exec(cmd->value, IS_DIR);
-		free(path);
-		closedir(dir);
 		return (IS_DIR);
 	}
+	path = exec(env, shell, cmd);
 	env_tab = get_env_tab(env);
+	shell->exit_status = test_path(path);
 	if (shell->exit_status != SUCCESS)
 	{
 		error_exec(cmd->value, shell->exit_status);

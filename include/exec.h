@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 09:52:45 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/21 13:49:32 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/21 18:35:42 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@
 void	free_child(t_list *env, t_minishell *shell);
 void	error_exec(char *str, int error);
 
-void	set_fd(t_minishell *shell);
+void    set_fd(t_minishell *shell);
+int		test_path(char *path);
+bool	is_dir(char *cmd);
 int		execution(t_list *env, t_minishell *shell, t_parse_cmd *cmd);
 int		exec_command(t_list *env, t_minishell *shell, t_parse_cmd *cmd);
 int		is_a_builtin(t_parse_cmd *cmd);

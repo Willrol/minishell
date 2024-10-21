@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:20:36 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/18 13:01:43 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/21 18:36:09 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,30 @@
 
 int	valid_name(char *str)
 {
-	int	i;
+    int	i;
 
-	i = 0;
-	if (ft_isalpha(str[0]) == 0)
-	{
-		printf("export: `%s': not a valid identifier\n", str);
-		free(str);
-		return (FAILURE);
-	}
-	while (str[i])
-	{
-		if (ft_isalnum(str[i]) == 0)
-		{
-			printf("export: `%s': not a valid identifier\n", str);
-			free(str);
-			return (FAILURE);
-		}
-		i++;
-	}
-	return (0);
+    i = 0;
+    if (ft_isalpha(str[0]) == 0)
+    {
+        ft_putstr_fd("export: `", 2);
+        ft_putstr_fd(str, 2);
+        ft_putstr_fd("': not a valid identifier\n", 2);
+        free(str);
+        return (FAILURE);
+    }
+    while (str[i])
+    {
+        if (ft_isalnum(str[i]) == 0)
+        {
+            ft_putstr_fd("export: `", 2);
+            ft_putstr_fd(str, 2);
+            ft_putstr_fd("': not a valid identifier\n", 2);
+            free(str);
+            return (FAILURE);
+        }
+        i++;
+    }
+    return (0);
 }
 
 int	count_equal(char *av)

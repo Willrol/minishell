@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 14:16:09 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/09 14:40:27 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/21 17:44:20 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ void	search_dollar_redir(char **file_name, t_list *env, t_minishell *shell)
 			*file_name = tilde_expander(*file_name, env, shell->username, &i);
 		if (*file_name == NULL)
 			error_malloc(shell, env);
-		if ((*file_name)[i] == '\'' && !double_quote)
+		if ((*file_name)[i] == ('\'' * -1) && !double_quote)
 			simple_quote = !simple_quote;
-		if ((*file_name)[i] == '"' && !simple_quote)
+		if ((*file_name)[i] == ('"' * -1) && !simple_quote)
 			double_quote = !double_quote;
 		if ((*file_name)[i] == '$' && !simple_quote
 			&& ft_iswhitespace((*file_name)[i + 1]) == 0 && (*file_name)[i

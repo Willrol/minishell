@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:26:24 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/17 13:20:44 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/21 18:25:08 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	process_argument(t_list **env, t_minishell *shell, char *arg)
 	if ((size_t)j == ft_strlen(arg))
 	{
 		free_tmps(tmp1, tmp2);
-		return (FAILURE);
+		return (SUCCESS);
 	}
 	add_env(env, tmp1, tmp2);
 	free_tmps(tmp1, tmp2);
@@ -96,7 +96,7 @@ int	ft_export(t_list **env, t_minishell *shell, char **argv)
 	{
 		result = process_argument(env, shell, argv[i]);
 		if (result == FAILURE)
-			return (FAILURE);
+			return (1);
 		i++;
 	}
 	return (SUCCESS);
