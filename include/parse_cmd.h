@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 16:40:03 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/18 12:55:40 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/21 13:49:40 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define PARSE_CMD_H
 
 # include "minishell.h"
+
+# define CMD_NFOUND 127
+# define IS_DIR 126
 
 typedef struct s_redirection
 {

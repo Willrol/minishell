@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 08:10:19 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/17 12:05:57 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/21 14:43:26 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,19 @@ int	exec_builtin(t_minishell *shell, t_parse_cmd *cmd)
 
 void	exec_solo_builtin(t_minishell *shell, t_parse_cmd *tmp)
 {
-	shell->fd_save = dup(STDOUT_FILENO);
-	handle_redirection(shell, tmp);
-	shell->exit_status = exec_builtin(shell, tmp);
-	dup2(shell->fd_save, STDOUT_FILENO);
-	if (shell->fd_save != -1)
-		close(shell->fd_save);
+	int	status;
+
+	shell->fd_save_in = dup(STDIN_FILENO);
+	shell->fd_save_out = dup(STDOUT_FILENO);
+	status = handle_redirection(shell, tmp);
+	if (status != FAILURE)
+		shell->exit_status = exec_builtin(shell, tmp);
+	else
+		shell->exit_status = 1;
+	dup2(shell->fd_save_in, STDIN_FILENO);
+	dup2(shell->fd_save_out, STDOUT_FILENO);
+	if (shell->fd_save_in != -1)
+		close(shell->fd_save_in);
+	if (shell->fd_save_out != -1)
+		close(shell->fd_save_out);
 }

@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:26:14 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/16 14:51:06 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/21 14:21:00 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,7 @@ int	echo(int argc, char **argv)
 		if (!n_flag)
 			ft_putstr_fd("\n", 1);
 	}
+	else
+		ft_putchar_fd('\n', 1);
 	return (SUCCESS);
 }

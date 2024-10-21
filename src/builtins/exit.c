@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:26:22 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/09 14:35:53 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/21 14:43:26 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ static void	exit_arg(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 	{
 		printf("exit\nminishell: exit: %s: numeric argument required\n",
 			cmd->argv[1]);
-		if (shell->fd_save != -1)
-			close(shell->fd_save);
 		free_shell(shell, env);
 		exit(2);
 	}
@@ -32,6 +30,23 @@ static void	exit_arg(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 		status = ft_atoi(cmd->argv[1]);
 		free_shell(shell, env);
 		exit(status);
+	}
+}
+
+static int	exit_args(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
+{
+	if (ft_isdigit(cmd->argv[1][0]) == 0)
+	{
+		printf("exit\nminishell: exit: %s: numeric argument required\n",
+			cmd->argv[1]);
+		free_shell(shell, env);
+		exit(2);
+	}
+	else
+	{
+		printf("exit\nminishell: exit: too many arguments\n");
+		shell->exit_status = 1;
+		return (FAILURE);
 	}
 }
 
@@ -47,10 +62,9 @@ int	exit_builtin(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 		exit_arg(env, shell, cmd);
 		return (SUCCESS);
 	}
-	else
+	else if (cmd->argc > 2)
 	{
-		printf("exit\nminishell: exit: too many arguments\n");
-		shell->exit_status = 1;
-		return (FAILURE);
+		return (exit_args(env, shell, cmd));
 	}
+	return (FAILURE);
 }

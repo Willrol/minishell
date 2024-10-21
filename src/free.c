@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:43:12 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/14 13:25:18 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/21 10:38:56 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ void	free_shell(t_minishell *shell, t_list *env)
 	}
 	if (env)
 		free_env(env);
-	if (shell->fd_save != -1)
-		close(shell->fd_save);
+	if (shell->fd_save_in != -1)
+		close(shell->fd_save_in);
+	if (shell->fd_save_out != -1)
+		close(shell->fd_save_out);
 	if (shell->path)
 		free(shell->path);
 }

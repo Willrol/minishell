@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:34:54 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/14 16:38:19 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/21 14:53:53 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	here_doc(t_list *env, t_minishell *shell, t_redirection *redirection,
 	free(file_name);
 	if (fd == -1)
 	{
-		error_exec("here_doc");
+		error_exec("here_doc", 0);
 		return ;
 	}
 	active_doc(redirection, fd);
@@ -73,7 +73,7 @@ int	call_doc(t_list *env, t_minishell *shell, t_redirection *redir, int i)
 	g_sigflag = 0;
 	pid = fork();
 	if (pid == -1)
-		error_exec("fork");
+		error_exec("fork", 0);
 	if (pid == 0)
 		here_doc(env, shell, redir, i);
 	else

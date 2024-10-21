@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:44 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/17 08:54:53 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/21 15:17:10 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ char	*make_path(t_list *env, t_minishell *shell)
 	return (path);
 }
 
+int	test_path(char *path)
+{
+	if (access(path, F_OK | X_OK) == -1)
+		return (127);
+	return (SUCCESS);
+}
+
 char	*exec(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 {
 	char	*path;
@@ -46,7 +53,8 @@ char	*exec(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 			if (path)
 				free(path);
 			path = ft_strjoin3(split_path[i], "/", cmd->value);
-			if (access(path, F_OK | X_OK) == 0)
+			shell->exit_status = test_path(path);
+			if (shell->exit_status == SUCCESS)
 				return (ft_free_tab(split_path), path);
 		}
 		ft_free_tab(split_path);
@@ -59,18 +67,29 @@ int	exec_command(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 {
 	char	*path;
 	char	**env_tab;
+	DIR		*dir;
 
 	path = exec(env, shell, cmd);
-	env_tab = get_env_tab(env);
-	if (execve(path, cmd->argv, env_tab) == FAILURE)
+	dir = opendir(path);
+	if (dir != NULL)
 	{
-		error_exec(cmd->value);
+		error_exec(cmd->value, IS_DIR);
 		free(path);
-		ft_free_tab(env_tab);
-		return (127);
+		closedir(dir);
+		return (IS_DIR);
 	}
+	env_tab = get_env_tab(env);
+	if (shell->exit_status != SUCCESS)
+	{
+		error_exec(cmd->value, shell->exit_status);
+		free(path);
+		return (ft_free_tab(env_tab), shell->exit_status);
+	}
+	execve(path, cmd->argv, env_tab);
+	error_exec(cmd->value, shell->exit_status);
 	free(path);
-	return (SUCCESS);
+	ft_free_tab(env_tab);
+	return (FAILURE);
 }
 
 int	do_command(t_list *env, t_minishell *shell, t_parse_cmd *cmd)

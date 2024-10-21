@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:13:10 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/18 13:47:28 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/21 09:49:01 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static char	*dollar_expander(char *str, int *j, t_list *env, t_minishell *shell)
 bool	is_expandable(char *argv, int j, int quoted, bool *is_expand)
 {
 	if (argv[j] == '$' && !(quoted & 0b01) && ft_iswhitespace(argv[j + 1]) == 0
-		&& argv[j + 1] != 0 && argv[j + 1] != '~')
+		&& argv[j + 1] != 0 && argv[j + 1] != '~' && argv[j + 1] != ('"' * -1))
 	{
 		*is_expand = true;
 		return (true);

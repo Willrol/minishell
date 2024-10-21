@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 09:52:45 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/17 10:30:20 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/21 13:49:32 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@
 # include "minishell.h"
 # include "parse_cmd.h"
 # include <signal.h>
+# include <sys/types.h>
+# include <dirent.h>
 
 void	free_child(t_list *env, t_minishell *shell);
-void	error_exec(char *str);
+void	error_exec(char *str, int error);
 
 void	set_fd(t_minishell *shell);
 int		execution(t_list *env, t_minishell *shell, t_parse_cmd *cmd);

@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:40:02 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/17 13:22:09 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/21 13:42:11 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # define SUCCESS 0
 # define WRITE 1
 # define READ 0
+# define CMD_NFOUND 127
+# define IS_DIR 126
 
 extern int					g_sigflag;
 
@@ -54,7 +56,8 @@ typedef struct s_minishell
 	int						prev_pipe_fd_out;
 	int						fd_in;
 	int						fd_out;
-	int						fd_save;
+	int						fd_save_in;
+	int						fd_save_out;
 	t_parse_cmd				*cmd;
 	t_list					**env;
 }							t_minishell;

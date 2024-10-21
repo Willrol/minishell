@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:53 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/08 08:17:34 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/21 14:48:58 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	redirection_in(t_minishell *shell, t_redirection *redir)
 	shell->fd_in = open(redir->file_name, O_RDONLY);
 	if (shell->fd_in == -1)
 	{
-		error_exec(redir->file_name);
+		error_exec(redir->file_name, 0);
 		return (FAILURE);
 	}
 	dup2(shell->fd_in, STDIN_FILENO);
@@ -35,7 +35,7 @@ int	redirection_out(t_minishell *shell, t_redirection *redir)
 			O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (shell->fd_out == -1)
 	{
-		error_exec(redir->file_name);
+		error_exec(redir->file_name, 0);
 		return (FAILURE);
 	}
 	dup2(shell->fd_out, STDOUT_FILENO);
@@ -51,7 +51,7 @@ int	redirection_append(t_minishell *shell, t_redirection *redir)
 			O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (shell->fd_out == -1)
 	{
-		error_exec(redir->file_name);
+		error_exec(redir->file_name, 0);
 		return (FAILURE);
 	}
 	dup2(shell->fd_out, STDOUT_FILENO);
