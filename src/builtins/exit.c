@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:26:22 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/22 10:20:02 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/22 13:52:04 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ static void	exit_arg(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 	{
 		if (!isdigit(cmd->argv[1][i]))
 		{
-			ft_putstr_fd("exit\nminishell: exit: ", 2);
+			ft_putstr_fd("exit\n", 1);
+			ft_putstr_fd("minishell: exit: ", 2);
 			ft_putstr_fd(cmd->argv[1], 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
 			free_shell(shell, env);
@@ -50,7 +51,8 @@ static int	exit_args(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 	{
 		if (!isdigit(cmd->argv[1][i]))
 		{
-			ft_putstr_fd("exit\nminishell: exit: ", 2);
+			ft_putstr_fd("exit\n", 1);
+			ft_putstr_fd("minishell: exit: ", 2);
 			ft_putstr_fd(cmd->argv[1], 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
 			free_shell(shell, env);

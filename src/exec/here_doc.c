@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:34:54 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/21 14:53:53 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/22 14:29:41 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,13 @@ void	here_doc(t_list *env, t_minishell *shell, t_redirection *redirection,
 	close(fd);
 	free_child(env, shell);
 	if (g_sigflag == SIGINT)
-		exit (130);
+		exit(130);
 	exit(0);
 }
 
 int	call_doc(t_list *env, t_minishell *shell, t_redirection *redir, int i)
 {
 	pid_t	pid;
-	char	*nb;
 
 	g_sigflag = 0;
 	pid = fork();
@@ -76,17 +75,12 @@ int	call_doc(t_list *env, t_minishell *shell, t_redirection *redir, int i)
 		error_exec("fork", 0);
 	if (pid == 0)
 		here_doc(env, shell, redir, i);
-	else
-		if (here_parent(pid, shell) == FAILURE)
-			return (FAILURE);
-	nb = ft_itoa(i);
-	if (!nb)
-		error_malloc(shell, env);
-	free(redir->file_name);
-	redir->file_name = ft_strjoin(".tmp", nb);
-	free(nb);
-	if (!redir->file_name)
-		error_malloc(shell, env);
+	else if (here_parent(pid, shell) == FAILURE)
+	{
+		update_redir_file_name(redir, i, shell, env);
+		return (FAILURE);
+	}
+	update_redir_file_name(redir, i, shell, env);
 	return (SUCCESS);
 }
 

@@ -6,7 +6,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 CC = cc
 RM = rm -f
-CFLAGS = -Wall -Werror -Wextra -Wunused -g3 -I./include
+CFLAGS = -Wall -Werror -Wextra -Wunused -g3 -I./include -fsanitize=address,leak,undefined
 
 SRC_DIR = src
 

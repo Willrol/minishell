@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:23:32 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/22 13:29:37 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/22 14:52:46 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,31 @@ void	check_argv_empty(char **argv)
 	}
 }
 
+void	free_tab_argc(int argc, char **argv)
+{
+	int	i;
+
+	i = 0;
+	while (i < argc)
+	{
+		free(argv[i]);
+		i++;
+	}
+	free(argv);
+}
+
 void	rm_argv_null(int *argc, char ***argv)
 {
 	int		i;
 	int		j;
 	int		cpt;
+	int		old_argc;
 	char	**new_argv;
 
 	i = -1;
 	j = 0;
 	cpt = 0;
+	old_argc = *argc;
 	while (++i < (*argc))
 		if ((*argv)[i] == NULL)
 			cpt++;
@@ -44,6 +59,6 @@ void	rm_argv_null(int *argc, char ***argv)
 			new_argv[j++] = ft_strdup((*argv)[i]);
 	}
 	(*argc) = j;
-	ft_free_tab(*argv);
+	free_tab_argc(old_argc, *argv);
 	*argv = new_argv;
 }

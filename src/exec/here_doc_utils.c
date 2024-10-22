@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rderkaza <rderkaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:26:48 by rderkaza          #+#    #+#             */
-/*   Updated: 2024/10/14 16:41:34 by rderkaza         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:54:01 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,19 @@ int	here_parent(pid_t pid, t_minishell *shell)
 	if (shell->exit_status == 130)
 		return (FAILURE);
 	return (SUCCESS);
+}
+
+void	update_redir_file_name(t_redirection *redir, int i, void *shell,
+		void *env)
+{
+	char	*nb;
+
+	nb = ft_itoa(i);
+	if (!nb)
+		error_malloc(shell, env);
+	free(redir->file_name);
+	redir->file_name = ft_strjoin(".tmp", nb);
+	free(nb);
+	if (!redir->file_name)
+		error_malloc(shell, env);
 }

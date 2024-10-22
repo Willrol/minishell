@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 11:08:22 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/16 14:06:49 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/22 13:40:16 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,11 @@ int	execution(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 	set_fd(shell);
 	while (tmp)
 	{
+		if (tmp->value == NULL && tmp->redirection == NULL)
+		{
+			tmp = tmp->next;
+			continue ;
+		}
 		if (!has_pipe && tmp->value != NULL && is_a_builtin(tmp) == SUCCESS)
 			exec_solo_builtin(shell, tmp);
 		else

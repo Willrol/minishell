@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 09:52:45 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/22 10:04:01 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/22 14:29:09 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int		here_parent(pid_t pid, t_minishell *shell);
 void	unlink_here_doc(t_parse_cmd *cmd);
 int		handle_redirection(t_minishell *shell, t_parse_cmd *cmd);
 void	handle_here_doc(int sig);
+void	update_redir_file_name(t_redirection *redir, int i, void *shell,
+			void *env);
 
 void	handle_sigint_hd(int sig);
 void	handle(int sig);
