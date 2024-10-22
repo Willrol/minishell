@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:13:10 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/21 18:20:09 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/22 10:26:02 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char	*dollar_expander(char *str, int *j, t_list *env, t_minishell *shell)
 	return (tmp);
 }
 
-bool	is_expandable(char *argv, int j, int quoted, bool *is_expand)
+static bool	is_expandable(char *argv, int j, int quoted, bool *is_expand)
 {
 	if (argv[j] == '$' && !(quoted & 0b01) && ft_iswhitespace(argv[j + 1]) == 0
 		&& argv[j + 1] != 0 && argv[j + 1] != '~' && argv[j + 1] != ('"' * -1))
@@ -50,6 +50,15 @@ bool	is_expandable(char *argv, int j, int quoted, bool *is_expand)
 		return (true);
 	}
 	return (false);
+}
+
+void	check_argv_empty(char **argv)
+{
+	if (ft_strlen(*argv) == 0)
+	{
+		free(*argv);
+		*argv = NULL;
+	}
 }
 
 void	search_dollar(char **argv, t_list *env, t_minishell *shell,
@@ -75,8 +84,10 @@ void	search_dollar(char **argv, t_list *env, t_minishell *shell,
 				argv[i] = dollar_expander(argv[i], &j, env, shell);
 			if (argv[i] == NULL)
 				error_malloc(shell, env);
-			quoted = quote_state(argv[i][j], quoted);
+			if (j >= 0)
+				quoted = quote_state(argv[i][j], quoted);
 		}
+		check_argv_empty(&argv[i]);
 	}
 }
 

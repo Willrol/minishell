@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:44 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/21 18:32:09 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/22 10:22:55 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,11 @@ int	exec_command(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
 		return (ft_free_tab(env_tab), shell->exit_status);
 	}
 	execve(path, cmd->argv, env_tab);
+	shell->exit_status = CMD_NFOUND;
 	error_exec(cmd->value, shell->exit_status);
 	free(path);
 	ft_free_tab(env_tab);
-	return (FAILURE);
+	return (shell->exit_status);
 }
 
 int	do_command(t_list *env, t_minishell *shell, t_parse_cmd *cmd)
