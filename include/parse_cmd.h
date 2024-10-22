@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 16:40:03 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/21 13:49:40 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/22 13:27:13 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ void						expand_redir(t_parse_cmd *cmd, t_list *env,
 int							take_cmd(t_list *t_tmp, t_parse_cmd *cmd_tmp);
 t_parse_cmd					*init_parser_cmd(t_list *token);
 int							to_next_cmd(t_list *t_tmp, t_parse_cmd *cmd_tmp);
+
+void						check_argv_empty(char **argv);
+void						rm_argv_null(int *argc, char ***argv);
 
 void						expand(t_parse_cmd *cmd, t_list *env,
 								t_minishell *shell);

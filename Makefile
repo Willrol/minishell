@@ -30,6 +30,7 @@ SRC 	= 	main.c						\
 			expand/expand.c				\
 			expand/expand_redir.c		\
 			expand/expand_utils.c		\
+			expand/expand_utils2.c		\
 			expand/split_expand.c		\
 			expand/split_expand_utils.c \
 			expand/quote.c				\

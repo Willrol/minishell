@@ -6,7 +6,7 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:13:10 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/22 10:26:02 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/22 13:24:15 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,6 @@ static bool	is_expandable(char *argv, int j, int quoted, bool *is_expand)
 		return (true);
 	}
 	return (false);
-}
-
-void	check_argv_empty(char **argv)
-{
-	if (ft_strlen(*argv) == 0)
-	{
-		free(*argv);
-		*argv = NULL;
-	}
 }
 
 void	search_dollar(char **argv, t_list *env, t_minishell *shell,
@@ -110,6 +101,8 @@ void	expand(t_parse_cmd *cmd, t_list *env, t_minishell *shell)
 				error_malloc(shell, env);
 		if (remove_quote(cmd->argv) == FAILURE)
 			error_malloc(shell, env);
+		if (cmd->argc > 0)
+			rm_argv_null(&cmd->argc, &cmd->argv);
 		free(cmd->value);
 		cmd->value = ft_strdup(cmd->argv[0]);
 		expand_redir(cmd, env, shell);
