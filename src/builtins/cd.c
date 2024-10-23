@@ -6,12 +6,12 @@
 /*   By: aditer <aditer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:53:28 by aditer            #+#    #+#             */
-/*   Updated: 2024/10/09 14:27:07 by aditer           ###   ########.fr       */
+/*   Updated: 2024/10/23 09:04:15 by aditer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "exec.h"
+#include "minishell.h"
 
 int	cd_home(t_list *env)
 {
@@ -74,6 +74,7 @@ int	cd_tiret(t_list *env)
 	if (cwd)
 	{
 		add_env(&env, "PWD", cwd);
+		ft_putendl_fd(cwd, 1);
 		free(cwd);
 	}
 	return (SUCCESS);
